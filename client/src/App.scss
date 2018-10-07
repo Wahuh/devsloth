@@ -1,0 +1,30 @@
+@import './styles/layout';
+
+@media #{$Tablet}  {
+    #App {
+
+    }
+}
+
+@media #{$Desktop} {
+    #App {
+        flex-direction: row;
+    }
+}
+
+@media #{$Mobile} {
+    #App {
+        flex-direction: column;
+    }
+}
+
+body {
+    margin: 0;
+}
+
+#App {
+    display: flex;
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+}

@@ -1,0 +1,37 @@
+@import '../styles/layout';
+
+@media #{$Tablet}  {
+    #SideMenu {
+        width: 25vw;
+    }
+
+}
+
+@media #{$Desktop} {
+    #SideMenu {
+        width: 20vw;
+    }
+}
+
+@media #{$Mobile} {
+    #SideMenu {
+        position: fixed;
+        width: 50vw;
+        transform: translate3d(-50vw, 0, 0);
+    }
+}
+
+#SideMenu {
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transition: transform .3s
+    cubic-bezier(0, .52, 0, 1);
+    background-color:#003F87;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:
+    "GroupList GroupTitle"
+    "GroupList DisplayTabs"
+    "GroupList Extra";
+}

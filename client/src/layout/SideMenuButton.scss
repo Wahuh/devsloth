@@ -1,0 +1,11 @@
+.SideMenuButton {
+    display: flex;
+    flex-direction: column;
+
+    .IconBar {
+        width: 35px;
+        height: 5px;
+        background-color: white;
+        margin: 6px 0;
+    }
+}

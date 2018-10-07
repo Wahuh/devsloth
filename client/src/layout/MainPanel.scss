@@ -1,0 +1,21 @@
+@import '../styles/layout';
+
+@media #{$Tablet}  {
+
+}
+
+@media #{$Desktop} {
+    .MainPanel {
+        width: 70%;
+    }
+}
+
+@media #{$Mobile} {
+    .MainPanel {
+        width: 100%;
+    }
+}
+
+.MainPanel {
+    height: 100%;
+}
