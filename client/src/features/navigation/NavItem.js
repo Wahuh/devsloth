@@ -1,8 +1,9 @@
 import React from "react";
+import "./NavItem.scss"
 
 const NavItem = (props) => {
     return (
-        <div>
+        <div className="NavItem">
             {props.children}
         </div>
     );

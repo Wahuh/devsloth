@@ -18,8 +18,19 @@
         position: fixed;
         width: 50vw;
         transform: translate3d(-50vw, 0, 0);
+        z-index: 2;
+    }
+
+    #SideMenuContainer {
+        z-index: 1;
+        position: fixed;
+    }
+
+    #SideMenuCover {
+        z-index: 1;
     }
 }
+
 
 #SideMenu {
     left: 0;
@@ -28,10 +39,19 @@
     transition: transform .3s
     cubic-bezier(0, .52, 0, 1);
     background-color:#003F87;
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-areas:
-    "GroupList GroupTitle"
-    "GroupList DisplayTabs"
-    "GroupList Extra";
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+}
+
+#SideMenuCover {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
 }

@@ -1,0 +1,11 @@
+.GroupIcon:hover .GroupToolTip {
+    visibility: visible;
+}
+
+.GroupIcon:hover {
+    background-color: red;
+}
+
+.GroupIcon {
+    position: relative;
+}

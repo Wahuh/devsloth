@@ -1,0 +1,12 @@
+.NavItem {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.NavItem:first-child {
+    border-left: 20px solid transparent;
+    border-right: 10px solid transparent;
+}

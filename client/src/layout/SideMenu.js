@@ -6,28 +6,32 @@ class SideMenu extends Component {
         super(props);
 
         this.state = {
-            visible: false
+            show: false
         }
         
         //this.handleMouseDown = this.handleMouseDown.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
     }
 
-    hideOnExternalClick() {
-
+    hide() {
+        document.getElementById("SideMenu").style.transform = "translate3d(-50vw, 0, 0)";
+        document.getElementById("SideMenuCover").style.display = "none";
     }
 
 
     toggleMenu() {
         this.setState({
-            visible: !this.state.visible
+            show: !this.state.visible
         });
     }
 
     render() {
         return (
-            <div id="SideMenu">
-                {this.props.children}
+            <div id="SideMenuContainer">
+                <div id="SideMenu">
+                    {this.props.children}
+                </div>
+                <div id="SideMenuCover" onClick={this.hide}></div>
             </div>
         );
     }

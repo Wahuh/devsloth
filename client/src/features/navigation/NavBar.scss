@@ -4,5 +4,22 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 10px;
+}
+
+.NavBarLeft {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.NavBarRight {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }

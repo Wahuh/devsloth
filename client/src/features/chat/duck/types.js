@@ -1,0 +1,1 @@
+export const CHANGE_CHANNEL = "features/chat/duck/CHANGE_CHANNEL";
