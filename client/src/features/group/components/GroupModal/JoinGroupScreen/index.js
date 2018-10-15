@@ -1,9 +1,10 @@
 import React from "react";
+import BackButton from "../../../../../pureComponents/BackButton";
 
 const JoinGroupScreen = (props) => {
     return (
         <div className="JoinGroupScreen">
-            hello
+            <BackButton onClick={props.onBack} />
         </div>
     );
 }

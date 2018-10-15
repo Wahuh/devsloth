@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../../../pureComponents/Button";
+import Button from "../../../../../../pureComponents/Button";
 
 const CreateGroupButton = (props) => {
     return (

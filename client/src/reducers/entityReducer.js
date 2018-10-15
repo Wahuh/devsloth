@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { groups2 } from "../features/group/duck/reducers";
+import { groups } from "../features/group/duck/reducers";
 
 const entityReducer = combineReducers({
-    groups2
+    groups
 });
 
 export default entityReducer;
