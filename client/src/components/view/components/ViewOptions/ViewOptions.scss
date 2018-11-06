@@ -15,7 +15,17 @@
     background-color: $secondary;
 }
 
+.ToggleChatActive {
+    padding: 0.5rem 1rem;
+    background-color: $primary-action;
+}
+
 .ToggleTasks {
     padding: 0.5rem 1rem;
     background-color: $secondary;
+}
+
+.ToggleTasksActive {
+    padding: 0.5rem 1rem;
+    background-color: $primary-action;
 }

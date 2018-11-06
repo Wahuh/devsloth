@@ -12,6 +12,7 @@ import GroupModalContainer from "./components/group/containers/GroupModalContain
 import GroupNameContainer from "./components/group/containers/GroupNameContainer";
 import ChannelListContainer from "./components/channel/containers/ChannelListContainer";
 import LoginModalContainer from "./components/auth/containers/LoginModalContainer";
+import UserListContainer from "./components/user/containers/UserListContainer";
 
 import "./App.scss";
 
@@ -32,6 +33,7 @@ class App extends Component {
                     <SideMenuRight>
                         <GroupNameContainer />
                         <ChannelListContainer />
+                        <UserListContainer />
                     </SideMenuRight>
                 </SideMenu>
 

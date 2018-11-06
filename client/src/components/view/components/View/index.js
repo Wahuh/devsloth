@@ -14,6 +14,7 @@ const View = ({ showChat, showTasks }) => {
             </MainPanel>
 
             <SecondaryPanel>
+                {showChat && <TaskPanel />}
             </SecondaryPanel>
         </div>
     );
