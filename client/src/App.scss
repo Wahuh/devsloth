@@ -1,21 +1,37 @@
 @import './styles/layout';
 
 @media #{$Tablet}  {
+    html {
+        font-size: 21px;
+    }
+
     #App {
 
     }
 }
 
 @media #{$Desktop} {
+    html {
+        font-size: 21px;
+    }
+
     #App {
         flex-direction: row;
     }
 }
 
 @media #{$Mobile} {
+    html {
+        font-size: 18px;
+    }
+
     #App {
         flex-direction: column;
     }
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {

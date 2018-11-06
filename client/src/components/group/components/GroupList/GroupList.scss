@@ -1,0 +1,31 @@
+@import "../../../../styles/color";
+
+.GroupList {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    height: inherit;
+    width: 88px;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.GroupItem {
+    width: 100%;
+    height: 88px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.AddGroupButton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $primary-action;
+}

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import Header from "./layout/Header";
 import Content from "./layout/Content";
-import NavBar from "./features/navigation/NavBar";
+import NavBar from "./components/navigation/NavBar";
 import SideMenu from "./layout/SideMenu";
-import SideMenuList from "./layout/SideMenuList";
-import SideMenuPanel from "./layout/SideMenuPanel";
-import SideMenuButton from "./layout/SideMenuButton";
-import GroupListContainer from "./features/group/containers/GroupListContainer";
+import SideMenuRight from "./layout/SideMenuRight";
+import SideMenuLeft from "./layout/SideMenuLeft";
+import GroupListContainer from "./components/group/containers/GroupListContainer";
 //import GroupTitleContainer from "./features/group/GroupTitleContainer";
-import DisplayViewContainer from "./features/display/containers/DisplayViewContainer";
-import GroupModalContainer from "./features/group/containers/GroupModalContainer";
-import GroupNameContainer from "./features/group/containers/GroupNameContainer";
-import ChannelListContainer from "./features/chat/containers/ChannelListContainer";
+import ViewContainer from "./components/view/containers/ViewContainer";
+import GroupModalContainer from "./components/group/containers/GroupModalContainer";
+import GroupNameContainer from "./components/group/containers/GroupNameContainer";
+import ChannelListContainer from "./components/channel/containers/ChannelListContainer";
+import LoginModalContainer from "./components/auth/containers/LoginModalContainer";
 
 import "./App.scss";
 
@@ -25,22 +25,23 @@ class App extends Component {
         return (
             <div id="App">
                 <SideMenu>
-                    <SideMenuList>
+                    <SideMenuLeft>
                         <GroupListContainer />
-                    </SideMenuList>
+                    </SideMenuLeft>
 
-                    <SideMenuPanel>
+                    <SideMenuRight>
                         <GroupNameContainer />
                         <ChannelListContainer />
-                    </SideMenuPanel>
+                    </SideMenuRight>
                 </SideMenu>
 
                 <Content>
                     <Header>
                         <NavBar />
                     </Header>
-                    <DisplayViewContainer />
+                    <ViewContainer />
                 </Content>
+                <LoginModalContainer />
                 <GroupModalContainer />
             </div>
 

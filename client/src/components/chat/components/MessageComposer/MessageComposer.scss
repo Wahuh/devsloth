@@ -1,0 +1,25 @@
+@import "../../../../styles/color";
+@import "../../../../styles/shadows";
+
+.MessageComposer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    box-shadow: $light-shadow-top;
+    background-color: $secondary-light;
+    z-index: 1;
+}
+
+.MessageComposerInput {
+    flex: 1 1 auto;
+}
+
+.MessageComposerButton {
+    padding: 0 1rem;
+    background-color: $primary-action;
+}

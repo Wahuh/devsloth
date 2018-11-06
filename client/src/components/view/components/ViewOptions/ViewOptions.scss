@@ -1,0 +1,21 @@
+@import "../../../../styles/color";
+
+.ViewOptions {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.ToggleChat {
+    padding: 0.5rem 1rem;
+    background-color: $secondary;
+}
+
+.ToggleTasks {
+    padding: 0.5rem 1rem;
+    background-color: $secondary;
+}

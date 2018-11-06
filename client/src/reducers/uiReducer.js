@@ -1,10 +1,13 @@
 import { combineReducers } from "redux";
-import { display } from "../features/display/duck/reducers";
-import { channels } from "../features/chat/duck/reducers";
-import { groupModal } from "../features/group/duck/reducers";
+import { view } from "../components/view/duck/reducers";
+import { channels } from "../components/chat/duck/reducers";
+import { groupModal } from "../components/group/duck/reducers";
+import { loginModal } from "../components/auth/duck/reducers";
 
 const uiReducer = combineReducers({
     groupModal,
+    loginModal,
+    view,
 });
 
 export default uiReducer;

@@ -1,0 +1,25 @@
+@import '../../styles/layout';
+@import "../../styles/color";
+
+@media #{$Tablet}  {
+}
+
+@media #{$Desktop} {
+    .Header {
+        display: flex;
+    }
+}
+
+@media #{$Mobile} {
+    .Header {
+        display: flex;
+    }
+}
+
+.Header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 60px;
+    background-color: $primary;
+}

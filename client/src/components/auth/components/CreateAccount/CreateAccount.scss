@@ -1,0 +1,30 @@
+@import "../../../../styles/color";
+
+.CreateAccount {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+}
+
+.CreateAccountButton {
+    background: $primary-action;
+    padding: 1rem 2rem;
+}
+
+.CreateAccountButton:hover,
+.CreateAccountButton:focus {
+    background: $primary-action-dark;
+}
+
+.CreateAccount > * {
+    margin-bottom: 0.5rem;
+}
+
+.CreateAccount > *:last-child {
+    margin-bottom: 0;
+}
+
+.CreateAccountInput {
+
+}
