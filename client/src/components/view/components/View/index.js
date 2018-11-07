@@ -2,7 +2,7 @@ import React from "react";
 import MainPanel from "../../../../layout/MainPanel";
 import SecondaryPanel from "../../../../layout/SecondaryPanel";
 import Chat from "../../../chat/components/Chat";
-import TaskPanel from "../../../tasks/components/TaskPanel";
+import TaskMenu from "../../../tasks/components/TaskMenu";
 import "./View.scss";
 
 const View = ({ showChat, showTasks }) => {
@@ -10,11 +10,11 @@ const View = ({ showChat, showTasks }) => {
         <div className="View">
             <MainPanel>
                 {showChat && <Chat />}
-                {showTasks && <TaskPanel />}
+                {showTasks && <TaskMenu />}
             </MainPanel>
 
             <SecondaryPanel>
-                {showChat && <TaskPanel />}
+                {showChat && <TaskMenu />}
             </SecondaryPanel>
         </div>
     );

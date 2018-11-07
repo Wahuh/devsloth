@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MenuIcon from "../components/reuse/icons/MenuIcon";
 import "./SideMenuButton.scss";
 
 const SideMenuButton = (props) => {
@@ -11,9 +12,7 @@ const SideMenuButton = (props) => {
 
     return (
         <div className="SideMenuButton" onClick={openSideMenu}>
-            <div className="IconBar"></div>
-            <div className="IconBar"></div>
-            <div className="IconBar"></div>
+            <MenuIcon />
         </div>
     );
 }

@@ -40,11 +40,11 @@ class ViewOptions extends Component {
     render() {
         return (
             <div className="ViewOptions">
-                <Button className={this.state.isChatActive? "ToggleChatActive" : "ToggleChat"} onClick={this.toggleChatActive}>
-                    <Typography>Chat</Typography>
+                <Button className={this.state.isChatActive? "ToggleOptionActive" : "ToggleOption"} onClick={this.toggleChatActive}>
+                    <Typography type="body2">Chat</Typography>
                 </Button>
-                <Button className={this.state.isTasksActive? "ToggleTasksActive" : "ToggleTasks"} onClick={this.toggleTasksActive}>
-                    <Typography>Tasks</Typography>
+                <Button className={this.state.isTasksActive? "ToggleOptionActive" : "ToggleOption"} onClick={this.toggleTasksActive}>
+                    <Typography type="body2">Tasks</Typography>
                 </Button>
             </div>
         );
