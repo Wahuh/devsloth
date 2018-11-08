@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { auth } = require("../middleware/auth.middleware");
 
-router.get("/", (req, res, next) => {
+router.post("/", auth, (req, res, next) => {
     res.json({
         confirmation: "success",
         data: "this is the group endpoint",

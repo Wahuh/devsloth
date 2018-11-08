@@ -1,21 +1,13 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema()
+const Schema = mongoose.Schema;
+const Joi = require("joi");
 const bcrypt = require('bcrypt');
-const SALT_WORK_FACTOR = 10;
+const jwt = require("jsonwebtoken");
 
-const User = mongoose.model("User", new Schema({
-    username: {
-        type: String, 
-        unique: true,
-        lowercase: true,
-        index: true,
-        trim: true,
-        minlength: 2,
-        maxlength: 20,
-    },
+const userSchema = new Schema({
     email: {
         type: String,
-        required: [true, "must have an email address"],
+        required: [true, "Email address is required"],
         minlength: 5,
         maxlength: 255,
         unique: true,
@@ -29,32 +21,51 @@ const User = mongoose.model("User", new Schema({
     },
     alias: {
         type: String,
+        maxlength: 255,
     },
     groups: [{
         type: Schema.Types.ObjectId,
         ref: "Group"
     }],
-}));
-
-function validateUser(user) {
-    
-}
-
-
-UserSchema.pre("save", async function(next) {
-    const user = this;
-
-    if (!user.isModified('password')) return next();
-
-    const hash = await bcrypt.hash(user.password, SALT_WORK_FACTOR);
-    user.password = hash;
-    next();
 });
 
-UserSchema.methods.isValidPassword = async function(password) {
-    const user = this;
-    const compare = await bcrypt.compare(password, user.password);
-    return compare;
+function validateUser(user) {
+    const schema = {
+        email: Joi.string().email({ minDomainAtoms: 2}).min(5).max(255).required(),
+        password: Joi.string().min(5).max(255).required()
+    };
+    return Joi.validate(user, schema);
 }
 
-module.exports = User;
+userSchema.pre("save", async function(next) {
+    const user = this;
+    if (!user.isModified("password")) return next();
+
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password, salt);
+        user.password = hash;
+        next();
+    } catch (err) {
+        return next(err);
+    }
+});
+
+userSchema.methods.generateAuthToken = function() {
+    const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET);
+    return token;
+}
+
+userSchema.methods.validatePassword = async function(password) {
+    const compare = await bcrypt.compare(password, this.password);
+    return compare
+}
+
+// UserSchema.methods.isValidPassword = async function(password) {
+//     const user = this;
+//     const compare = await bcrypt.compare(password, user.password);
+//     return compare;
+// }
+
+exports.User = mongoose.model("User", userSchema);
+exports.validate = validateUser;

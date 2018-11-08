@@ -1,17 +1,22 @@
+const { error } = require('dotenv').config();
+if (error) {
+    throw error;
+    //process.exit(1);
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const socketIo = require("socket.io");
-const passport = require("passport");
 const http = require("http");
-require("./passport.config");
+
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://thanh:thebestslacker1@ds131983.mlab.com:31983/slacker";
+const MONGODB_URI = process.env.MONGODB_URI;
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(() => console.log("connected to MongoDB"))
     .catch(err => console.error("Could not connect to MongoDB", err));
 
@@ -24,18 +29,17 @@ db.on("error", error => console.log(error))
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(passport.initialize())
 
-
-const group = require("./routes/group.route");
 const index = require("./routes/index");
-const login = require("./routes/login.route");
-const users = require("./routes/users.route");
+const register = require("./routes/register.route");
+const auth = require("./routes/auth.route");
+const group = require("./routes/group.route");
 
 app.use("/", index);
+app.use("/api/auth", auth);
+app.use("/api/register", register);
 app.use("/api/groups", group);
-app.use("/api", users);
-app.use("/api", login);
+
 
 const server = http.createServer(app)
 const io = socketIo(server);

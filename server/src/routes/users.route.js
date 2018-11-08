@@ -1,5 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const { auth } = require("../middleware/auth.middleware");
+
+//get the current user
+router.get("/me", auth, async (req, res) => {
+
+});
 
 //get all users
 router.get("/users", (req, res) => {
