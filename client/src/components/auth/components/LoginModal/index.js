@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Modal from "../../../general/Modal";
-import CreateAccount from "../CreateAccount";
+import Modal from "../../../reuse/Modal";
+import Registration from "../Registration";
 import CreateGuest from "../CreateGuest";
 import Typography from "../../../general/Typography";
+import Divider from "../../../reuse/Divider";
 import { bool } from "prop-types";
 import "./LoginModal.scss";
 
@@ -29,8 +30,8 @@ class LoginModal extends Component {
                 <div className="LoginModal">
                     <Typography align="center" type="title">Slacker.io</Typography>
                     <Typography align="center" type="body">Chat and task management app for Slackers!</Typography>
-                    <CreateAccount onCreateAccount={this.onCreateAccount} />
-                    <Typography type="body">OR</Typography>
+                    <Registration onRegistration={this.onCreateAccount} />
+                    <Divider />
                     <CreateGuest onCreateGuest={this.props.onCreateGuest} />
                 </div>
             </Modal>

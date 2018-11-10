@@ -17,8 +17,6 @@ const NavBar = (props) => {
                 </NavItem>
             </div>
             <div className="NavBarRight">
-                poop
-                poop2
             </div>
         </nav>
     );

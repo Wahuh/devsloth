@@ -1,5 +1,5 @@
 import React from "react";
-import "./Typography.scss";
+
 //import colors from "../colors";
 
 const Typography = (props) => {
@@ -11,12 +11,30 @@ const Typography = (props) => {
         textAlign: props.align
     }
 
+    const className = "grt";
+
     let text = props.children;
     let textComponent = null;
 
     switch(props.type) {
+        case "h1":
+            textComponent = <h1 style={style} className={className}>{text}</h1>
+            break;
+
+        case "h2":
+            textComponent = <h2 style={style} className={className}>{text}</h2>
+            break;
+
+        case "h3":
+            textComponent = <h3 style={style} className={className}>{text}</h3>
+            break;
+
+        case "h4":
+            textComponent = <h4 style={style} className={className}>{text}</h4>
+            break;
+
         case "body":
-            textComponent = <p style={style} className="Body">{text}</p>
+            textComponent = <p style={style} className={className}>{text}</p>
             break;
 
         case "body2":

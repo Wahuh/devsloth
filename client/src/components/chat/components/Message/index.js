@@ -15,7 +15,7 @@ const Message = ({ alias, children, icon, time }) => {
                 <div className="MessageBody">
                     <Row>
                         <div className="MessageAlias">
-                            <Typography type="body" fontWeight="bold">{alias}</Typography>
+                            <Typography type="subtitle" fontWeight="bold">{alias}</Typography>
                         </div>
                         
                         <div className="MessageTime">

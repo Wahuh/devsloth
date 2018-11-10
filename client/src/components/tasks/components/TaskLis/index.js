@@ -5,8 +5,7 @@ import Row from "../../../reuse/Row";
 import Typography from "../../../reuse/Typography";
 import Button from "../../../reuse/Button";
 import PlusIcon from "../../../reuse/icons/PlusIcon";
-import styles from "./TaskList.scss";
-console.log(styles, "styles");
+import "./TaskList.scss";
 
 const TaskList = ({task}) => {
     let tasks = [

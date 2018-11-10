@@ -1,0 +1,1 @@
+export const registrationUrl = `${process.env.API_URL}/register`;

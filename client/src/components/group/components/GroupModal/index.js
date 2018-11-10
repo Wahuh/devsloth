@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Modal from "../../../../pureComponents/Modal";
+import Modal from "../../../reuse/Modal";
 import * as constants from "../../constants"; 
 import CreateOrJoinScreen from "./CreateOrJoinScreen";
-import CreateGroupScreen from "./CreateGroupScreen";
+import CreateGroup from "../CreateGroup";
 import JoinGroup from "../JoinGroup";
 import "./GroupModal.scss";
 
@@ -12,7 +12,7 @@ class GroupModal extends Component {
 
         this.forwardToJoin = this.forwardToJoin.bind(this);
         this.forwardToCreate = this.forwardToCreate.bind(this);
-        this.backToCreateOrJoin = this.backToCreateOrJoin.bind(this);
+        this.back = this.back.bind(this);
     }
 
     forwardToCreate() {
@@ -23,7 +23,7 @@ class GroupModal extends Component {
         this.props.changeScreen(constants.JOIN_GROUP_SCREEN);
     }
 
-    backToCreateOrJoin() {
+    back() {
         this.props.changeScreen(constants.CREATE_OR_JOIN_GROUP_SCREEN);
     }
 
@@ -31,9 +31,9 @@ class GroupModal extends Component {
         let screen;
 
         if (this.props.screen === constants.CREATE_GROUP_SCREEN) {
-            screen = <CreateGroupScreen onBack={this.backToCreateOrJoin} onCreateGroup={this.props.createGroup}/>
+            screen = <CreateGroup onBack={this.back} onCreate={this.props.createGroup}/>
         } else if (this.props.screen === constants.JOIN_GROUP_SCREEN) {
-            screen = <JoinGroup onBack={this.backToCreateOrJoin} />
+            screen = <JoinGroup onBack={this.back} />
         } else {
             screen = <CreateOrJoinScreen onCreate={this.forwardToCreate} onJoin={this.forwardToJoin}/>
         }

@@ -1,75 +1,124 @@
 @import "../../../styles/fonts";
 
 @media screen and (max-width: 350px) {
-    .Title {
-        font-size: 2rem;
-    }
 
-    .Subtitle {
-        font-size: 1.5rem;
-    }
-
-    .Subtitle2 {
-        font-size: 1.2rem;
-    }
-
-    .Body2 {
-        font-size: 0.6rem;
-    }
 }
 
 @media screen and (max-width: 767px) {
-    .Title {
-        font-size: 3rem;
-    }
 
 }
 
 @media screen and (min-width: 768px){
-    .Title {
-        font-size: 3rem;
-    }
 
-    .Subtitle {
-        font-size: 2rem;
-    }
-
-    .Subtitle2 {
-        font-size: 1.5rem;
-    }
-
-    .Body2 {
-        font-size: 0.8rem;
-    }
-}
-.Body {
-    font-size: 1rem;
-    font-family: $main-font;
-    line-height: 1.5;
-    margin: 0;
 }
 
-.Body2 {
-    font-family: $main-font;
-    line-height: 1.5;
-    margin: 0;
+.grt {
+	max-width: 544px;
+	font-family: $main-font;
+	font-size: 16px;
+	line-height: 27px;
+	padding: 17px;
+	margin: 0;
 }
 
-.Subtitle {
-    font-family: $main-font;
-    line-height: 1.5;
-    margin: 0;
+.GoldenRatioBody {
+	font-family: $main-font;
+	font-size: 16px;
+	line-height: 27px;
+	margin-bottom: 27px;
+	margin-top: 0;
 }
 
-.Subtitle2 {
-    font-family: $main-font;
-    line-height: 1.5;
-    margin: 0;
+.grt h1 {
+	font-size: 33px;
+	line-height: 52px;
+	margin-bottom: 27px;
+}
+.grt .title {
+	font-size: 42px;
+	line-height: 65px;
+	margin-bottom: 27px;
+}
+.grt h2 {
+	font-size: 26px;
+	line-height: 42px;
+	margin-top: 44px;
+	margin-bottom: 17px;
 }
 
-.Title {
-    font-family: $main-font;
-    line-height: 1.5;
-    margin: 0;
+.h3 {
+	font-size: 20px;
+	line-height: 33px;
+	margin-top: 27px;
+	margin-bottom: 11px;
+	margin-top: 0;
+	font-family: $main-font;
 }
 
+.GoldenRatioSubtitle {
+	font-family: $main-font;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 27px;
+	margin-bottom: 7px;
+	margin-top: 0;
+}
+
+.grt p, .grt ul, .grt ol, .grt blockquote, .grt pre, .grt .alert, .grt .note, .grt .box, .grt .footnotes {
+	margin-bottom: 27px;
+}
+.grt ul, .grt ol {
+	margin-left: 27px;
+}
+
+.grt blockquote {
+	padding-left: 17px;
+	border-style: solid;
+	border-color: rgba(0,0,0,0.15);
+	border-width: 0 0 0 7px;
+}
+.grt sub, .grt sup {
+	padding: 0 1px;
+}
+.grt code, .grt pre, .grt kbd {
+	font-size: 15px;
+}
+.grt code {
+	background-color: rgba(0,0,0,0.08);
+	padding: 3px 4px;
+	border-radius: 7px;
+	margin: 0 1px;
+}
+.grt pre {
+	padding: 11px;
+	border-style: solid;
+	border-color: rgba(0,0,0,0.15);
+	border-width: 0 0 0 7px;
+}
+.grt kbd {
+	background-color: #fff;
+	padding: 3px 4px;
+	border-radius: 4px;
+	box-shadow: 0 0 4px 0 rgba(0,0,0,0.45);
+	margin: 0 1px;
+}
+.grt .alert, .grt .note, .grt .box {
+	padding: 17px;
+}
+.grt .footnotes {
+	font-size: 13px;
+	line-height: 23px;
+	padding-top: 17px;
+	border-top: 1px dotted rgba(0,0,0,0.15);
+}
+.grt .footnotes p {
+	margin-bottom: 17px;
+}
+.grt ul ul, .grt ul ol, .grt ol ul, .grt ol ol, .grt blockquote.right p, .grt blockquote.left p, .grt .alert :last-child, .grt .note :last-child, .grt .box :last-child, .grt .footnotes :last-child {
+	margin-bottom: 0;
+}
+@media all and (min-width: 598px) {
+	.grt {
+		padding: 27px;
+	}
+}

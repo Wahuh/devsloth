@@ -1,7 +1,7 @@
 import React from "react";
-import "./Row.scss";
+import "./Column.scss";
 
-const Row = ({children, justifyContent, alignItems, className, width, height}) => {
+const Column = ({children, justifyContent, alignItems, className, width, height}) => {
     const style = {
         justifyContent: justifyContent,
         alignItems: alignItems,
@@ -10,10 +10,10 @@ const Row = ({children, justifyContent, alignItems, className, width, height}) =
     }
 
     return (
-        <div style={style} className={className ? "Row " + className : "Row"}>
+        <div style={style} className={className ? "Column " + className : "Column"}>
             {children}
         </div>
     );
 }
 
-export default Row;
+export default Column;
