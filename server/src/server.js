@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const socketIo = require("socket.io");
 const http = require("http");
+const cors = require("cors");
 
 
 const app = express();
@@ -29,6 +30,7 @@ db.on("error", error => console.log(error))
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cors);
 
 const index = require("./routes/index");
 const register = require("./routes/register.route");
