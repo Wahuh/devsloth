@@ -4,4 +4,16 @@
     flex-shrink: 0;
     border: none;
     background-color: rgba(0, 0, 0, 0.12);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.DividerVertical {
+    width: 1px;
+    height: 100%;
+    flex-shrink: 0;
+    border: none;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: rgba(0, 0, 0, 0.12);
 }

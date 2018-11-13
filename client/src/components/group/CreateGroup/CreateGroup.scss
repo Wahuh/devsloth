@@ -1,0 +1,13 @@
+@import "../../../styles/color";
+
+.CreateGroup {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.CreateForm {
+    padding: 1.5rem;
+}

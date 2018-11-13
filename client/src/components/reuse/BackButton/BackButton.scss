@@ -1,0 +1,10 @@
+@import "../../../styles/color";
+
+.BackButton {
+    background-color: transparent;
+    fill: $white;
+}
+
+.BackButton:focus {
+    outline: none;
+}

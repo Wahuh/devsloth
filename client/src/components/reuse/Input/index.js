@@ -1,8 +1,10 @@
-import React from "react";
-import "./Input.scss";
+import React, { Fragment } from "react";
+import ValidationMessage from "../ValidationMessage";
+import Label from "../Label";
+import styles from "./Input.scss";
 import { bool, func, string } from "prop-types";
 
-const Input = ({autoFocus, className, max, min, onEnter, onChange, placeholder, type, value}) => {
+const Input = ({autoFocus, className, label, max, min, name, onEnter, onChange, placeholder, type, value, validation, successMessage}) => {
     function onEnterPress(event) {
         if (event.defaultPrevented) {
             return; // Should do nothing if the default action has been cancelled
@@ -26,17 +28,31 @@ const Input = ({autoFocus, className, max, min, onEnter, onChange, placeholder, 
     }
 
     return (
-        <input 
-        className={className ? "Input " + className : "Input"} 
-        type={type} 
-        autoFocus={autoFocus} 
-        placeholder={placeholder}
-        value={value}
-        max={max}
-        min={min}
-        onChange={onChange}
-        onKeyPress={onEnterPress}
-        />
+        <Fragment>
+            {label && <Label htmlFor={name}>{label}</Label>}
+            <input 
+            className={className ? `${styles.Input} ` + className : styles.Input} 
+            type={type} 
+            autoFocus={autoFocus} 
+            placeholder={placeholder}
+            value={value}
+            max={max}
+            min={min}
+            id={name}
+            name={name}
+            onChange={onChange}
+            onKeyPress={onEnterPress}
+            data-success-message={successMessage}
+            />
+
+            {
+                validation &&
+                <ValidationMessage 
+                    validation={validation}
+                />
+            }
+
+        </Fragment>
     );
 }
 

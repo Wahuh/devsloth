@@ -1,9 +1,9 @@
 import React from "react";
-import "./SideMenuRight.scss";
+import styles from "./SideMenuRight.scss";
 
 const SideMenuRight = (props) => {
     return (
-        <div className="SideMenuRight">
+        <div className={styles.SideMenuRight}>
             {props.children}
         </div>
     );

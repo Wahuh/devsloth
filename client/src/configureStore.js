@@ -1,7 +1,8 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
 import { saveLocalState } from "./services/loadLocalState";
-
+import { register } from "./components/auth/duck/sagas";
 
 
 //node-uuid
@@ -14,13 +15,16 @@ import { saveLocalState } from "./services/loadLocalState";
 //    todos: store.getState().todos
 //});
 
+
 const configureStore = () => {
     const persistedState = {}; //loadLocalState
-
+    const sagaMiddleware = createSagaMiddleware();
     const store = createStore(
         rootReducer, 
-        persistedState
+        persistedState,
+        applyMiddleware(sagaMiddleware)
     );
+    sagaMiddleware.run(register);
     
     console.log(store.getState());
     return store;

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Row.scss";
+import styles from "./Row.scss";
 
 const Row = ({children, justifyContent, alignItems, className, width, height}) => {
     const style = {
@@ -10,7 +10,7 @@ const Row = ({children, justifyContent, alignItems, className, width, height}) =
     }
 
     return (
-        <div style={style} className={className ? "Row " + className : "Row"}>
+        <div style={style} className={className ? `${styles.Row} ` + className : styles.Row}>
             {children}
         </div>
     );

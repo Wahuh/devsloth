@@ -1,9 +1,9 @@
 import React from "react";
-import "./SideMenuLeft.scss";
+import styles from "./SideMenuLeft.scss";
 
 const SideMenuLeft = (props) => {
     return (
-        <div id="SideMenuLeft">
+        <div id={styles.SideMenuLeft}>
             {props.children}
         </div>
     );

@@ -78,6 +78,11 @@ module.exports = () => {
                 chunkFilename: "[id].css"
             }),
             new webpack.DefinePlugin(envKeys)
-        ]
+        ],
+        resolve: {
+            alias: {
+                joi: 'joi-browser'
+            }
+        }
     };
 }

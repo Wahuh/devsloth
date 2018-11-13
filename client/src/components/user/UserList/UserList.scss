@@ -1,0 +1,8 @@
+@import "../../../styles/color";
+
+.UserList {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    color: $secondary-text;
+}

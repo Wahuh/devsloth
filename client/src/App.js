@@ -2,11 +2,25 @@ import React, { Component } from 'react';
 import Header from "./components/layout/Header";
 import Content from "./components/layout/Content";
 import View from "./components/view/View";
+
+import SideMenu from "./components/layout/SideMenu";
+import SideMenuLeft from "./components/layout/SideMenuLeft";
+import SideMenuRight from "./components/layout/SideMenuRight";
+
+import GroupList from "./components/group/GroupList";
+import GroupName from "./components/group/GroupName";
+import GroupModal from "./components/group/GroupModal";
+
+import ChannelList from "./components/channel/ChannelList";
+
+import UserList from "./components/user/UserList";
+import Authentication from "./components/auth/Authentication";
+
 // import Content from "./layout/Content";
 // import NavBar from "./components/navigation/NavBar";
-// import SideMenu from "./layout/SideMenu";
-// import SideMenuRight from "./layout/SideMenuRight";
-// import SideMenuLeft from "./layout/SideMenuLeft";
+
+// 
+
 // import GroupListContainer from "./components/group/containers/GroupListContainer";
 // //import GroupTitleContainer from "./features/group/GroupTitleContainer";
 // import ViewContainer from "./components/view/containers/ViewContainer";
@@ -16,23 +30,34 @@ import View from "./components/view/View";
 // import LoginModalContainer from "./components/auth/containers/LoginModalContainer";
 // import UserListContainer from "./components/user/containers/UserListContainer";
 
-import "./App.scss";
+import styles from "./App.scss";
+
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         //Header is only displayed on mobile devices
         return (
-            <div id="App">
+            <div id={styles.App}>
+                <SideMenu>
+                    <SideMenuLeft>
+                        <GroupList />
+                    </SideMenuLeft>
+
+                    <SideMenuRight>
+                        <GroupName />
+                        <ChannelList />
+                        <UserList />
+                    </SideMenuRight>
+                </SideMenu>
+
                 <Content>
                     <Header />
                     <View />
                 </Content>
+                
+                <Authentication />
+                <GroupModal />
             </div>
-
         )
     }
 }

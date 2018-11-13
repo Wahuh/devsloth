@@ -1,0 +1,25 @@
+.Spinner {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.SpinnerSmall {
+    content: '';
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.Spin {
+    border-top-color: #333;
+    animation: spinner .6s linear infinite;
+}
+
+@keyframes spinner {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

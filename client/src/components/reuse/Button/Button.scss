@@ -22,6 +22,16 @@ button:focus {
 
 }
 
+button:disabled {
+    background-color: $disabled;
+    color: $disabled-dark;
+}
+
+button:disabled:hover {
+    background-color: $disabled;
+    
+}
+
 button:focus {
     outline: 1px solid #fff;
     outline-offset: -4px;

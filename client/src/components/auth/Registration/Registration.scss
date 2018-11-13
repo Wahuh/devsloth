@@ -1,0 +1,21 @@
+@import "../../../styles/color";
+
+.Registration {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.RegistrationButton {
+    background: $primary-action;
+    padding: 1rem 2rem;
+}
+
+.RegistrationButton:hover,
+.RegistrationButton:focus {
+    background: $primary-action-dark;
+}
+
+.Registration > * {
+    margin-bottom: 0.5rem;
+}

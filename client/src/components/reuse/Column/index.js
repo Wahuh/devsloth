@@ -1,5 +1,5 @@
 import React from "react";
-import "./Column.scss";
+import styles from "./Column.scss";
 
 const Column = ({children, justifyContent, alignItems, className, width, height}) => {
     const style = {
@@ -10,7 +10,7 @@ const Column = ({children, justifyContent, alignItems, className, width, height}
     }
 
     return (
-        <div style={style} className={className ? "Column " + className : "Column"}>
+        <div style={style} className={className ? `${styles.Column} ` + className : styles.Column}>
             {children}
         </div>
     );

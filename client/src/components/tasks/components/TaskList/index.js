@@ -6,7 +6,6 @@ import Typography from "../../../reuse/Typography";
 import Button from "../../../reuse/Button";
 import PlusIcon from "../../../reuse/icons/PlusIcon";
 import styles from "./TaskList.scss";
-console.log(styles, "styles");
 
 const TaskList = ({task}) => {
     let tasks = [
@@ -17,7 +16,7 @@ const TaskList = ({task}) => {
         {name: "develop engineering blog"},
     ];
     const taskItems = tasks.map(task => 
-        <ListItem className="TaskItem">
+        <ListItem className={styles.TaskItem}>
             <Typography>
                 {task.name}
             </Typography>
@@ -25,22 +24,22 @@ const TaskList = ({task}) => {
     ) 
 
     return (
-        <List className="TaskList">
-            <ListItem className="TaskListTitle">
+        <List className={styles.TaskList}>
+            <ListItem className={styles.TaskListTitle}>
                 <Row alignItems="center">
-                    <Typography type="subtitle2">Tasks</Typography>
-                    <Button className="AddButton">
+                    <Typography marginBottom="0" type="heading">Tasks</Typography>
+                    <Button className={styles.AddButton}>
                         <PlusIcon />
                     </Button>
                 </Row>
             </ListItem>
-            <ListItem className="TaskListButtons">
-                <Button className="TaskListButton">
-                    <Typography type="body2">Active</Typography>
+            <ListItem>
+                <Button className={styles.TaskListButton}>
+                    <Typography type="button">Active</Typography>
                 </Button>
 
-                <Button className="TaskListButton">
-                    <Typography type="body2">Done</Typography>
+                <Button className={styles.TaskListButton}>
+                    <Typography type="button">Done</Typography>
                 </Button>
             </ListItem>
             {taskItems}

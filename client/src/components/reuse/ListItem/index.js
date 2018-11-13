@@ -1,14 +1,12 @@
 import React from "react";
 import { any, arrayOf, object, func, string } from "prop-types";
-import "./ListItem.scss";
+import styles from "./ListItem.scss";
 
-const ListItem = ({ children, className }) => {
-    return (
-        <li className={className ? "ListItem " + className : "ListItem"}>
-            {children}
-        </li>
-    );
-}
+const ListItem = ({ children, className }) => (
+    <li className={className ? `${styles.ListItem} ` + className : styles.ListItem}>
+        {children}
+    </li>
+);
 
 ListItem.propTypes = {
     children: any,

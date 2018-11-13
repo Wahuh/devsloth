@@ -6,7 +6,7 @@ import MessageList from "../MessageList";
 import styles from "./Chat.scss";
 
 const Chat = () => (
-    <Column>
+    <Column height="100%" width="100%">
         <MessageList />
         <MessageComposer />
     </Column>

@@ -1,15 +1,22 @@
 import React from "react";
-import "./Button.scss";
+import styles from "./Button.scss";
+import Typography from "../Typography";
 import { any, func, string } from "prop-types";
 
-const Button = ({ className, type, children, onClick}) => {
-    let defaultStyle = "Button";
+const Button = ({ className, disabled, type, text, children, onClick, alignSelf, justifySelf}) => {
+    let style = {
+        alignSelf: alignSelf,
+        justifySelf: justifySelf
+    }
 
     return (
         <button 
+        disabled={disabled}
+        style={style}
         type={type} 
         onClick={onClick} 
-        className={className ? defaultStyle += ` ${className}`: defaultStyle} >
+        className={className ? `${styles.Button} ` + className : styles.Button}>
+            {text && <Typography type="button">{text}</Typography>}
             {children}
         </button>
     );

@@ -1,23 +1,24 @@
 import React, { Component } from "react";
-import "./SideMenu.scss";
+import styles from "./SideMenu.scss";
 
 class SideMenu extends Component {
+    state = {
+        show: false
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            show: false
-        }
+
         //this.handleMouseDown = this.handleMouseDown.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
     }
 
-    hide() {
+    hide = () => {
         document.getElementById("SideMenu").style.transform = "translate3d(-50vw, 0, 0)";
-        document.getElementById("SideMenuCover").style.display = "none";
+        document.getElementById("SideMenuOverlay").style.display = "none";
     }
 
-
-    toggleMenu() {
+    toggleMenu = () => {
         this.setState({
             show: !this.state.visible
         });
@@ -25,11 +26,11 @@ class SideMenu extends Component {
 
     render() {
         return (
-            <div id="SideMenuContainer">
-                <div id="SideMenu">
+            <div id={styles.SideMenuContainer}>
+                <div id={styles.SideMenu}>
                     {this.props.children}
                 </div>
-                <div id="SideMenuCover" onClick={this.hide}></div>
+                <div id={styles.SideMenuOverlay} onClick={this.hide}></div>
             </div>
         );
     }

@@ -1,0 +1,21 @@
+@import "../../../styles/color";
+
+.PrimaryButton {
+    background: $primary-action;
+    padding: 1rem 2rem;
+}
+
+.PrimaryButton:focus,
+.PrimaryButton:hover {
+    background: $primary-action-dark;
+}
+
+.SecondaryButton {
+    background: $secondary-action;
+    padding: 1rem 2rem;
+}
+
+.SecondaryButton:focus,
+.SecondaryButton:hover {
+    background: $secondary-action-dark;
+}

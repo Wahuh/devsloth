@@ -1,9 +1,9 @@
 import React from "react";
-import "./Divider.scss";
+import styles from "./Divider.scss";
 
-const Divider = () => {
+const Divider = ({ vertical }) => {
     return (
-        <hr className="Divider" />
+        <hr className={vertical ? styles.DividerVertical : styles.Divider} />
     );
 }
 

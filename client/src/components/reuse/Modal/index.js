@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import "./Modal.scss";
+import styles from "./Modal.scss";
 
 const modalRoot = document.getElementById("ModalRoot");
 //const show = props.show;
@@ -9,8 +9,14 @@ class Modal extends Component {
     constructor(props) {
         super(props);
         this.element = document.createElement('div');
-        this.element.className = "HideModal";
-        this.element.onclick = this.props.hide;
+        this.element.className = styles.HideModal;
+        this.element.onclick = this.hide;
+    }
+
+    hide = (event) => {
+        if (event.target.className === styles.ShowModal) {
+            this.props.hide();
+        }
     }
 
     componentDidMount() {
@@ -23,9 +29,9 @@ class Modal extends Component {
 
     render() {
         if (this.props.show) {
-            this.element.className = "ShowModal";
+            this.element.className = styles.ShowModal;
         } else {
-            this.element.className = "HideModal";
+            this.element.className = styles.HideModal;
         }
 
         return ReactDOM.createPortal(
