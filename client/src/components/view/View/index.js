@@ -5,7 +5,7 @@ import React from "react";
 import Chat from "../../chat/Chat";
 import MainPanel from "../../layout/MainPanel";
 import SecondaryPanel from "../../layout/SecondaryPanel";
-import TaskMenu from "../../tasks/components/TaskMenu";
+import TaskMenu from "../../tasks/TaskMenu";
 import styles from "./View.scss";
 
 export const View = ({ showChat, showTasks }) => (

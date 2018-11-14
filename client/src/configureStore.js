@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import rootReducer from "./reducers";
-import { saveLocalState } from "./services/loadLocalState";
+import rootReducer from "./rootReducer";
 import { register } from "./components/auth/duck/sagas";
 
 

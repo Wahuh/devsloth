@@ -1,0 +1,51 @@
+@import "../../../styles/color";
+
+.TaskList {
+    display: flex;
+    flex-direction: column;
+}
+
+.TaskListTitle {
+    color: $secondary-text;
+}
+
+.TaskItem {
+    color: $primary-text;
+    background-color: $white;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.TaskListButton {
+    width: 4rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: transparent;
+    outline: 1px solid $white;
+    outline-offset: -1px;
+    margin-right: 0.5rem;
+}
+
+.TaskListButton:focus {
+    outline: 1px solid $primary-action;
+    outline-offset: -1px;
+}
+
+.AddButton {
+    background-color: transparent;
+    box-shadow: 0 0 0 1pt $primary-action;
+    fill: $primary-action;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+}
+
+.AddButton:focus {
+    outline: none;
+}

@@ -3,31 +3,17 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import Modal from "../../reuse/Modal";
 import SlackerLoader from "../SlackerLoader";
-import Registration from "../Registration";
+import RegistrationForm from "../RegistrationForm";
 import styles from "./Authentication.scss";
 
-class Authentication extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-
-    }
-
-    render() {
-        const { showAuthentication } = this.props;
-
-        return (
-            <Modal show={showAuthentication}>
-                <div className={styles.Authentication}>
-                    <SlackerLoader />
-                    <Registration />
-                </div>
-            </Modal>
-        );
-    }
-}
+const Authentication = ({ showAuthentication }) => (
+    <Modal show={showAuthentication}>
+        <div className={styles.Authentication}>
+            <SlackerLoader />
+            <RegistrationForm />
+        </div>
+    </Modal>
+);
 
 const mapStateToProps = state => ({
     showAuthentication: state.ui.showAuthentication,

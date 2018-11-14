@@ -15,7 +15,7 @@ const SlackerLoader = ({ isLoading }) => (
 );
 
 const mapStateToProps = state => ({
-    isLoading: state.ui.showRegistrationLoading
+    isLoading: state.ui.registrationLoading
 });
 
 export default connect(mapStateToProps)(SlackerLoader);

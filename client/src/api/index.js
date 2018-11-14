@@ -1,4 +1,8 @@
 import { register } from "./userApi";
+import { fetchToken, saveToken } from "./jwtToken";
 
-export default {    register,
+export default { 
+    register,
+    fetchToken,
+    saveToken,
 }

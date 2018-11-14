@@ -30,10 +30,12 @@ export const showAuthentication = (state = true, action) => {
     }
 }
 
-export const showRegistrationLoading = (state = false, action) => {
+export const registrationLoading = (state = false, action) => {
     switch(action.type) {
-        case types.SHOW_REGISTRATION_LOADING:
+        case types.START_REGISTRATION_LOADING:
             return true;
+        case types.STOP_REGISTRATION_LOADING:
+            return false;
         default:
             return state;
     }
@@ -41,7 +43,7 @@ export const showRegistrationLoading = (state = false, action) => {
 
 const initialState = {
     user: "",
-    isPending: false,
+    error: "",
     isAuthenticated: false,
 };
 
@@ -49,6 +51,12 @@ export const auth = (state = initialState, action) => {
     switch(action.type) {
         case types.USER_LOGIN:
         
+        case types.REGISTRATION_ERROR:
+        console.log(action.payload.error);
+            return {
+                ...state,
+                error: action.payload.error,
+            }
         default:
             return state;
     }

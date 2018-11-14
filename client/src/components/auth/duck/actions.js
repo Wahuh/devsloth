@@ -31,8 +31,11 @@ export const registrationPending = (user) => ({
 });
 
 
-export const registrationError = () => ({
+export const registrationError = (error) => ({
     type: types.REGISTRATION_ERROR,
+    payload: {
+        error: error
+    }
 });
 
 export const showAuthentication = () => ({
@@ -43,6 +46,10 @@ export const hideAuthentication = () => ({
     type: types.HIDE_AUTHENTICATION,
 });
 
-export const showRegistrationLoading = () => ({
-    type: types.SHOW_REGISTRATION_LOADING,
+export const startRegistrationLoading = () => ({
+    type: types.START_REGISTRATION_LOADING,
+});
+
+export const stopRegistrationLoading = () => ({
+    type: types.STOP_REGISTRATION_LOADING,
 });

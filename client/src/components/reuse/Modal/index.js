@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import styles from "./Modal.scss";
 
 const modalRoot = document.getElementById("ModalRoot");
-//const show = props.show;
-//const hide = props.hide;
+
 class Modal extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +14,7 @@ class Modal extends Component {
 
     hide = (event) => {
         if (event.target.className === styles.ShowModal) {
-            this.props.hide();
+            this.props.onHide();
         }
     }
 
@@ -28,14 +27,15 @@ class Modal extends Component {
     }
 
     render() {
-        if (this.props.show) {
+        const { show, children } = this.props;
+        if (show) {
             this.element.className = styles.ShowModal;
         } else {
             this.element.className = styles.HideModal;
         }
 
         return ReactDOM.createPortal(
-            this.props.children,
+            children,
             this.element
         );
     }

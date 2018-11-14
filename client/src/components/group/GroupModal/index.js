@@ -42,7 +42,7 @@ class GroupModal extends Component {
         }
 
         return (
-            <Modal show={this.props.show} hide={this.props.hide}>
+            <Modal show={this.props.show} onHide={this.props.hide}>
                 <div className={styles.GroupModal}>
                     {screen}
                 </div>

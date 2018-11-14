@@ -1,4 +1,8 @@
+import { connect } from "react-redux";
 import React, { Component } from 'react';
+import { hideAuthentication } from "./components/auth/duck/actions";
+
+import api from "./api";
 import Header from "./components/layout/Header";
 import Content from "./components/layout/Content";
 import View from "./components/view/View";
@@ -16,10 +20,10 @@ import ChannelList from "./components/channel/ChannelList";
 import UserList from "./components/user/UserList";
 import Authentication from "./components/auth/Authentication";
 
+import TaskModal from "./components/tasks/TaskModal";
+
 // import Content from "./layout/Content";
 // import NavBar from "./components/navigation/NavBar";
-
-// 
 
 // import GroupListContainer from "./components/group/containers/GroupListContainer";
 // //import GroupTitleContainer from "./features/group/GroupTitleContainer";
@@ -32,10 +36,18 @@ import Authentication from "./components/auth/Authentication";
 
 import styles from "./App.scss";
 
-
+//disable focus on App element when there is a modal active
 class App extends Component {
+    componentDidMount() {
+        const jwt = api.fetchToken();
+        if (jwt) {
+            this.props.hideAuthentication();
+        }
+    }
+
     render() {
-        //Header is only displayed on mobile devices
+        const { showAuthentication } = this.props;
+
         return (
             <div id={styles.App}>
                 <SideMenu>
@@ -55,32 +67,18 @@ class App extends Component {
                     <View />
                 </Content>
                 
-                <Authentication />
+                {showAuthentication && <Authentication />}
                 <GroupModal />
+                <TaskModal />
             </div>
         )
     }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    showAuthentication: state.ui.showAuthentication
+});
 
-{/* <SideMenu>
-<SideMenuLeft>
-    <GroupListContainer />
-</SideMenuLeft>
-
-<SideMenuRight>
-    <GroupNameContainer />
-    <ChannelListContainer />
-    <UserListContainer />
-</SideMenuRight>
-</SideMenu>
-
-<Content>
-<Header>
-    <NavBar />
-</Header>
-<ViewContainer />
-</Content>
-<LoginModalContainer />
-<GroupModalContainer /> */}
+export default connect(mapStateToProps, 
+    { hideAuthentication: hideAuthentication }
+)(App);
