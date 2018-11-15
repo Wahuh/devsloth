@@ -7,6 +7,11 @@ const channelSchema = new Schema({
         type: String,
         trim: true,
     },
+
+    group: {
+        type: Schema.Types.ObjectId,
+        ref: "Group"
+    },
     
     users: [{
         type: Schema.Types.ObjectId,

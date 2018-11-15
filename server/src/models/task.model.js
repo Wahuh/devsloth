@@ -12,6 +12,11 @@ const taskSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
+
+    channel: {
+        type: Schema.Types.ObjectId,
+        ref: "Channel"
+    }
 });
 
 function validateTask(task) {

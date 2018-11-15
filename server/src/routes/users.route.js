@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { auth } = require("../middleware/auth.middleware");
+const { getCurrentUser } = require("../controllers/user.controller");
 
 //get the current user
-router.get("/me", auth, async (req, res) => {
+router.get("/me", auth, getCurrentUser);
 
-});
+//add a group for the current user
+router.post("/me/groups", auth, );
 
 //get all users
 router.get("/users", (req, res) => {

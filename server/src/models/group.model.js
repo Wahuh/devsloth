@@ -27,4 +27,4 @@ function validateGroup(group) {
 }
 
 exports.Group = mongoose.model("Group", groupSchema);
-exports.validate = validateGroup;
+exports.validateGroup = validateGroup;

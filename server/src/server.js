@@ -38,12 +38,14 @@ const register = require("./routes/register.route");
 const auth = require("./routes/auth.route");
 const group = require("./routes/groups.route");
 const channels = require("./routes/channels.route")
+const users = require("./routes/users.route");
 
 app.use("/", index);
 app.use("/api/auth", auth);
 app.use("/api/register", register);
 app.use("/api/groups", group);
 app.use("/api/channels", channels);
+app.use("/api/users", users);
 
 const server = http.createServer(app)
 const io = socketIo(server);

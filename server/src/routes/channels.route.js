@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { createTask, createChannel } = require("../controllers/channel.controller");
-
+const { auth } = require("../middleware/auth.middleware");
+const { createChannel } = require("../controllers/channel.controller");
+const { createTask } = require("../controllers/task.controller");
+ 
 //get all channels
 router.get("/", (req, res) => {
     res.send("Hello");
@@ -21,7 +23,7 @@ router.get("/:id", (req, res) => {
 router.post("/", createChannel);
 
 //create a new task for a specific channel
-router.post("/:id/tasks", createTask);
+router.post("/:id/tasks", auth, createTask);
 
 //bulk update channels
 router.put("/");

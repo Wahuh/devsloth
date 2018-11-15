@@ -1,8 +1,8 @@
-const { User, validate } = require("../models/user.model");
+const { User, validateUser } = require("../models/user.model");
 
 const register = async (req, res) => {
     console.log(req.body);
-    const { error } = validate(req.body);
+    const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     //validate the request data return 400 error
@@ -29,7 +29,7 @@ const register = async (req, res) => {
 };
 
 const authenticate = async (req, res) => {
-    const { error } = validate(req.body);
+    const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     const existingUser = await User.findOne({ email: req.body.email });
@@ -41,8 +41,32 @@ const authenticate = async (req, res) => {
     res.send(token);
 };
 
+const getCurrentUser = async (req, res) => {
+    console.log(req.user);
+    const user = await User
+    .findById(req.user.id)
+    .select("-password")
+    .populate({
+        path: "groups",
+        populate: { 
+            path: "channels",
+            populate: {
+                path: "tasks"
+            }
+        }
+    });
+
+    if (!user) return res.status(500).send("This user does not exist");
+
+    //if user doesn't exist...
+    res.send(user);
+};
+
+
+
 exports.registerUser = register;
 exports.authenticateUser = authenticate;
+exports.getCurrentUser = getCurrentUser;
 
 // module.exports = {
 //     registerUser: register,
