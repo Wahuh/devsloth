@@ -30,18 +30,20 @@ db.on("error", error => console.log(error))
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(cors);
+app.use(cors());
+app.options('*', cors());
 
 const index = require("./routes/index");
 const register = require("./routes/register.route");
 const auth = require("./routes/auth.route");
-const group = require("./routes/group.route");
+const group = require("./routes/groups.route");
+const channels = require("./routes/channels.route")
 
 app.use("/", index);
 app.use("/api/auth", auth);
 app.use("/api/register", register);
 app.use("/api/groups", group);
-
+app.use("/api/channels", channels);
 
 const server = http.createServer(app)
 const io = socketIo(server);

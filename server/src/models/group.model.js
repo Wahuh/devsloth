@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Joi = require("joi");
 
-let GroupSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+const groupSchema = new Schema({
     name: {
         type: String,
         trim: true,
@@ -13,10 +13,18 @@ let GroupSchema = new Schema({
         ref: "User"
     }],
 
-    Channels: [{
+    channels: [{
         type: Schema.Types.ObjectId,
         ref: "Channel"
     }],
 });
 
-module.exports = mongoose.model("Group", GroupSchema);
+function validateGroup(group) {
+    const schema = {
+        name: Joi.string().required(),
+        //users:
+    }
+}
+
+exports.Group = mongoose.model("Group", groupSchema);
+exports.validate = validateGroup;

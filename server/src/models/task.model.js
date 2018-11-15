@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 
-const channelSchema = new Schema({
+const taskSchema = new Schema({
     name: {
         type: String,
         trim: true,
@@ -12,20 +12,15 @@ const channelSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
-
-    tasks: [{
-        type: Schema.Types.ObjectId,
-        ref: "Task"
-    }],
 });
 
-function validateChannel(channel) {
+function validateTask(task) {
     const schema = {
         name: Joi.string().required(),
         //users:
     }
-    return Joi.validate(channel, schema);
+    return Joi.validate(task, schema);
 }
 
-exports.Channel = mongoose.model("Channel", channelSchema);
-exports.validateChannel = validateChannel;
+exports.Task = mongoose.model("Task", taskSchema);
+exports.validateTask = validateTask;

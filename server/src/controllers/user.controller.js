@@ -1,6 +1,7 @@
 const { User, validate } = require("../models/user.model");
 
 const register = async (req, res) => {
+    console.log(req.body);
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -17,7 +18,10 @@ const register = async (req, res) => {
         const user = await newUser.save();
         const { _id: id, email } = user;
         const token = user.generateAuthToken();
-        res.header("x-auth-token", token).send({ id, email });
+        res
+        .header("x-auth-token", token)
+        .header("access-control-expose-headers", "x-auth-token")
+        .send({ id, email });
     } catch (err) {
         console.log(err);
         res.status(500).send(err);
@@ -35,9 +39,6 @@ const authenticate = async (req, res) => {
 
     const token = existingUser.generateAuthToken();
     res.send(token);
-};
-
-const update = async (req, res) => {
 };
 
 exports.registerUser = register;
