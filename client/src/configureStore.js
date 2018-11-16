@@ -16,11 +16,10 @@ import { register } from "./components/auth/duck/sagas";
 
 
 const configureStore = () => {
-    const persistedState = {}; //loadLocalState
+    //const persistedState = {}; //loadLocalState
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(
         rootReducer, 
-        persistedState,
         applyMiddleware(sagaMiddleware)
     );
     sagaMiddleware.run(register);
