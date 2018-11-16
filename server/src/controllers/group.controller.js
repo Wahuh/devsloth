@@ -14,21 +14,16 @@ const createGroup = async (req, res) => {
         name: "general"
     });
 
-    try {
-        user.groups.push(group);
-        group.users.push(user);
-        group.channels.push(channel);
-        channel.group = group;
+    user.groups.push(group);
+    group.users.push(user);
+    group.channels.push(channel);
+    channel.group = group;
 
-        await channel.save();
-        await group.save();
-        await user.save();
-
-        res.send("group created");
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
+    await channel.save();
+    await group.save();
+    await user.save();
+    
+    res.send("group created");
 }
 
 exports.createGroup = createGroup;

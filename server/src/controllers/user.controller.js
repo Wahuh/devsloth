@@ -1,7 +1,6 @@
 const { User, validateUser } = require("../models/user.model");
 
-const register = async (req, res) => {
-    console.log(req.body);
+const registerUser = async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -14,18 +13,13 @@ const register = async (req, res) => {
         password: req.body.password,
     });
 
-    try {
-        const user = await newUser.save();
-        const { _id: id, email } = user;
-        const token = user.generateAuthToken();
-        res
-        .header("x-auth-token", token)
-        .header("access-control-expose-headers", "x-auth-token")
-        .send({ id, email });
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
+    const user = await newUser.save();
+    const { _id: id, email } = user;
+    const token = user.generateAuthToken();
+    res
+    .header("x-auth-token", token)
+    .header("access-control-expose-headers", "x-auth-token")
+    .send({ id, email });
 };
 
 const authenticate = async (req, res) => {
@@ -56,15 +50,13 @@ const getCurrentUser = async (req, res) => {
         }
     });
 
-    if (!user) return res.status(500).send("This user does not exist");
-
-    //if user doesn't exist...
+    if (!user) return res.status(400).send("This user does not exist");
     res.send(user);
 };
 
 
 
-exports.registerUser = register;
+exports.registerUser = registerUser;
 exports.authenticateUser = authenticate;
 exports.getCurrentUser = getCurrentUser;
 
