@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
     const { _id: id, email } = user;
     const token = user.generateAuthToken();
     res
-    .header("x-auth-token", token)
+    .header("Authorization", `Bearer ${token}`)
     .header("access-control-expose-headers", "x-auth-token")
     .send({ id, email });
 };
