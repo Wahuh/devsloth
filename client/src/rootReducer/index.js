@@ -6,6 +6,10 @@ const rootReducer = (state, action) => {
 
     if (type === USER_LOAD_INITIAL_DATA_SUCCESS) {
         console.log("ORIGINAL", state);
+        console.log({
+            ...state,
+            ...payload
+        });
         return {
             ...state,
             ...payload
