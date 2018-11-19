@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getTasks } from "../duck/selectors";
+import { getAllTasks } from "../duck/selectors";
 import { showTaskModal } from "../duck/actions";
 
 import React from "react";
@@ -44,7 +44,7 @@ const TaskList = ({ tasks, showTaskModal }) => {
 }
 
 const mapStateToProps = state => ({
-    tasks: getTasks(state)
+    tasks: getAllTasks(state)
 });
 
 export default connect(mapStateToProps, {

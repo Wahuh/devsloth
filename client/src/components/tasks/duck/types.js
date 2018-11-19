@@ -1,6 +1,6 @@
-export const TASK_ADD_REQUEST = "";
-export const TASK_ADD_SUCCESS = "";
-export const TASK_ADD_FAILURE = "";
+export const TASK_CREATE_REQUEST = "tasks/duck/types/TASK_CREATE_REQUEST";
+export const TASK_CREATE_SUCCESS = "tasks/duck/types/TASK_CREATE_SUCCESS";
+export const TASK_CREATE_FAILURE = "tasks/duck/types/TASK_CREATE_FAILURE";
 
 export const TASK_DELETE_REQUEST = "";
 export const TASK_DELETE_SUCCESS = "";
