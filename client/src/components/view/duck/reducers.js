@@ -1,4 +1,4 @@
-import { SHOW_CHAT, SHOW_TASKS } from "./types";
+import { VIEW_CHAT_SHOW, VIEW_TASKS_SHOW } from "./types";
 
 const initialState = {
     showChat: true,
@@ -6,18 +6,16 @@ const initialState = {
 };
 
 export function view(state = initialState, action) {
-    console.log(action.type);
-    switch (action.type) {
-        case SHOW_CHAT:
+    const { type } = action;
+    switch (type) {
+        case VIEW_CHAT_SHOW:
             return {
-                ...state,
                 showChat: true,
                 showTasks: false,
             }
         
-        case SHOW_TASKS:
+        case VIEW_TASKS_SHOW:
             return {
-                ...state,
                 showChat: false,
                 showTasks: true,
             }

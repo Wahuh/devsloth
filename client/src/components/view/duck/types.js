@@ -1,2 +1,2 @@
-export const SHOW_CHAT = "features/display/duck/DISPLAY_CHAT";
-export const SHOW_TASKS = "features/display/duck/DISPLAY_TASKS";
+export const VIEW_CHAT_SHOW = "view/duck/types/VIEW_CHAT_SHOW";
+export const VIEW_TASKS_SHOW = "view/duck/types/VIEW_TASKS_SHOW";

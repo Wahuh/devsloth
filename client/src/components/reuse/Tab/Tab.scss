@@ -1,0 +1,28 @@
+@import "../../../styles/color";
+
+.Tab {
+    height: 3rem;
+    flex: 1 1 0;
+}
+
+.Tab:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.Tab:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.TabActive {
+    background-color: $primary-action;
+    color: $white;
+    box-shadow: 0 0 0 1px $primary-action;
+}
+
+.TabInactive {
+    color: $primary-action;
+    background-color: transparent;
+    box-shadow: 0 0 0 1px $primary-action;
+}

@@ -1,0 +1,44 @@
+@import "../../../styles/color";
+
+.Segment {
+    height: inherit;
+    flex: 1 1 0;
+    border: 2px solid transparent;
+}
+
+.Segment:focus {
+    outline: none;
+    border: 2px solid $focus;
+}                 
+
+.Segment:active {
+    border: 2px solid $primary-action;
+    color: $disabled;
+}
+
+.Segment:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.Segment:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.SegmentActive {
+    background-color: $primary-action;
+}
+
+.SegmentActive:hover {
+    background-color: $primary-action-dark;
+}
+
+.SegmentInactive {
+    background-color: transparent;
+    color: $disabled;
+    border: 2px solid $primary-action;
+}
+
+.SegmentInactive:focus {
+}
