@@ -1,7 +1,13 @@
 import { delay } from "redux-saga";
 import { call, take, put } from "redux-saga/effects";
-import { hideAuthentication, startRegistrationLoading, stopRegistrationLoading, registrationError } from "./actions";
+import { 
+    hideAuthentication, 
+    startRegistrationLoading, 
+    stopRegistrationLoading, 
+    registrationError 
+} from "./actions";
 
+import authApi from "../../../api/authApi";
 import api from "../../../api";
 import * as types from "./types";
 
@@ -14,7 +20,7 @@ export function* register() {
         try {
             const { data, headers } = yield call(api.register, payload);
             console.log(data);
-            localStorage.setItem("jwtToken", headers["x-auth-token"]);
+            authApi.setJwt(headers["Authorization"]);
         } catch (error) {
             yield put(registrationError(error.response.data));
             yield put(stopRegistrationLoading());
@@ -25,3 +31,4 @@ export function* register() {
         yield put(hideAuthentication());
     }
 }
+

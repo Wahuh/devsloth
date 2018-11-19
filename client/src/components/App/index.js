@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { hideAuthentication } from "../auth/duck/actions";
 import { loadInitialUserDataRequest } from "../user/duck/actions";
 
-import api from "../../api";
+import authApi from "../../api/authApi";
 import Header from "../layout/Header";
 import Content from "../layout/Content";
 import View from "../view/View";
+import ViewSwitcher from "../view/ViewSwitcher";
 
 import SideMenu from "../layout/SideMenu";
 import SideMenuLeft from "../layout/SideMenuLeft";
@@ -41,7 +42,7 @@ import styles from "./App.scss";
 class App extends Component {
     componentDidMount() {
         const { hideAuthentication, loadInitialUserDataRequest } = this.props;
-        const jwt = api.fetchToken();
+        const jwt = authApi.getJwt();
         if (jwt) {
             hideAuthentication();
             loadInitialUserDataRequest();
@@ -66,7 +67,9 @@ class App extends Component {
                 </SideMenu>
 
                 <Content>
-                    <Header />
+                    <Header>
+                        <ViewSwitcher />
+                    </Header>
                     <View />
                 </Content>
                 

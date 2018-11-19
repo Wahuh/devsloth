@@ -1,17 +1,23 @@
 import * as types from "./types";
 
-const initialState = {
-    isLoggedIn: false,
+export const usersEntity = (state = null, action) => {
+    switch (action.type) {
+        
+
+        default:
+            return state;
+    }
 }
 
-export const user = (state = initialState, action) => {
+export const usersResult = (state = null, action) => {
     switch (action.type) {
-        case types.USER_LOGIN:
-            return {
-                ...state,
-                isLoggedIn: true,
-            };
+        default:
+            return state;
+    }
+}
 
+export const currentUser = (state = null, action) => {
+    switch(action.type) {
         default:
             return state;
     }

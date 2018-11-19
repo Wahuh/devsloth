@@ -1,6 +1,20 @@
-export const CREATE_GROUP = "features/group/duck/CREATE_GROUP";
-export const JOIN_GROUP = "features/group/duck/JOIN_GROUP";
-export const LEAVE_GROUP = "features/group/duck/LEAVE_GROUP";
-export const HIDE_GROUP_MODAL = "features/group/duck/HIDE_GROUP_MODAL";
-export const SHOW_GROUP_MODAL = "features/group/duck/SHOW_GROUP_MODAL";
-export const CHANGE_GROUP_MODAL_SCREEN = "features/group/duck/CHANGE_GROUP_MODAL_SCREEN";
+export const GROUP_CREATE_REQUEST = "group/duck/types/GROUP_CREATE_REQUEST";
+export const GROUP_CREATE_SUCCESS = "group/duck/types/GROUP_CREATE_SUCCESS";
+export const GROUP_CREATE_FAILURE = "group/duck/types/GROUP_CREATE_FAILURE";
+
+export const GROUP_MODAL_SHOW = "group/duck/types/GROUP_MODAL_SHOW";
+export const GROUP_MODAL_HIDE = "group/duck/types/GROUP_MODAL_HIDE";
+
+export const GROUP_MODAL_CREATE_SHOW = "group/duck/types/GROUP_MODAL_CREATE_SHOW";
+export const GROUP_MODAL_CREATE_HIDE = "group/duck/types/GROUP_MODAL_CREATE_HIDE";
+export const GROUP_MODAL_CREATE_OR_JOIN_SHOW = "group/duck/types/GROUP_MODAL_CREATE_OR_JOIN_SHOW";
+export const GROUP_MODAL_CREATE_OR_JOIN_HIDE = "group/duck/types/GROUP_MODAL_CREATE_OR_JOIN_HIDE";
+export const GROUP_MODAL_JOIN_SHOW = "group/duck/types/GROUP_MODAL_JOIN_SHOW";
+export const GROUP_MODAL_JOIN_HIDE = "group/duck/types/GROUP_MODAL_JOIN_HIDE";
+
+export const GROUP_JOIN_REQUEST = "group/duck/types/GROUP_JOIN_REQUEST";
+export const GROUP_JOIN_SUCCESS = "group/duck/types/GROUP_JOIN_SUCCESS";
+export const GROUP_JOIN_FAILURE = "group/duck/types/GROUP_JOIN_FAILURE";
+
+export const CURRENT_GROUP_LOAD_DEFAULT = "group/duck/types/CURRENT_GROUP_LOAD_DEFAULT";
+export const CURRENT_GROUP_LOAD = "group/duck/types/CURRENT_GROUP_LOAD_DEFAULT";

@@ -1,32 +1,20 @@
+import { createAction } from "redux-actions";
 import * as types from "./types"
 
-export const createGroup = (groupName) => ({
-    //generate a unique ID for group
-    type: types.CREATE_GROUP,
-    payload: {
-        name: groupName,
-    }
-});
+const metaCreator = () => ({ errorType: "group" });
 
-export const joinGroup = (group) => ({
-    type: types.JOIN_GROUP,
-});
+export const createGroupRequest = createAction(types.GROUP_CREATE_REQUEST);
+export const createGroupSuccess = createAction(types.GROUP_CREATE_SUCCESS);
+export const createGroupFailure = createAction(types.GROUP_CREATE_FAILURE, null, metaCreator);
 
-export const leaveGroup = (group) => ({
-    type: types.LEAVE_GROUP,
-});
+export const showGroupModal = createAction(types.GROUP_MODAL_SHOW);
+export const hideGroupModal = createAction(types.GROUP_MODAL_HIDE);
+export const showGroupModalJoin = createAction(types.GROUP_MODAL_CREATE_OR_JOIN_SHOW);
+export const hideGroupModalJoin = createAction(types.GROUP_MODAL_CREATE_OR_JOIN_HIDE);
+export const showGroupModalCreate = createAction(types.GROUP_MODAL_CREATE_SHOW);
+export const hideGroupModalCreate = createAction(types.GROUP_MODAL_CREATE_HIDE);
+export const showGroupModalCreateOrJoin = createAction(types.GROUP_MODAL_CREATE_OR_JOIN_SHOW);
+export const hideGroupModalCreateOrJoin = createAction(types.GROUP_MODAL_CREATE_OR_JOIN_HIDE);
 
-export const hideGroupModal = () => ({
-    type: types.HIDE_GROUP_MODAL,
-});
-
-export const showGroupModal = () => ({
-    type: types.SHOW_GROUP_MODAL,
-});
-
-export const changeScreen = (screen) => ({
-    type: types.CHANGE_GROUP_MODAL_SCREEN,
-    payload: {
-        screen: screen
-    }
-});
+export const loadCurrentGroupDefault = createAction(types.CURRENT_GROUP_LOAD_DEFAULT);
+export const loadCurrentGroup = createAction(types.CURRENT_GROUP_LOAD);
