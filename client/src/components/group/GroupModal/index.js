@@ -1,6 +1,12 @@
 import { connect } from "react-redux";
-import * as constants from "../constants";
-import { createGroup, hideGroupModal, changeScreen } from "../duck/actions";
+import { 
+    hideGroupModal,
+    showGroupModalCreate,
+    showGroupModalJoin,
+    hideGroupModalCreate,
+    hideGroupModalJoin
+ } from "../duck/actions";
+import { getGroupModal, getGroupModalScreens } from "../duck/selectors";
 
 import React, { Component } from "react";
 import Modal from "../../reuse/Modal";
@@ -9,40 +15,30 @@ import CreateGroup from "../CreateGroup";
 import JoinGroup from "../JoinGroup";
 import styles from "./GroupModal.scss";
 
+
 class GroupModal extends Component {
-    constructor(props) {
-        super(props);
-
-        this.forwardToJoin = this.forwardToJoin.bind(this);
-        this.forwardToCreate = this.forwardToCreate.bind(this);
-        this.back = this.back.bind(this);
-    }
-
-    forwardToCreate() {
-        this.props.changeScreen(constants.CREATE_GROUP_SCREEN);
-    }
-
-    forwardToJoin() {
-        this.props.changeScreen(constants.JOIN_GROUP_SCREEN);
-    }
-
-    back() {
-        this.props.changeScreen(constants.CREATE_OR_JOIN_GROUP_SCREEN);
-    }
-
     render() {
+        const { 
+            show, 
+            screens, 
+            hideGroupModal,
+            showGroupModalCreate,
+            showGroupModalJoin,
+            hideGroupModalCreate,
+            hideGroupModalJoin
+        } = this.props;
         let screen;
 
-        if (this.props.screen === constants.CREATE_GROUP_SCREEN) {
-            screen = <CreateGroup onBack={this.back} onCreate={this.props.createGroup}/>
-        } else if (this.props.screen === constants.JOIN_GROUP_SCREEN) {
-            screen = <JoinGroup onBack={this.back} />
+        if (screens.showCreate) {
+            screen = <CreateGroup onBack={hideGroupModalCreate} onCreate={this.props.createGroup}/>
+        } else if (screens.showJoin) {
+            screen = <JoinGroup onBack={hideGroupModalJoin} />
         } else {
-            screen = <CreateOrJoin onCreate={this.forwardToCreate} onJoin={this.forwardToJoin}/>
+            screen = <CreateOrJoin onCreate={showGroupModalCreate} onJoin={showGroupModalJoin}/>
         }
 
         return (
-            <Modal show={this.props.show} onHide={this.props.hide}>
+            <Modal show={show} onHide={hideGroupModal}>
                 <div className={styles.GroupModal}>
                     {screen}
                 </div>
@@ -54,24 +50,13 @@ class GroupModal extends Component {
 
 
 const mapStateToProps = state => ({
-    show: state.ui.groupModal.show,
-    screen: state.ui.groupModal.screen,
+    show: getGroupModal(state),
+    screens: getGroupModalScreens(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    hide() {
-        dispatch(hideGroupModal());
-    },
+export default connect(mapStateToProps, {
+    hideGroupModal,
+    showGroupModalCreate,
+    showGroupModalJoin,
 
-    changeScreen(screen) {
-        dispatch(changeScreen(screen));
-    },
-
-    createGroup(groupName) {
-        dispatch(createGroup(groupName));
-        dispatch(hideGroupModal());
-        dispatch(changeScreen(constants.CREATE_OR_JOIN_GROUP_SCREEN))
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GroupModal);
+})(GroupModal);

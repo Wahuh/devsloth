@@ -9,7 +9,7 @@ import Button from "../../reuse/Button"
 import PlusIcon from "../../reuse/icons/PlusIcon";
 import styles from "./GroupList.scss";
 
-const GroupList = ({ groups, onSelect, show }) => {
+const GroupList = ({ groups, onSelect, showGroupModal }) => {
     const groupItems = groups.map(
         (group) => <ListItem className={styles.GroupItem}>{group.name}</ListItem>
     );
@@ -18,7 +18,7 @@ const GroupList = ({ groups, onSelect, show }) => {
         <List className={styles.GroupList}>
             {groupItems}
             <ListItem className={styles.GroupItem}>
-                <Button className={styles.AddGroupButton} onClick={show}>
+                <Button className={styles.AddGroupButton} onClick={showGroupModal}>
                     <PlusIcon />
                 </Button>
             </ListItem>
@@ -36,12 +36,6 @@ const mapStateToProps = state => ({
     groups: getAllGroups(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    show() {
-        //action
-        dispatch(showGroupModal());
-    },
-    onSelect: selectGroup,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GroupList);
+export default connect(mapStateToProps, {
+    showGroupModal
+})(GroupList);
