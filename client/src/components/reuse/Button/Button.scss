@@ -32,24 +32,15 @@ button:disabled:hover {
     
 }
 
-button:focus {
+beutton:focus {
     outline: 1px solid #fff;
     outline-offset: -4px;
 }
 
-button:active {
+beutton:active {
     transform: scale(0.99);
 }
 
-.ActionButton {
-    background: $primary-action;
-    padding: 1rem 2rem;
-}
-
-.ActionButton:hover,
-.ActionButton:focus {
-    background: $primary-action-dark;
-}
 
 .AddButton {
     background-color: transparent;
@@ -69,4 +60,29 @@ button:active {
     outline: none;
 }
 
+.Action {
+    background: $primary-action;
+    padding: 1rem 2rem;
+    border: 1px solid transparent;
+}
+
+.Action:focus {
+    border: 1px solid $focus;
+}
+
+.Action:hover {
+    background: $primary-action-dark;
+}
+
+.Outlined {
+    padding: 0.5rem;
+    outline: 1px solid $white;
+    outline-offset: -1px;
+    background-color: transparent;
+}
+
+.Outlined:focus {
+    outline: 1px solid $primary-action;
+    outline-offset: -1px;
+}
 /*     background: #0069ed;   padding: 1rem 2rem; */
