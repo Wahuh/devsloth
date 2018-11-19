@@ -4,7 +4,7 @@ import Label from "../Label";
 import styles from "./Input.scss";
 import { bool, func, string } from "prop-types";
 
-const Input = ({autoFocus, className, label, max, min, name, onEnter, onChange, placeholder, type, value, validation, successMessage}) => {
+const Input = ({autoFocus, className, label, max, min, name, onEnter, onChange, placeholder, required, type, value, validation, successMessage}) => {
     function onEnterPress(event) {
         if (event.defaultPrevented) {
             return; // Should do nothing if the default action has been cancelled
@@ -29,7 +29,7 @@ const Input = ({autoFocus, className, label, max, min, name, onEnter, onChange, 
 
     return (
         <Fragment>
-            {label && <Label htmlFor={name}>{label}</Label>}
+            {label && <Label required={required} htmlFor={name}>{label}</Label>}
             <input 
             className={className ? `${styles.Input} ` + className : styles.Input} 
             type={type} 
