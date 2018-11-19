@@ -1,12 +1,25 @@
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./rootReducer";
-import { register } from "./components/auth/duck/sagas";
+import rootSaga from "./rootSaga";
 
 
 //node-uuid
 
-
+const initialState = {
+    entities: {
+        channels: {},
+        groups: {},
+        tasks: {},
+        users: {}
+    },
+    result: {
+        channels: [],
+        groups: [],
+        tasks: [],
+        users: []
+    }
+}
 
 
 //store.subscribe(() => {
@@ -20,10 +33,10 @@ const configureStore = () => {
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(
         rootReducer, 
+        initialState,
         applyMiddleware(sagaMiddleware)
     );
-    sagaMiddleware.run(register);
-    
+    sagaMiddleware.run(rootSaga);
     console.log(store.getState());
     return store;
 }
