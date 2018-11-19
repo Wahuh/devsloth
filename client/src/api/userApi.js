@@ -1,5 +1,5 @@
 import http from "./httpApi";
-import { registrationEndpoint } from "./endpoints";
+import { registrationEndpoint, CURRENT_USER_ENDPOINT } from "./endpoints";
 
 export function register(user) {
     console.log(registrationEndpoint, user);
@@ -7,4 +7,12 @@ export function register(user) {
         email: user.email,
         password: user.password,
     });
+}
+
+export function getCurrentUser() {
+    return http.get(CURRENT_USER_ENDPOINT);
+}
+
+export default {
+    getCurrentUser
 }
