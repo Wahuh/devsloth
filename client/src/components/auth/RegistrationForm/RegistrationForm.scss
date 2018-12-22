@@ -1,21 +1,43 @@
 @import "../../../styles/color";
+@import "../../../styles/layout";
+
+@media #{$Tablet}  {
+    .RegistrationForm {
+        width: 50%;
+    }
+
+    .RegistrationForm > * {
+        margin-bottom: 1rem;
+    }
+}
+
+@media #{$Desktop} {
+    .RegistrationForm {
+        width: 50%;
+    }
+
+    .RegistrationForm > * {
+        margin-bottom: 1rem;
+    }
+}
+
+@media #{$Mobile} {
+    .RegistrationForm {
+        width: 100%;
+    }
+
+    .RegistrationForm > * {
+        margin-bottom: 0.5rem;
+    }
+}
 
 .RegistrationForm {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex-shrink: 0;
 }
 
-.RegistrationButton {
-    background: $primary-action;
-    padding: 1rem 2rem;
-}
 
-.RegistrationButton:hover,
-.RegistrationButton:focus {
-    background: $primary-action-dark;
-}
-
-.RegistrationForm > * {
-    margin-bottom: 0.5rem;
+.FloatInput {
+    position: relative;
 }

@@ -1,0 +1,45 @@
+@import "../../../styles/color";
+
+.GroupIcon {
+    color: $primary-text;
+    background-color: $secondary-light;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.GroupIcon:hover {
+    .GroupTooltip {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.GroupTooltip {
+    display: none;
+    position: absolute;
+    left: 63px;
+    z-index: 1000;
+}
+
+.TooltipContent {
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    background-color: aliceblue;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+.LeftArrow {
+    width: 0; 
+    height: 0; 
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent; 
+    border-right: 6px solid aliceblue;
+}

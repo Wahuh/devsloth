@@ -1,37 +1,48 @@
 import { connect } from "react-redux";
-import { registrationPending } from "../duck/actions";
+import { registrationAuthRequest } from "../duck/actions";
 
 import React, { Component } from "react";
 import { string, func } from "prop-types";
 import Joi from "joi";
 
+import RegistrationMessage from "../RegistrationMessage";
 import Button from "../../reuse/Button";
-import Input from "../../reuse/Input";
-import Typography from "../../reuse/Typography";
+import FloatInput from "../../reuse/FloatInput";
 import styles from "./RegistrationForm.scss";
-import ValidationMessage from "../../reuse/ValidationMessage";
 
 export class RegistrationForm extends Component {
     state = {
         user: {
             email: "",
             password: "",
+            username: "",
         },
-        validation: {
-            email: {},
-            password: {}
+        validation: {   
+            email: {
+                successMessage: "Email looks good."
+            },
+            password: {
+                successMessage: "That's a valid password!"
+            },
+            username: {
+                successMessage: ""
+            }
         },
     };
 
     schema = {
         email: Joi.string().required().email({ minDomainAtoms: 2 }).label("Email"),
-        password: Joi.string().required().label("Password")
+        password: Joi.string().min(5).max(50).required().label("Password"),
+        username: Joi.string().min(1).max(50).required().label("Username"),
     };
 
     validateForm = () => {
-        //const { error } = Joi.validate(this.state.user, this.schema, { abortEarly: false });
         for (const [key, value] of Object.entries(this.state.validation)) {
-            if (!value.success) {
+            if (value.hasOwnProperty("error")) {
+                if (value.error) {
+                    return false;
+                }
+            } else {
                 return false;
             }
         }
@@ -48,7 +59,7 @@ export class RegistrationForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
+        //when no fields entered do error
         const result = this.validateForm();
         if (!result) return
         this.props.onRegister(this.state.user);
@@ -61,11 +72,9 @@ export class RegistrationForm extends Component {
         if (errorMessage) {
             validation[input.name].message = errorMessage; 
             validation[input.name].error = true;
-            validation[input.name].success = false;
         } else {
-            validation[input.name].success = true;
             validation[input.name].error = false;
-            validation[input.name].message = input.dataset.successMessage;
+            validation[input.name].message = validation[input.name].successMessage;
         }
 
         const user = { ...this.state.user };
@@ -75,33 +84,48 @@ export class RegistrationForm extends Component {
 
     render() {
         const { user, validation } = this.state;
-        const { serverError } = this.props;
+        
         return (
             <form onSubmit={this.handleSubmit} className={styles.RegistrationForm}>
-                <Input 
+                <FloatInput 
                     value={user.email} 
                     onChange={this.handleChange}
                     autoFocus
                     label="Email"
                     name="email"
-                    type="email" 
-                    placeholder="Email Address"
-                    successMessage="Nice, that's a valid email address."
-                    validation={validation.email}
+                    type="email"
+                    placeholder="Enter your email address"
+                    error={validation.email.error}
+                    message={validation.email.message}
+                    top
                 />
-                <Input
+
+                <FloatInput
+                    value={user.username}
+                    onChange={this.handleChange}
+                    name="username" 
+                    type="text" 
+                    label="Username"
+                    placeholder="What should we call you?"
+                    error={validation.username.error}
+                    message={validation.username.message}
+                    top
+                 />
+
+                <FloatInput
                     value={user.password}
                     onChange={this.handleChange}
                     name="password" 
                     type="password" 
                     label="Password"
-                    placeholder="Set Password"
-                    successMessage="You've got a valid password, let's go!"
-                    validation={validation.password}
+                    placeholder="Choose a password"
+                    error={validation.password.error}
+                    message={validation.password.message}
+                    top
                  />
-                 <Typography>{serverError}</Typography>
-                <Button text="Create Account" className={styles.RegistrationButton} /> 
-                <Typography align="center" type="body">It's quick and free.</Typography>
+                 
+                <Button theme="action" text="Create Account" /> 
+                <RegistrationMessage />
             </form>
         );
     }
@@ -111,10 +135,6 @@ RegistrationForm.propTypes = {
     onRegister: func.isRequired,
 }
 
-const mapStateToProps = state => ({
-    serverError: state.auth.error,
-});
-
-export default connect(mapStateToProps, 
-    { onRegister: registrationPending }
+export default connect(null, 
+    { onRegister: registrationAuthRequest }
 )(RegistrationForm);

@@ -3,17 +3,7 @@
 .Segment {
     height: inherit;
     flex: 1 1 0;
-    border: 2px solid transparent;
-}
-
-.Segment:focus {
-    outline: none;
-    border: 2px solid $focus;
-}                 
-
-.Segment:active {
     border: 2px solid $primary-action;
-    color: $disabled;
 }
 
 .Segment:first-child {
@@ -28,17 +18,20 @@
 
 .SegmentActive {
     background-color: $primary-action;
+    fill: white;
 }
 
 .SegmentActive:hover {
     background-color: $primary-action-dark;
+    border: 2px solid $primary-action-dark;
 }
 
 .SegmentInactive {
     background-color: transparent;
     color: $disabled;
-    border: 2px solid $primary-action;
 }
 
+.SegmentInactive:hover,
 .SegmentInactive:focus {
+    color: $primary-text
 }

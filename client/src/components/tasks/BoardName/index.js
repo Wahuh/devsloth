@@ -1,8 +1,15 @@
+import { connect } from "react-redux";
+import { getCurrentChannelName } from "../../channel/duck/selectors";
+
 import React from "react";
 import Typography from "../../reuse/Typography";
 
-const BoardName = ({ name }) => (
-    <Typography type="title">{name}</Typography>
+const BoardName = ({ name, currentChannelName }) => (
+    <Typography type="heading">{`${name} for ${currentChannelName}`}</Typography>
 )
 
-export default BoardName;
+const mapStateToProps = state => ({
+    //currentChannelName: getCurrentChannelName(state)
+});
+
+export default connect(mapStateToProps)(BoardName);

@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const tasks = (state = initialState, action) => {
-    console.log(action.type);
     switch(action.type) {
         case types.TASK_MODAL_SHOW:
             return {

@@ -2,32 +2,33 @@ import React from "react";
 import styles from "./Typography.scss";
 //import colors from "../colors";
 
-const Typography = (props) => {
+const Typography = ({ color, children, overflow, type }) => {
+    const colors = {
+        primary: styles.Primary,
+        secondary: styles.Secondary,
+        tertiary: styles.Tertiary,
+        error: styles.error
+    };
+
     const style = {
-        margin: props.margin,
-        textAlign: props.align,
-        verticalAlign: props.verticalAlign,
-        fontWeight: props.fontWeight,
-        marginBottom: props.marginBottom,
-        lineHeight: props.lineHeight,
         textOverflow: "",
         overflow: "",
         whiteSpace: "",
         width: "",
     }
 
-    if (props.overflow) {
+    if (overflow) {
         style.textOverflow = "ellipsis";
         style.overflow = "hidden";
         style.whiteSpace = "nowrap";
         style.width = "10vw";
     }
-    let text = props.children;
+    let text = children;
     let textComponent = null;
 
-    switch(props.type) {
+    switch(type) {
         case "title":
-            textComponent = <h1 style={style} className={styles.Title}>{text}</h1>
+            textComponent = <h1 className={color ? `${styles.Title} ${colors[color]}` : styles.Title}>{text}</h1>
             break;
 
         case "h2":
@@ -35,7 +36,7 @@ const Typography = (props) => {
             break;
 
         case "heading":
-            textComponent = <h3 style={style} className={styles.Heading}>{text}</h3>
+            textComponent = <h3 className={color ? `${styles.Heading} ${colors[color]}` : styles.Heading}>{text}</h3>
             break;
 
         case "h4":
@@ -43,7 +44,11 @@ const Typography = (props) => {
             break;
 
         case "body":
-            textComponent = <p style={style} className={styles.Body}>{text}</p>
+            textComponent = <p className={color ? `${styles.Body} ${colors[color]}` : styles.Body}>{text}</p>
+            break;
+        
+        case "bullet":
+            textComponent = <p style={style} className={styles.Bullet}>{text}</p>
             break;
 
         case "subtitle":
@@ -51,11 +56,11 @@ const Typography = (props) => {
             break;
         
         case "button":
-            textComponent = <p style={style} className={styles.ButtonText}>{text}</p>
+            textComponent = <p className={color ? `${styles.ButtonText} ${colors[color]}` : styles.ButtonText}>{text}</p>
             break;
         
         case "caption":
-            textComponent = <p style={style} className={styles.Caption}>{text}</p>
+            textComponent = <p className={color ? `${styles.Caption} ${colors[color]}` : styles.Caption}>{text}</p>
             break;
 
         default:

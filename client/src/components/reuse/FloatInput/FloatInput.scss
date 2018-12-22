@@ -1,0 +1,89 @@
+@import "../../../styles/color";
+@import "../../../styles/fonts";
+
+.InputContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.PasswordButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: var(--color-primary-font);
+    background-color: transparent;
+}
+
+.FloatInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0.4rem 0.5rem;
+    background-color: var(--color-primary);
+}
+
+.FloatInputFocused {
+    outline: none;
+    border: 1px solid $primary-action;
+}
+
+.FloatInputError {
+    outline: none;
+    border: 1px solid $error;
+}
+
+.Input {
+    outline: none;
+    border: none;   
+    font-family: $main-font;
+    font-size: 1rem;
+    color: var(--color-primary-font);
+    caret-color: var(--color-primary-font);
+    width: 100%;
+    background-color: var(--color-primary);
+}
+
+.Input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--color-primary) inset;
+    -webkit-text-fill-color: var(--color-primary-font) !important;
+}
+
+.Input:focus {
+    outline: none; 
+}
+
+.Label {
+    flex-shrink: 0;
+}
+
+.ErrorMessage {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 2;
+    color: var(--color-error);
+}
+
+.SuccessMessage  {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 2;
+    color: var(--color-success);
+}
+
+.LabelContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.LabelContainer > * {
+    margin-right: 0.4rem;
+}
+
+.Delete {
+    
+}

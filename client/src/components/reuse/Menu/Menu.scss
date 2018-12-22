@@ -1,0 +1,11 @@
+@import "../../../styles/color";
+
+.Menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: $secondary;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 0.5rem;
+}

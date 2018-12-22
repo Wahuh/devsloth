@@ -2,6 +2,10 @@
 
 .Button {
     border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
     margin: 0;
     text-decoration: none;
@@ -16,31 +20,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
 }
-
-button:hover,
-button:focus {
-
-}
-
-button:disabled {
-    background-color: $disabled;
-    color: $disabled-dark;
-}
-
-button:disabled:hover {
-    background-color: $disabled;
-    
-}
-
-beutton:focus {
-    outline: 1px solid #fff;
-    outline-offset: -4px;
-}
-
-beutton:active {
-    transform: scale(0.99);
-}
-
 
 .AddButton {
     background-color: transparent;
@@ -62,27 +41,62 @@ beutton:active {
 
 .Action {
     background: $primary-action;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     border: 1px solid transparent;
-}
-
-.Action:focus {
-    border: 1px solid $focus;
+    border-radius: 3px;
 }
 
 .Action:hover {
     background: $primary-action-dark;
 }
 
+.Action:focus {
+    outline: none !important;
+    background-color: $focus;
+}
+
+.Delete {
+    background: $error;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.Delete:hover {
+    background: $error-dark;
+}
+
+.SecondaryAction {
+    background: $secondary-action;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.SecondaryAction:hover {
+    background: $secondary-action-dark;
+}
+
 .Outlined {
     padding: 0.5rem;
-    outline: 1px solid $white;
-    outline-offset: -1px;
+    border: 1px solid $tertiary-text;
     background-color: transparent;
 }
 
 .Outlined:focus {
-    outline: 1px solid $primary-action;
-    outline-offset: -1px;
+    border: 1px solid $primary-action;
 }
-/*     background: #0069ed;   padding: 1rem 2rem; */
+
+.Rounded {
+    border-radius: 8px;
+}
+
+.Icon {
+    background-color: transparent;
+    fill: var(--color-primary-icon);
+    padding: 0.5rem;
+}
+
+.Icon:hover {
+    fill: $white;
+}

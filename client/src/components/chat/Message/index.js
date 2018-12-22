@@ -3,23 +3,24 @@ import Typography from "../../reuse/Typography";
 import Row from "../../reuse/Row";
 import styles from "./Message.scss";
 
-const Message = ({ alias, children, icon, time }) => (
-    <Row>
+const Message = ({ alias, text, icon, timestamp }) => (
+    <div className={styles.Message}>
         <div className={styles.MessageIcon}>
-            <img src={"./placeholder-face-big.png"} />
         </div>
 
         <div className={styles.MessageBody}>
-            <Row className={styles.MessageBodyRow}>
+            <Row alignItems="flex-end" className={styles.MessageBodyRow}>
                 <Typography marginBottom="0" type="subtitle">{alias}</Typography>
-                <Typography lineHeight="30px" marginBottom="0" type="caption">{time}</Typography>
+                <Typography color="tertiary" type="caption">{timestamp}</Typography>
             </Row>
 
-            <Typography type="body">
-                {children}
-            </Typography>
+            <div className={styles.MessageText}>
+                <Typography color="tertiary" type="body">
+                    {text}
+                </Typography>
+            </div>
         </div>
-    </Row>
+    </div>
 );
 
 export default Message;

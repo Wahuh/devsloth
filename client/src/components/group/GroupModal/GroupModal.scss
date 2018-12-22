@@ -7,7 +7,9 @@
     max-width: 500px;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: #2e2e2e;
+    border-radius: 5px;
+    position: relative;
 }
 
 .GroupModalColumn {
@@ -17,4 +19,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.CloseButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
 }

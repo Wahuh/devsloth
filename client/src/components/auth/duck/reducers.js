@@ -1,63 +1,77 @@
-import * as types from "./types";
+import { combineReducers } from "redux";
+import { APP_LOAD_DATA_FAILURE } from "../../app/duck/types";
+import {
+    AUTH_JWT_SUCCESS,
+    AUTH_LOGIN_SUCCESS,
+    AUTH_REGISTRATION_SUCCESS
+} from "./types";
 
-export const loginModal = (state = {show: true}, action) => {
-    switch(action.type) {
-        case types.HIDE_LOGIN_MODAL:
-            return {
-                show: false,
-            };
-
-        case types.SHOW_LOGIN_MODAL:
-            return {
-                show: true,
-            };
+const _id = (state = null, action) => {
+    const { type, payload } = action;
+    switch(type) {
+        case AUTH_JWT_SUCCESS:
+        case AUTH_LOGIN_SUCCESS:
+        case AUTH_REGISTRATION_SUCCESS:
+            return payload._id;
 
         default:
             return state;
     }
 }
 
-export const showAuthentication = (state = true, action) => {
-    switch(action.type) {
-        case types.SHOW_AUTHENTICATION:
+const username = (state = null, action) => {
+    const { type, payload } = action;
+    switch(type) {
+        case AUTH_JWT_SUCCESS:
+        case AUTH_LOGIN_SUCCESS:
+        case AUTH_REGISTRATION_SUCCESS:
+            return payload.username;
+
+        default:
+            return state;
+    }
+}
+
+const email = (state = null, action) => {
+    const { type, payload } = action;
+    switch(type) {
+        case AUTH_JWT_SUCCESS:
+        case AUTH_LOGIN_SUCCESS:
+        case AUTH_REGISTRATION_SUCCESS:
+            return payload.email;
+
+        default:
+            return state;
+    }
+}
+
+const isLoggedIn = (state = false, action) => {
+    const { type } = action;
+    switch(type) {
+        case AUTH_JWT_SUCCESS:
+        case AUTH_LOGIN_SUCCESS:
+        case AUTH_REGISTRATION_SUCCESS:
             return true;
 
-        case types.HIDE_AUTHENTICATION:
-            return false;
-
         default:
             return state;
     }
 }
 
-export const registrationLoading = (state = false, action) => {
-    switch(action.type) {
-        case types.START_REGISTRATION_LOADING:
+const isRejected = (state = false, action) => {
+    const { type, payload } = action;
+    switch(type) {
+        case APP_LOAD_DATA_FAILURE:
             return true;
-        case types.STOP_REGISTRATION_LOADING:
-            return false;
         default:
             return state;
     }
 }
 
-const initialState = {
-    user: "",
-    error: "",
-    isAuthenticated: false,
-};
-
-export const auth = (state = initialState, action) => {
-    switch(action.type) {
-        case types.USER_LOGIN:
-        
-        case types.REGISTRATION_ERROR:
-        console.log(action.payload.error);
-            return {
-                ...state,
-                error: action.payload.error,
-            }
-        default:
-            return state;
-    }
-}
+export default combineReducers({
+    _id,
+    email,
+    username,
+    isLoggedIn,
+    isRejected
+})

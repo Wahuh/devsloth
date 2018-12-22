@@ -2,8 +2,8 @@ import React from "react";
 import { any, arrayOf, object, func, string } from "prop-types";
 import styles from "./List.scss";
 
-const List = ({ children, className, itemComponent, items }) => (
-    <ul className={className ? `${styles.List} ` + className : styles.List}>
+const List = ({ id, children, className, itemComponent, items }) => (
+    <ul id={id} className={className ? `${styles.List} ` + className : styles.List}>
         {children}
     </ul>
 );

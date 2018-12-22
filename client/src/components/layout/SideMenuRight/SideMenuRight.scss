@@ -3,7 +3,17 @@
 .SideMenuRight {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    background-color: $secondary;
+    justify-content: space-between;
+    width: calc(100% - 72px);
+    height: 100%;
+    background-color: var(--color-primary);
+}
+
+.ScrollContainer > * {
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.ScrollContainer {
+    overflow-y: auto;
 }

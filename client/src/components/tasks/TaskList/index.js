@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 import { getAllTasks } from "../duck/selectors";
-import { showTaskModal } from "../duck/actions";
+import { showUiModal } from "../../ui/duck/actions";
 
 import React from "react";
+import AddButton from "../../reuse/buttons/AddButton";
 import List from "../../reuse/List";
 import ListItem from "../../reuse/ListItem";
 import Row from "../../reuse/Row";
@@ -12,7 +13,7 @@ import PlusIcon from "../../reuse/icons/PlusIcon";
 import Task from "../Task";
 import styles from "./TaskList.scss";
 
-const TaskList = ({ tasks, showTaskModal }) => {
+const TaskList = ({ tasks, onShowModal }) => {
     const taskItems = tasks.map(task => 
         <ListItem className={styles.TaskItem}>
             <Task name={task.name} />
@@ -21,22 +22,22 @@ const TaskList = ({ tasks, showTaskModal }) => {
 
     return (
         <List className={styles.TaskList}>
-            <ListItem className={styles.TaskListTitle}>
+            <ListItem className={styles.TaskHeading}>
                 <Row alignItems="center">
-                    <Typography marginBottom="0" type="heading">Tasks</Typography>
-                    <Button onClick={showTaskModal} className={styles.AddButton}>
-                        <PlusIcon />
-                    </Button>
+                    <Typography color="tertiary" type="heading">Tasks</Typography>
+                    <AddButton onClick={onShowModal} className={styles.AddButton} />
                 </Row>
             </ListItem>
             <ListItem>
-                <Button className={styles.TaskListButton}>
-                <Typography type="button">Active</Typography>
-                </Button>
+                <Row>
+                    <Button theme="outlined" className={styles.TaskListButton}>
+                    <Typography color="tertiary" type="button">Active</Typography>
+                    </Button>
 
-                <Button className={styles.TaskListButton}>
-                    <Typography type="button">Done</Typography>
-                </Button>
+                    <Button theme="outlined" className={styles.TaskListButton}>
+                        <Typography color="tertiary" type="button">Done</Typography>
+                    </Button>
+                </Row>
             </ListItem>
             {taskItems}
         </List>
@@ -48,5 +49,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    showTaskModal
+    onShowModal: () => showUiModal("TASK")
 })(TaskList);

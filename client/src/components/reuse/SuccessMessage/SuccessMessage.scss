@@ -1,5 +1,5 @@
 @import "../../../styles/color";
 
 .SuccessMessage {
-    color: $success;
+    color: var(--color-success);
 }

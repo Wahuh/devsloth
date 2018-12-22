@@ -1,18 +1,31 @@
+@import "../../../styles/color";
+
+.Message {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
 .MessageIcon {
-    margin-top: 6px;
     display: block;
     height: 48px;
     width: 48px;
-    background-color: red;
-    margin-right: 1rem;
+    border-radius: 5px;
+    background-color: $tertiary-text;
+    flex-shrink: 0;
 }
 
 .MessageBody {
     display: flex;
     flex-direction: column;
-    width: calc(100% - 48px);
+    padding-left: 0.5rem;
+    min-width: 0;
 }
 
 .MessageBodyRow > * {
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
+}
+
+.MessageText > p {
+    overflow-wrap: break-word;
 }

@@ -1,26 +1,26 @@
 import { combineReducers } from "redux";
 
-import entitiesReducer from "./entitiesReducer";
 import errorsReducer from "./errorsReducer";
-import resultReducer from "./resultReducer";
-import uiReducer from "./uiReducer"
+import uiReducer from "../components/ui/duck/reducers";
 
-import { auth } from "../components/auth/duck/reducers";
-import { currentGroup } from "../components/group/duck/reducers";
-import { currentUser } from "../components/user/duck/reducers";
-import { currentChannel } from "../components/channel/duck/reducers";
+import auth from "../components/auth/duck/reducers";
 
+import channels from "../components/channel/duck/reducers";
+import groups from "../components/group/duck/reducers";
+import members from "../components/members/duck/reducers";
+import messages from "../components/chat/duck/reducers";
+import tasks from "../components/tasks/duck/reducers";
 
 const appReducer = combineReducers({
-    entities: entitiesReducer,
     errors: errorsReducer,
-    result: resultReducer,
     ui: uiReducer,
-
     auth,
-    currentChannel,
-    currentGroup,
-    currentUser,
+    channels,
+    groups,
+    tasks,
+    members,
+    messages,
 });
 
 export default appReducer;
+

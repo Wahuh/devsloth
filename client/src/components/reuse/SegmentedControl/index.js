@@ -45,11 +45,13 @@ class SegmentedControl extends Component {
         const { className, segments } = this.props;
 
         const segmentItems = segments.map(
-            ({ id, text, onClick }) => {
+            ({ id, text, onClick, icon }) => {
                 return (
                     <Segment
                         active={this.state[id]}
+                        key={id}
                         id={id}
+                        icon={icon}
                         text={text} 
                         onClick={this.onActive(onClick)} 
                     />

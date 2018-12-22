@@ -1,6 +1,10 @@
+import { connect } from "react-redux";
+import { getChannelMessages } from "../duck/selectors";
+import { getMemberAlias } from "../../members/duck/selectors";
+
 import React, { Component } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
-
+import dateApi from "../../../api/dateApi";
 import Message from "../Message";
 import List from "../../reuse/List";
 import ListItem from "../../reuse/ListItem";
@@ -8,56 +12,40 @@ import styles from "./MessageList.scss";
 
 class MessageList extends Component {
     //let messages = props.messages;
+
     constructor(props) {
         super(props);
-        this.scrollbars = React.createRef();
     }
 
     componentDidMount() {
-        this.scrollbars.current.scrollToBottom();
+        document.getElementById("Filler").scrollIntoView({ behavior: "smooth" });
+    }
+
+    componentDidUpdate() {
+        document.getElementById("Filler").scrollIntoView({ behavior: "smooth" });
     }
 
     render() {
-        let messages = [
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-            {icon: "./placeholder-face-big.png", alias: "Alice", time: "10:00AM", text: `hello this is a test messtests is a test message this is a test message
-            hello this is a test messtests is a test message this is a test messagehello this is a test messtests is a test message this is a test message`},
-        ];
-    
-        const messageItems = messages.map(
-            message => 
-            <ListItem>
-                <Message alias={message.alias} time={message.time}>{message.text}</Message>
-            </ListItem>
-        );
+        const { messages } = this.props;
         
         return (
-            <Scrollbars ref={this.scrollbars} style={{height: "100%"}}>
-                <List className={styles.MessageList}>
-                    {messageItems}
-                </List>
-            </Scrollbars>
+            <List id="MessageList" className={styles.MessageList}>
+                {messages && messages.map(
+                    ({ alias, timestamp, text }) => 
+                    <ListItem>
+                        <Message alias={alias} timestamp={dateApi.toDate(timestamp)} text={text} />
+                    </ListItem>
+                )}
+                <div id="Filler"></div>
+            </List>
         );
     }
 }
 
-export default MessageList;
+const mapStateToProps = state => {
+    const unaliasedMessages = getChannelMessages(state);
+    const messages = unaliasedMessages.map(message => 
+        ({ ...message, alias: getMemberAlias(state, message.user) }));
+    return { messages };
+} 
+export default connect(mapStateToProps)(MessageList);

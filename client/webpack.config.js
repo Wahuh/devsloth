@@ -45,6 +45,12 @@ module.exports = () => {
       }, {});
 
     return {
+        output: {
+            publicPath: '/',
+        },
+        devServer: {
+            historyApiFallback: true,
+          },
         module: {
           rules: [
             {

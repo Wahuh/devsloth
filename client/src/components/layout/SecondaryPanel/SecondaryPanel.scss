@@ -21,5 +21,6 @@
 
 .SecondaryPanel { 
     height: 100%;
-    background-color: $secondary;
+
+    background-color: var(--color-primary);
 }

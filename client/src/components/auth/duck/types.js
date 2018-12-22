@@ -1,18 +1,14 @@
-export const USER_LOGIN = "user/duck/USER_LOGIN";
-export const HIDE_LOGIN_MODAL = "user/duck/HIDE_LOGIN_MODAL";
-export const SHOW_LOGIN_MODAL = "user/duck/SHOW_LOGIN_MODAL";
-export const CREATE_ACCOUNT = "user/duck/CREATE_ACCOUNT";
-export const CREATE_GUEST = "user/duck/CREATE_GUEST";
+export const AUTH_REGISTRATION_REQUEST = "auth/AUTH_REGISTRATION_REQUEST";
+export const AUTH_REGISTRATION_SUCCESS = "auth/AUTH_REGISTRATION_SUCCESS";
+export const AUTH_REGISTRATION_FAILURE = "auth/AUTH_REGISTRATION_FAILURE";
 
-export const LOGIN_SUCCESS = "auth/duck/LOGIN_SUCCESS";
-export const LOGIN_ERROR = "auth/duck/LOGIN_ERROR";
+export const AUTH_LOGIN_REQUEST = "auth/AUTH_LOGIN_REQUEST";
+export const AUTH_LOGIN_SUCCESS = "auth/AUTH_LOGIN_SUCCESS";
+export const AUTH_LOGIN_FAILURE = "auth/AUTH_LOGIN_FAILURE";
 
-export const REGISTRATION_PENDING = "auth/duck/REGISTRATION_PENDING";
-export const REGISTRATION_SUCCESS = "auth/duck/REGISTRATION_SUCCESS";
-export const REGISTRATION_ERROR = "auth/duck/REGISTRATION_ERROR";
+export const AUTH_JWT_REQUEST = "auth/AUTH_JWT_REQUEST";
+export const AUTH_JWT_SUCCESS = "auth/AUTH_JWT_SUCCESS";
+export const AUTH_JWT_FAILURE = "auth/AUTH_JWT_FAILURE";
 
-export const SHOW_AUTHENTICATION = "auth/duck/SHOW_AUTHENTICATION";
-export const HIDE_AUTHENTICATION = "auth/duck/HIDE_AUTHENTICATION";
-export const START_REGISTRATION_LOADING = "auth/duck/SHOW_REGISTRATION_LOADING";
-export const STOP_REGISTRATION_LOADING = "auth/duck/STOP_REGISTRATION_LOADING";
-export const HIDE_REGISTRATION_LOADING = "auth/duck/HIDE_REGISTRATION_LOADING";
+export const AUTH_IS_FETCHING = "auth/duck/types/AUTH_IS_FETCHING";
+export const AUTH_IS_FINISHED = "auth/duck/types/AUTH_IS_FINISHED";

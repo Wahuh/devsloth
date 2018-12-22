@@ -1,62 +1,47 @@
 import { connect } from "react-redux";
-import { 
-    hideGroupModal,
-    showGroupModalCreate,
-    showGroupModalJoin,
-    hideGroupModalCreate,
-    hideGroupModalJoin
- } from "../duck/actions";
-import { getGroupModal, getGroupModalScreens } from "../duck/selectors";
+import { hideUiModal } from "../../ui/duck/actions";
 
 import React, { Component } from "react";
-import Modal from "../../reuse/Modal";
+import Button from "../../reuse/Button";
+import CloseIcon from "../../reuse/icons/CloseIcon";
 import CreateOrJoin from "../CreateOrJoin";
-import CreateGroup from "../CreateGroup";
-import JoinGroup from "../JoinGroup";
+import CreateGroupForm from "../CreateGroupForm";
+import JoinGroupForm from "../JoinGroupForm";
+import Modal from "../../reuse/Modal";
 import styles from "./GroupModal.scss";
 
-
 class GroupModal extends Component {
+    state = {
+        screen: "createOrJoin",
+    }
+
+    screens = {
+        createOrJoin: <CreateOrJoin onCreate={() => this.changeScreen("create")} onJoin={() => this.changeScreen("join")} />,
+        create: <CreateGroupForm onBack={() => this.changeScreen("createOrJoin")} />,
+        join: <JoinGroupForm onBack={() => this.changeScreen("createOrJoin")} />
+    }
+
+    changeScreen(screen) {
+        console.log(screen);
+        this.setState({ screen });
+    }
+
     render() {
-        const { 
-            show, 
-            screens, 
-            hideGroupModal,
-            showGroupModalCreate,
-            showGroupModalJoin,
-            hideGroupModalCreate,
-            hideGroupModalJoin
-        } = this.props;
-        let screen;
-
-        if (screens.showCreate) {
-            screen = <CreateGroup onBack={hideGroupModalCreate} onCreate={this.props.createGroup}/>
-        } else if (screens.showJoin) {
-            screen = <JoinGroup onBack={hideGroupModalJoin} />
-        } else {
-            screen = <CreateOrJoin onCreate={showGroupModalCreate} onJoin={showGroupModalJoin}/>
-        }
-
+        const { onHide } = this.props;
+        const { screen } = this.state;
         return (
-            <Modal show={show} onHide={hideGroupModal}>
+            <Modal onHide={onHide}>
                 <div className={styles.GroupModal}>
-                    {screen}
+                    <Button onClick={onHide} theme="icon" className={styles.CloseButton}>
+                        <CloseIcon />
+                    </Button>
+                    {this.screens[screen]}
                 </div>
             </Modal>
         );
     }
 }
 
-
-
-const mapStateToProps = state => ({
-    show: getGroupModal(state),
-    screens: getGroupModalScreens(state),
-});
-
-export default connect(mapStateToProps, {
-    hideGroupModal,
-    showGroupModalCreate,
-    showGroupModalJoin,
-
+export default connect(null, {
+    onHide: hideUiModal
 })(GroupModal);

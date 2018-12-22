@@ -1,10 +1,16 @@
 @import "../../../styles/color";
 
 .BackButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     background-color: transparent;
     fill: $white;
+    transition: all 0.3s;
+    transform-origin: 50% 50%
 }
 
-.BackButton:focus {
-    outline: none;
+.BackButton:focus,
+.BackButton:hover {
+    transform: scale(1.2);
 }

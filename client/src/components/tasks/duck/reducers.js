@@ -1,31 +1,33 @@
+import { combineReducers } from "redux";
 import * as types from "./types";
 
-export const tasksEntity = (state = {}, { type, payload }) => {
+const byId = (state = {}, action) => {
+    const { type, payload } = action;
     switch(type) {
-        case types.TASK_CREATE_SUCCESS:
-            return {
-                ...state,
-                [payload.id]: payload,
-            };
 
         default:
             return state;
     }
-};
+}
 
-export const tasksResult = (state = [], { type, payload }) => {
+const allIds = (state = [], action) => {
+    const { type, payload } = action;
     switch(type) {
-        case types.TASK_CREATE_SUCCESS:
-            console.log([
-                ...state,
-                payload.id
-            ])
-            return [
-                ...state,
-                payload.id,
-            ];
-
         default:
             return state;
     }
-};
+}
+
+const currentId = (state = null, action) => {
+    const { type, payload } = action;
+    switch(type) {
+        default:
+            return state;
+    }
+}
+
+export default combineReducers({
+    byId,
+    allIds,
+    currentId
+});

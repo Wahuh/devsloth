@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getTaskModal } from "../duck/selectors";
 import { hideTaskModal } from "../duck/actions";
+import { hideUiModal } from "../../ui/duck/actions";
 
 import React from "react";
 import CreateTask from "../CreateTask";
@@ -8,8 +9,8 @@ import CreateTask from "../CreateTask";
 import Modal from "../../reuse/Modal";
 import styles from "./TaskModal.scss";
 
-const TaskModal = ({ showTaskModal, hideTaskModal }) => (
-    <Modal show={showTaskModal} onHide={hideTaskModal} >
+const TaskModal = ({ showTaskModal, onHide }) => (
+    <Modal show={showTaskModal} onHide={onHide} >
         <div className={styles.TaskModal}>
             <CreateTask />
         </div>
@@ -21,5 +22,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    hideTaskModal
+    onHide: hideUiModal
 })(TaskModal);

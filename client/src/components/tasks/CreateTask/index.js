@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createTaskRequest } from "../duck/actions";
-import { getCurrentChannel } from "../../channel/duck/selectors";
+import { getCurrentChannelId } from "../../channel/duck/selectors";
 
 import React, { Component } from "react";
-import ActionButton from "../../reuse/ActionButton";
+import Button from "../../reuse/Button";
 import Column from "../../reuse/Column";
 import Input from "../../reuse/Input";
 import Typography from "../../reuse/Typography";
@@ -63,14 +63,14 @@ class CreateTask extends Component {
                     placeholder="Optionally add a description"
                 />
                 <Typography>Add to task</Typography>
-                <ActionButton primary text="Create Task" />
+                <Button theme="action" text="Create Task" />
             </form>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    currentChannel: getCurrentChannel(state)
+    currentChannel: getCurrentChannelId(state)
 });
 
 export default connect(mapStateToProps, {

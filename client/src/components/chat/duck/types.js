@@ -1,1 +1,8 @@
-export const CHANGE_CHANNEL = "features/chat/duck/CHANGE_CHANNEL";
+export const CHAT_MESSAGE_SEND_REQUEST = "chat/duck";
+export const CHAT_MESSAGE_SEND_SUCCESS = "";
+export const CHAT_MESSAGE_SEND_FAILURE = "";
+
+export const CHAT_TYPING_REQUEST = "chat/CHAT_TYPING_REQUEST";
+export const CHAT_TYPING_RECEIVE_SUCCESS = "chat/CHAT_TYPING_RECEIVE_SUCCESS";
+
+export const CHAT_MESSAGE_RECEIVE_SUCCESS = "chat/CHAT_MESSAGE_RECEIVE_SUCCESS";

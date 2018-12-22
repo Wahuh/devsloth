@@ -1,55 +1,16 @@
+import { createAction } from "redux-actions";
 import * as types from "./types";
 
-export const userLogin = () => ({
-    type: types.USER_LOGIN,
-});
+const metaCreator = () => ({ errorType: "auth" });
 
-export const showLoginModal = () => ({
-    type: types.SHOW_LOGIN_MODAL,
-});
+export const registrationAuthRequest = createAction(types.AUTH_REGISTRATION_REQUEST);
+export const registrationAuthSuccess = createAction(types.AUTH_REGISTRATION_SUCCESS);
+export const registrationAuthFailure = createAction(types.AUTH_REGISTRATION_FAILURE, null, metaCreator);
 
-export const hideLoginModal = () => ({
-    type: types.HIDE_LOGIN_MODAL,
-});
+export const loginAuthRequest = createAction(types.AUTH_LOGIN_REQUEST);
+export const loginAuthSuccess = createAction(types.AUTH_LOGIN_SUCCESS);
+export const loginAuthFailure = createAction(types.AUTH_LOGIN_FAILURE, null, metaCreator);
 
-export const createGuest = () => ({
-    type: types.CREATE_GUEST,
-});
-
-export const createAccount = () => ({
-    type: types.CREATE_ACCOUNT,
-});
-
-export const loginSuccess = (data) => ({
-    type: types.LOGIN_SUCCESS,
-    payload: data,
-});
-
-export const registrationPending = (user) => ({
-    type: types.REGISTRATION_PENDING,
-    payload: user,
-});
-
-
-export const registrationError = (error) => ({
-    type: types.REGISTRATION_ERROR,
-    payload: {
-        error: error
-    }
-});
-
-export const showAuthentication = () => ({
-    type: types.SHOW_AUTHENTICATION,
-});
-
-export const hideAuthentication = () => ({
-    type: types.HIDE_AUTHENTICATION,
-});
-
-export const startRegistrationLoading = () => ({
-    type: types.START_REGISTRATION_LOADING,
-});
-
-export const stopRegistrationLoading = () => ({
-    type: types.STOP_REGISTRATION_LOADING,
-});
+export const jwtAuthRequest = createAction(types.AUTH_JWT_REQUEST);
+export const jwtAuthSuccess = createAction(types.AUTH_JWT_SUCCESS);
+export const jwtAuthFailure = createAction(types.AUTH_JWT_FAILURE, null, metaCreator);

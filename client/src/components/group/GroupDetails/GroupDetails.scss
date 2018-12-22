@@ -1,0 +1,31 @@
+@import "../../../styles/color";
+
+.GroupDetails {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.Wrapper {
+    width: 80%;
+}
+
+.GroupName {
+    min-width: 0;
+    flex-basis: 50%;
+    h3 {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.ButtonContainer {
+    display: inline-block;
+    flex-shrink: 0;
+}

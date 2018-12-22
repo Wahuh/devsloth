@@ -10,7 +10,7 @@
 
 @media #{$Desktop} {
     #SideMenu {
-        width: 20vw;
+        width: 17vw;
     }
 }
 
@@ -40,6 +40,7 @@
     flex-direction: row;
     overflow-x: hidden;
     box-shadow: $light-shadow;
+    position: relative;
 }
 
 #SideMenuOverlay {

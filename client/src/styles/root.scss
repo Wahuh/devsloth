@@ -1,0 +1,41 @@
+@import "./layout";
+
+
+@media #{$Tablet}  {
+
+}
+
+@media #{$Desktop} {
+    :root {
+        --padding: 1.5rem;
+        --padding-left: 1.5rem;
+        --padding-right: 1.5rem;
+    }
+}
+
+@media #{$Mobile} {
+    :root {
+        --padding: 1rem;
+        --padding-left: 1rem;
+        --padding-right: 1rem;
+    }
+}
+
+:root {
+    --color-primary: #212121;
+    --color-primary-light: #2e2e2e;
+    --color-primary-dark: #101010;
+
+    --color-primary-action: #0069ed;
+    --color-primary-action-light: #B8D8FF;
+    --color-primary-action-dark: #0053ba;
+
+    --color-primary-font: #ccc;
+    --color-secondary-font: white;
+
+    --color-primary-icon: #ccc;
+
+    --color-error: #FF8C8A;
+    --color-success: #9BFE83;
+    --color-focus: #9B30FF;
+}

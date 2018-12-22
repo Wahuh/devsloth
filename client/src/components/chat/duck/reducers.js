@@ -1,35 +1,44 @@
-import { CHANGE_CHANNEL } from "./types";
+import { combineReducers } from "redux";
+import { handleActions } from "redux-actions";
+import {
+    sendChatMessageSuccess, 
+    receiveChatMessageSuccess,
+    receiveChatTypingSuccess
+} from "./actions";
+import { mergeObject, mergeArray } from "../../../utils";
 
-const initialState = {
-    current: "channel1",
-    byId: {
-        "channel1": {
-            id: "channel1",
-            group: "group1",
-            name: "#general",
-            messages: ["message1", "message2"]
-        },
+const byId = handleActions(
+    {
+        [sendChatMessageSuccess]: (state, { payload }) => addMessage(state, payload),
+        [receiveChatMessageSuccess]: (state, { payload }) => addMessage(state, payload),
+    }, {}
+);
 
-        "channel2": {
-            id: "channel2",
-            group: "group1",
-            name: "#random",
-            messages: ["message3", "message4"]
-        },
-    },
-    allIds: ["channel1", "channel2"],
+const allIds = handleActions(
+    {
+        [sendChatMessageSuccess]: (state, { payload }) => addMessageId(state, payload),
+        [receiveChatMessageSuccess]: (state, { payload }) => addMessageId(state, payload),
+    }, []
+);
+
+const isTyping = handleActions(
+    {
+        [receiveChatTypingSuccess]: (state, { payload }) => state.indexOf(payload) > -1 ? state : [ ...state, payload ]
+    }, []
+);
+
+const addMessage = (state, { entities }) => {
+    const { messages } = entities;
+    console.log("merge", mergeObject(state, messages));
+    return mergeObject(state, messages);
 }
 
-export function channels(state = initialState, action) {
-    switch (action.type) {
-        case CHANGE_CHANNEL:
-            return {
-                ...state,
-                name: action.name
-            }
-        
-        default:
-            return state;
-    }
+const addMessageId = (state, { result }) => {
+    return mergeArray(state, result);
 }
 
+export default combineReducers({
+    byId,
+    allIds,
+    isTyping
+});

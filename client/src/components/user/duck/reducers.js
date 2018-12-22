@@ -1,24 +1,33 @@
+import { combineReducers } from "redux";
 import * as types from "./types";
 
-export const usersEntity = (state = null, action) => {
-    switch (action.type) {
-        
+const byId = (state = {}, action) => {
+    const { type, payload } = action;
+    switch(type) {
 
         default:
             return state;
     }
 }
 
-export const usersResult = (state = null, action) => {
-    switch (action.type) {
+const allIds = (state = [], action) => {
+    const { type, payload } = action;
+    switch(type) {
         default:
             return state;
     }
 }
 
-export const currentUser = (state = null, action) => {
-    switch(action.type) {
+const currentId = (state = null, action) => {
+    const { type, payload } = action;
+    switch(type) {
         default:
             return state;
     }
 }
+
+export default combineReducers({
+    byId,
+    allIds,
+    currentId
+});

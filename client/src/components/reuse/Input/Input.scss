@@ -4,14 +4,16 @@
 .Input {
     font-family: $main-font;
     font-size: 1rem;
-    padding: 0.75rem;
+    padding: 0.7rem;
     z-index: 2;
-    margin-bottom: 1rem;
-}
+    background-color: var(--color-primary);
+    border: 1px solid transparent !important;
+    caret-color: var(--color-primary-font);
+    color: var(--color-primary-font);
+}   
 
 .Input:focus {
     outline:none; 
-    border:2px solid $focus;
-    -webkit-box-shadow: 0px 0px 5px $focus;
-    box-shadow: 0px 0px 5px $focus;
+    border:1px solid var(--color-focus) !important;
 }
+

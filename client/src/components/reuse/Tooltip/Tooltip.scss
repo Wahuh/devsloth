@@ -1,0 +1,13 @@
+.Tooltip {
+    position: relative;
+}
+
+.TooltipContent {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+}
+
+.Tooltip:hover .TooltipContent {
+    visibility: visible;
+}
