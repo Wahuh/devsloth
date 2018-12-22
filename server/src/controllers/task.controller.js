@@ -10,16 +10,12 @@ const createTask = async (req, res) => {
         name: req.body.name
     });
 
-    try {
-        channel.tasks.push(task);
-        task.channel = channel;
-        await task.save();
-        await channel.save();
-        res.send("task created");
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
+    channel.tasks.push(task);
+    task.channel = channel;
+    await task.save();
+    await channel.save();
+    const { _id, name } = task;
+    res.status(201).send({ _id, name });
 }
 
 exports.createTask = createTask;

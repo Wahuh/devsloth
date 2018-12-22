@@ -8,7 +8,7 @@ const taskSchema = new Schema({
         trim: true,
     },
     
-    users: [{
+    members: [{
         type: Schema.Types.ObjectId,
         ref: "User"
     }],

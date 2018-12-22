@@ -1,5 +1,8 @@
 const { Channel, validateChannel } = require("../models/channel.model");
+const { Group, validateGroup } = require("../models/group.model");
 const { Task, validateTask } = require("../models/task.model");
+const { Member }  = require("../models/member.model");
+const { User } = require("../models/user.model");
 
 const createTask = async (req, res, next) => {
     //validate req.params.id
@@ -22,47 +25,30 @@ const createTask = async (req, res, next) => {
 }
 
 const createChannel = async (req, res) => {
-    console.log(req.body);
-    const channel = new Channel({
-        name: req.body.name
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).send("User not found");
+
+    const group = await Group
+    .findById(req.body.groupId);
+    if (!group) return res.status(404).send("We couldn't find the group");
+
+    const newChannel = await Channel.create({
+        name: req.body.name,
+        group: group._id
     });
 
-    try {
-        await channel.save();
-        res.send("success");
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}
-
-const register = async (req, res) => {
-    console.log(req.body);
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    //validate the request data return 400 error
-    const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) return res.status(400).send("This email address has already been registered.")
+    await Member.findOneAndUpdate(
+        { user: user._id, group: group._id }, 
+        { $push: { channels: newChannel._id } }
+    );
     
-    const newUser = new User({
-        email: req.body.email,
-        password: req.body.password,
-    });
+    const channel = await Channel
+    .findById(newChannel._id)
+    .populate({ path: "members" });
 
-    try {
-        const user = await newUser.save();
-        const { _id: id, email } = user;
-        const token = user.generateAuthToken();
-        res
-        .header("x-auth-token", token)
-        .header("access-control-expose-headers", "x-auth-token")
-        .send({ id, email });
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-};
+    console.log("created", channel);
+    res.status(201).send(channel);
+}
 
 exports.createTask = createTask;
 exports.createChannel = createChannel;

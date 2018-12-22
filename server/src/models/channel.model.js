@@ -12,16 +12,25 @@ const channelSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Group"
     },
-    
-    users: [{
-        type: Schema.Types.ObjectId,
-        ref: "User"
-    }],
+}, {
+    toObject: {
+        virtuals: true
+    },
+    toJSON: {
+        virtuals: true 
+    }
+});
 
-    tasks: [{
-        type: Schema.Types.ObjectId,
-        ref: "Task"
-    }],
+channelSchema.virtual("members", {
+    ref: "Member",
+    localField: "_id",
+    foreignField: "channels"
+});
+
+channelSchema.virtual("tasks", {
+    ref: "Task",
+    localField: "_id",
+    foreignField: "channel"
 });
 
 function validateChannel(channel) {

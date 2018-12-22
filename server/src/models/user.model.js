@@ -13,15 +13,19 @@ const userSchema = new Schema({
         unique: true,
         trim: true,
     },
+
+    username: {
+        type: String,
+        required: [true, "username is required"],
+        minlength: 1,
+        maxlength: 255,
+    },
+
     password: {
         type: String,
         required: true,
         minlength: 5,
         maxlength: 1024,
-    },
-    alias: {
-        type: String,
-        maxlength: 255,
     },
     groups: [{
         type: Schema.Types.ObjectId,
@@ -32,7 +36,8 @@ const userSchema = new Schema({
 function validateUser(user) {
     const schema = {
         email: Joi.string().email({ minDomainAtoms: 2}).min(5).max(255).required(),
-        password: Joi.string().min(5).max(255).required()
+        password: Joi.string().min(5).max(255).required(),
+        username: Joi.string().min(1).max(255).required(),
     };
     return Joi.validate(user, schema);
 }

@@ -1,89 +1,41 @@
 const { User, validateUser } = require("../models/user.model");
-
-const registerUser = async (req, res) => {
-    const { error } = validateUser(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    //validate the request data return 400 error
-    const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) return res.status(400).send("This email address has already been registered.")
-    
-    const newUser = new User({
-        email: req.body.email,
-        password: req.body.password,
-    });
-
-    const user = await newUser.save();
-    const { _id: id, email } = user;
-    const token = user.generateAuthToken();
-    res
-    .header("Authorization", `Bearer ${token}`)
-    .header("access-control-expose-headers", "x-auth-token")
-    .send({ id, email });
-};
-
-const authenticate = async (req, res) => {
-    const { error } = validateUser(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    const existingUser = await User.findOne({ email: req.body.email });
-    if (!existingUser) return res.status(400).send("Invalid email or password");
-    const validPassword = existingUser.validatePassword();
-    if (!validPassword) return res.status(400).send("Invalid email or password");
-
-    const token = existingUser.generateAuthToken();
-    res.send(token);
-};
+const { Channel } = require("../models/channel.model");
+const { Group } = require("../models/group.model");
+require("../models/task.model");
 
 const getCurrentUser = async (req, res) => {
-    console.log(req.user);
     const user = await User
     .findById(req.user.id)
     .select("-password")
     .populate({
         path: "groups",
-        populate: { 
-            path: "channels",
-            populate: {
-                path: "tasks"
-            }
-        }
+        populate: [
+            { path: "channels", populate: { path: "members" } },
+            { path: "members" },
+            { path: "roles" }
+        ]
     });
 
-    if (!user) return res.status(400).send("This user does not exist");
-    res.send(user);
+    if (!user) return res.status(404).send("Whoops, we couldn't find the user. Please try logging in again.");
+    res.status(200).send(user);
 };
 
+const removeUser = async (req, res) => {
+    const user = await User.findOneAndDelete({ _id: req.user.id });
+    if (user) return res.status(200).send(user._id);
+    else return res.status(404).send("User not found");
+}
 
+const updateUser = async (req, res) => {
+    const { body } = req;
+    const { email } = body;
 
-exports.registerUser = registerUser;
-exports.authenticateUser = authenticate;
+    const user = await User.findByIdAndUpdate(req.user.id, {
+        $set: { email: email }
+    });
+    res.status(200).send(user);
+}
+
 exports.getCurrentUser = getCurrentUser;
-
-// module.exports = {
-//     registerUser: register,
-
-//     create: async function createUser() {
-//         const user = new User({
-//             name: "thanh"
-//         });
-//         const result = await user.save();
-//         console.log(result);
-//     },
-
-//     getUsers: async function getUsers() {
-//         const users = await User.find();
-//         console.log(users);
-//     }
-// }
-//{user: "THanh"} filter groups by user
-//complex query
-//.find().limit(10).sort({ name: 1}) 1 asc, -1 desc
-//operators eq (equal)
-//ne (not equal)
-//gt (greater than)]
-//gte (greater than or equal to)
-//lt (less than)
-//in
-//nin (not in)
-//.find().populate() second argument specifiy proprties that you want to include 
+exports.removeUser = removeUser;
+exports.updateUser = updateUser;
