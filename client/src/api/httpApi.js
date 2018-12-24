@@ -4,7 +4,7 @@ import axios from "axios";
 //axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("jwt")}`;
 
 function setAuthHeader(token) {
-    axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
 //log successful requests somewhere?
