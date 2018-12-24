@@ -1,33 +1,26 @@
 import { combineReducers } from "redux";
-import * as types from "./types";
+import { handleActions } from "redux-actions";
+import { loadUserDataSuccess } from "./actions";
 
-const byId = (state = {}, action) => {
-    const { type, payload } = action;
-    switch(type) {
+export const id = handleActions(
+    {
+        [loadUserDataSuccess]: (state, { payload }) => updateId(state, payload),
+    }, null
+);
 
-        default:
-            return state;
-    }
-}
+export const email = handleActions(
+    {
+        [loadUserDataSuccess]: (state, { payload }) => updateEmail(state, payload),
+    }, null
+);
 
-const allIds = (state = [], action) => {
-    const { type, payload } = action;
-    switch(type) {
-        default:
-            return state;
-    }
-}
-
-const currentId = (state = null, action) => {
-    const { type, payload } = action;
-    switch(type) {
-        default:
-            return state;
-    }
+const updateId = (state, { result }) => result;
+const updateEmail = (state, { entities, result: id }) => {
+    const { user } = entities;
+    return user[id].email;
 }
 
 export default combineReducers({
-    byId,
-    allIds,
-    currentId
+    id,
+    email,
 });
