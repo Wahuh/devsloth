@@ -1,12 +1,20 @@
 import { take, put, call, select } from "redux-saga/effects";
+
 import groupsApi from "../../../api/groupsApi";
 import schemas from "../../../schemas";
 import { normalize } from "normalizr";
 import * as types from "./types";
 import { hideUiModal } from "../../ui/duck/actions";
-import { selectGroup } from "./actions";
-import * as actions from "./actions";
-import { getCurrentGroupId, getCurrentGroupIdDefault } from "../../group/duck/selectors";
+import {
+    createGroupSuccess,
+    createGroupFailure,
+    updateGroupSuccess,
+    updateGroupFailure,
+    deleteGroupSuccess,
+    deleteGroupFailure,
+    selectGroup
+} from "./actions";
+import { getCurrentGroupId, getCurrentGroupIdDefault } from "./selectors";
 import { selectChannel } from "../../channel/duck/actions";
 import { 
     getCurrentChannelIdDefault,
@@ -27,29 +35,41 @@ export function* watchUpdateGroupRequest() {
     }
 }
 
+export function* watchCreateGroupSuccess() {
+    while(true) {
+        const { payload } = yield take(types.GROUP_CREATE_SUCCESS);
+        yield call(handleSelectGroup, payload);
+    }
+}
+
 function* handleCreateGroup(payload) {
     try {
         const { data } = yield call(createGroup, payload);
-        const normalizedData = yield call(normalize, data, schemas.group);
-        console.log("normalized", normalizedData);
-        yield put(actions.createGroupSuccess(normalizedData));
-        yield put(actions.selectGroup({ _id: normalizedData.result }));
-        const groupId = yield select(getCurrentGroupId);
-        const channelId = yield select(getCurrentChannelIdDefault);
-        yield put(selectChannel({ [groupId]: channelId }));
+        console.log("groupRAW", data);
+        const groupData = yield call(normalize, data, schemas.group);
+        console.log("normalized", groupData);
+        yield put(createGroupSuccess(groupData));
+        // yield put(actions.selectGroup({ _id: normalizedData.result }));
+        // const groupId = yield select(getCurrentGroupId);
+        // const channelId = yield select(getCurrentChannelIdDefault);
+        // yield put(selectChannel({ [groupId]: channelId }));
         yield put(hideUiModal());
     } catch (error) {
-        yield put(actions.createGroupFailure(error));
+        yield put(createGroupFailure(error));
     }
+}
+
+function* handleSelectGroup({ result }) {
+    yield put(selectGroup({ _id: result }));
 }
 
 function* handleUpdateGroup(payload) {
     try {
         const { data } = yield call(updateGroup, payload);
-        yield put(actions.updateGroupSuccess(data))
+        yield put(updateGroupSuccess(data))
         yield put(hideUiModal());
     } catch (error) {
-        yield put(actions.updateGroupFailure(error));
+        yield put(updateGroupFailure(error));
     }
 }
 
@@ -64,16 +84,17 @@ export function* watchDeleteGroupRequest() {
 function* handleDeleteGroup(payload) {
     try {
         const { data } = yield call(deleteGroup, payload);
-        const { _id } = data;
+        const deletedGroupData = yield call(normalize, data, schemas.group);
+        const { _id } = deletedGroupData;
         const channelsToDelete = yield select(getChannelIdsToDelete, _id);
         console.log("channels to delete", channelsToDelete);
-        yield put(actions.deleteGroupSuccess({ _id, channelIds: channelsToDelete }));
+        yield put(deleteGroupSuccess({ _id, channelIds: channelsToDelete }));
         const groupId = yield select(getCurrentGroupIdDefault);
         console.log(groupId);
         yield put(selectGroup({ _id: groupId }));
         yield put(hideUiModal());
     } catch (error) {
-        yield put(actions.deleteGroupFailure(error));
+        yield put(deleteGroupFailure(error));
     }
 }
 
@@ -103,4 +124,3 @@ function* updateGroup() {
         throw(error);
     }
 }
-
