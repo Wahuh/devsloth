@@ -2,6 +2,7 @@
     --color-primary: #212121;
     --color-primary-light: #2e2e2e;
     --color-primary-dark: #101010;
+    --color-primary-hover: #191919;
 
     --color-primary-action: #0069ed;
     --color-primary-action-light: #B8D8FF;
@@ -11,24 +12,27 @@
     --color-secondary-font: white;
 
     --color-primary-icon: #ccc;
+    --color-primary-icon-hover: white;
 
     --color-error: crimson;
     --color-focus: #9B30FF;
 }
 
 .light {
-    --color-primary: white !important;
+    --color-primary: rgb(237, 239, 241) !important;
     --color-primary-light: white !important;
-    --color-primary-dark: white !important;
+    --color-primary-dark: #BABCBE !important;
+    --color-primary-hover: #D4D6D8 !important;
 
     --color-primary-action: #0069ed !important;
     --color-primary-action-light: #B8D8FF !important;
     --color-primary-action-dark: #0053ba !important;
 
-    --color-primary-font: red !important;
-    --color-secondary-font: red !important;
+    --color-primary-font: #4a4a4a !important;
+    --color-secondary-font: black !important;
 
-    --color-primary-icon: red !important;
+    --color-primary-icon: #e84118 !important;
+    --color-primary-icon-hover: #c23616 !important;
 
     --color-error: crimson !important;
     --color-focus: #9B30FF !important;
