@@ -12,11 +12,11 @@ export const setJwtHeader = (jwt) => {
     http.setAuthHeader(jwt);
 }
 
-export const register = (user) => {
-    console.log(REGISTRATION_ENDPOINT, user);
+export const register = ({ email, password, username }) => {
     return http.post(REGISTRATION_ENDPOINT, {
-        email: user.email,
-        password: user.password,
+        email: email,
+        password: password,
+        username: username
     });
 }
 
