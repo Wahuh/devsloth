@@ -1,8 +1,9 @@
 import { createAction } from "redux-actions";
-import * as types from "./types";
+import { normalize, schema } from "normalizr";
+import schemas from "../../../schemas"
 
-const metaCreator = () => ({ errorType: "user" });
+import { USER_DATA_LOAD_SUCCESS } from "./types";
 
-export const loadInitialUserDataRequest = createAction(types.USER_LOAD_INITIAL_DATA_REQUEST);
-export const loadInitialUserDataSuccess = createAction(types.USER_LOAD_INITIAL_DATA_SUCCESS);
-export const loadInitialUserDataFailure = createAction(types.USER_LOAD_INITIAL_DATA_FAILURE, null, metaCreator);
+const payloadCreator = data => normalize(data, schemas.user);
+
+export const loadUserDataSuccess = createAction(USER_DATA_LOAD_SUCCESS, payloadCreator);
