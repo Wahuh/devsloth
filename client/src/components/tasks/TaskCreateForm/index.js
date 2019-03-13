@@ -2,18 +2,15 @@ import { connect } from "react-redux";
 
 import React, { Component } from "react";
 import classNames from "classnames";
-import TaskCreateButton from "../TaskCreateButton";
-import Button from "../../reuse/Button";
-import Typography from "../../reuse/Typography";
 import Icon from "../../reuse/Icon";
 import PlusIcon from "../../reuse/icons/PlusIcon";
 import styles from "./TaskCreateForm.scss";
 import Input from "../../reuse/Input";
 import { createTaskRequest } from "../duck/actions";
 import { getLastTaskId } from "../../lists/duck/selectors";
+
 class TaskCreateForm extends Component {
     state = {
-        isCreateable: false,
         isFocused: false,
         task: {
             name: ""
@@ -49,17 +46,12 @@ class TaskCreateForm extends Component {
         this.setState({ task });
     }
 
-
-    handleClick = () => {
-        this.setState(prevProps => ({ isCreateable: true }));
-    }
-
     handleFocus = () => {
         this.setState(prevProps => ({ isFocused: !prevProps.isFocused }));
     }
 
     render() {
-        const { isCreateable, isFocused, task } = this.state;
+        const { isFocused, task } = this.state;
         const { lastTaskId } = this.props;
         console.log("Lasttask", lastTaskId);
         return (
@@ -83,7 +75,7 @@ class TaskCreateForm extends Component {
                     value={task.name}
                     name="name"
                     type="text"
-                    placeholder="Add Task"
+                    placeholder="add task"
                 />
             </form>
         );
