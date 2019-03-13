@@ -10,14 +10,15 @@
         height: 50px;
         width: 50px;
         border-radius: 50%;
-        background-color: var(--color-300);
+        background-color: var(--color-home-button);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        border: 2px solid var(--color-home-icon-border);
     
         svg {
-            fill: var(--color-500);
+            fill: var(--color-home-icon);
             height: 24px;
             width: 24px;
         }
@@ -28,9 +29,9 @@
 
 .Active {
     svg {
-        fill: white;
+        fill: var(--color-home-icon-active) !important;
     }
-    background-color: var(--color-home-active) !important;
+    background-color: var(--color-home-button-active) !important;
 }
 
 // .Active::after {

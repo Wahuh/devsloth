@@ -20,9 +20,9 @@
 }
 
 .Selected {
-    background-color: var(--color-400);
+    background-color: var(--color-channel-selected);
     p {
-        color: var(--color-primary-font-selected);
+        color: var(--color-channel-selected-font);
     }
     .ChannelHash {
         fill: var(--color-primary-font);

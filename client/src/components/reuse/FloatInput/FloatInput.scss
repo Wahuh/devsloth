@@ -9,8 +9,8 @@
     height: 4rem;
     border-radius: 5px;
     padding: 0.375rem 0.75rem;
-    background-color: var(--color-700);
-    border: 1px solid var(--color-900);
+    background-color: var(--color-input);
+    border: 1px solid var(--color-input-border);
     margin-bottom: 1rem;
 
     .Input {
@@ -18,10 +18,10 @@
         border: none;   
         font-family: $main-font;
         font-size: 1rem;
-        color: var(--color-primary-font);
-        caret-color: var(--color-primary-font);
+        caret-color: var(--color-font-tertiary);
+        color: var(--color-font-primary);
         width: 100%;
-        background-color: var(--color-700);
+        background-color: var(--color-input);
         padding: 0;
 
     }
@@ -41,7 +41,7 @@
     }
     
     .Input:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0 30px var(--color-700) inset;
+        -webkit-box-shadow: 0 0 0 30px var(--color-input) inset;
         -webkit-text-fill-color: var(--color-primary-font) !important;
     }
     

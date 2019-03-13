@@ -12,7 +12,7 @@ const position = {
 
 const Tooltip = ({ message, id, place }) => (
     <ReactTooltip className={place === "right" || place ==="left" ? styles.TooltipSide : styles.Tooltip} place={place} effect="solid" id={id}>
-        <Typography type="tooltip" color="secondary">
+        <Typography type="tooltip">
             {message}
         </Typography>
     </ReactTooltip>

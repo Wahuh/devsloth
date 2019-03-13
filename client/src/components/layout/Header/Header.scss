@@ -27,7 +27,7 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    background-color: var(--color-700);
+    background-color: var(--color-header);
     flex-shrink: 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--color-border);
 }
