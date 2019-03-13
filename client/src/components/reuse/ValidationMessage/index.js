@@ -5,7 +5,6 @@ import Typography from "../Typography";
 import styles from "./ValidationMessage.scss";
 
 const ValidationMessage = ({ validation }) => {
-    console.log(validation);
     const { error, success, message} = validation;
     let validationMessage;
 
@@ -16,7 +15,7 @@ const ValidationMessage = ({ validation }) => {
     } else {
         validationMessage = (
             <div className={styles.ValidationMessage}>
-                <Typography type="button">Not yet validated</Typography>
+                <Typography>Not yet validated</Typography>
             </div>
         )
     }

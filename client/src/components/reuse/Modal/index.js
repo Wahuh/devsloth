@@ -1,44 +1,55 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import styles from "./Modal.scss";
+import ModalOverlay from "./ModalOverlay";
+import classNames from "classnames";
 
 const modalRoot = document.getElementById("ModalRoot");
+
+const sizes = {
+    "sm": styles.small,
+    "md": styles.medium,
+    "lg": styles.large
+}
+
+const aligns = {
+    "flex-start": styles.flexStart,
+    "center": styles.center
+}
 
 class Modal extends Component {
     constructor(props) {
         super(props);
         this.element = document.createElement('div');
-        this.element.className = styles.Modal;
         this.element.onclick = this.hide;
     }
 
     hide = (event) => {
-        if (event.target.className === styles.Modal) {
-            this.props.onHide();
+        const { onHide } = this.props;
+        if (event.target === this.element.children[0]) {
+            onHide();
         }
     }
 
     componentDidMount() {
         modalRoot.appendChild(this.element);
-        // let elements = document.getElementById("index").querySelectorAll("*");
-        // for (let i = 0; i < elements.length; i++) {
-        //     elements[i].tabIndex = "-1"
-        // }
     }
 
     componentWillUnmount() {
-        modalRoot.removeChild(this.element);
+        modalRoot.removeChild(this.element)
     }
 
     render() {
-        const { children } = this.props;
+        const { children, size, align, className } = this.props;
         return ReactDOM.createPortal(
-            children,
+            <ModalOverlay>
+                <div className={classNames(styles.ModalContent, className, aligns[align], size ? sizes[size] : sizes["md"] )}>
+                    {children}
+                </div>
+            </ModalOverlay>,
             this.element
-        );
+        )
     }
 }
 
 export default Modal;
-
-//onClick setShow modal to false

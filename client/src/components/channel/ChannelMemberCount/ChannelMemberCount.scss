@@ -1,0 +1,14 @@
+.ChannelMemberCount {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    svg {
+        height: 14px;
+        width: 14px;
+        fill: var(--color-primary-icon);
+        margin-right: 0.25rem;
+    }
+    p {
+        font-size: 14px;
+    }
+}

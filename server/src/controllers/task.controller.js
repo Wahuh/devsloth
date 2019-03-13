@@ -1,21 +1,65 @@
 const { Task, validateTask } = require("../models/task.model");
 const { Channel, validateChannel } = require("../models/channel.model");
+const { List } = require("../models/list.model");
 
 const createTask = async (req, res) => {
-    //validate req.params.id
-    const channel = await Channel.findById(req.params.id);
-    if (!channel) return res.status(400).send("This channel does not exist.");
+    const list = await List.findById(req.params.listId);
+    console.log(req.params.listId);
+    if (!list) return res.status(404).send("List not found");
 
     const task = new Task({
-        name: req.body.name
+        list: list._id,
+        name: req.body.name,
+        channel: list.channel,
     });
 
-    channel.tasks.push(task);
-    task.channel = channel;
-    await task.save();
-    await channel.save();
-    const { _id, name } = task;
-    res.status(201).send({ _id, name });
+    if (req.body.prev) {
+        await Task.findByIdAndUpdate(req.body.prev, { $set: { next: task._id } });
+    } else {
+        task.isHead = true;
+    }
+
+    const { 
+        _id,
+        name,
+        next,
+        description,
+        isHead,
+        members,
+        list: listId,
+        channel
+    } = await task.save();
+
+    const io = req.app.get("io");
+    io.to(list.channel).emit("channel task create", {
+        _id,
+        prev: req.body.prev,
+        name,
+        next,
+        description,
+        isHead,
+        members,
+        list: listId,
+        channel
+    });
+    res.status(200).end();
 }
 
+const deleteTask = async (req, res) => {
+
+}
+
+const updateTask = async (req, res) => {
+    const task = await Task.findById(req.params.taskId);
+    if (!task) return res.status(404).send("Task not found");
+    task.set(req.body);
+    const updatedTask = await task.save();
+    const io = req.app.get("io");
+    io.to(task.channel).emit("channel task update", updatedTask);
+    res.status(200).end();
+}
+
+
 exports.createTask = createTask;
+exports.deleteTask = deleteTask;
+exports.updateTask = updateTask;

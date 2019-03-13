@@ -6,16 +6,10 @@ class SideMenu extends Component {
         show: false
     }
 
-    constructor(props) {
-        super(props);
-
-        //this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.toggleMenu = this.toggleMenu.bind(this);
-    }
-
     hide = () => {
-        document.getElementById("SideMenu").style.transform = "translate3d(-50vw, 0, 0)";
-        document.getElementById("SideMenuOverlay").style.display = "none";
+        document.getElementById(styles.SideMenu).style.transform = "translate3d(-80vw, 0, 0)";
+        document.getElementById(styles.SideMenuOverlay).style.visibility = "hidden";
+        document.getElementById(styles.SideMenuContainer).style.visibility = "hidden";
     }
 
     toggleMenu = () => {

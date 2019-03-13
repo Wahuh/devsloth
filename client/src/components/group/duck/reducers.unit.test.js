@@ -1,25 +1,39 @@
-import { byId, allIds, select } from "./reducers";
+import { 
+    byId, 
+    allIds, 
+    select,
+    queuedInvite
+ } from "./reducers";
 
 import { 
     createGroupSuccess,
     deleteGroupSuccess,
     updateGroupSuccess,
+    joinGroupSuccess,
+    leaveGroupSuccess,
+    joinGroupQueuedInvite,
     selectGroup
 } from "./actions";
-import { loadUserDataSuccess } from "../../user/duck/actions";
+import { loadUserData } from "../../user/duck/actions";
 
 import { loadUserAction } from "../../../tests/actions/user";
 
 import { 
     createGroupData,
     deleteGroupData,
-    updateGroupData
+    updateGroupData,
+    joinGroupData,
+    queuedInviteData,
+    leaveGroupData
 } from "../../../tests/data/group";
 import { userData } from "../../../tests/data/user";
 import { 
     createGroupAction,
     updateGroupAction,
     deleteGroupAction,
+    joinGroupAction,
+    queuedInviteAction,
+    leaveGroupAction
  } from "../../../tests/actions/group";
 
 describe("Group Reducers", () => {
@@ -33,6 +47,20 @@ describe("Group Reducers", () => {
             .toEqual(createGroupAction.payload.entities.groups);
         });
 
+        it("handles joining a group", () => {
+            expect(
+                byId({}, joinGroupSuccess(joinGroupData))
+            ).toEqual(joinGroupAction.payload.entities.groups);
+        });
+
+        it("handles leaving a group", () => {
+            expect(
+                byId(
+                    leaveGroupAction.payload.entities.groups, 
+                    leaveGroupSuccess(leaveGroupData))
+            ).toEqual({})
+        });
+
         it("handles deleting a group", () => {
             expect(
                 byId(
@@ -42,15 +70,22 @@ describe("Group Reducers", () => {
         });
 
         it("handles updating a group", () => {
+            const groupId = updateGroupAction.payload.result;
             expect(
                 byId(createGroupAction.payload.entities.groups, 
                     updateGroupSuccess(updateGroupData))
-            ).toEqual(updateGroupAction.payload.entities.groups)
+            ).toEqual({ 
+                ...updateGroupAction.payload.entities.groups,
+                [groupId]: { 
+                    ...createGroupAction.payload.entities.groups[groupId],
+                    name: updateGroupAction.payload.entities.groups[groupId].name
+                }
+            })
         });
 
         it("handles loading a user's groups", () => {
             expect(
-                byId({}, loadUserDataSuccess(userData))
+                byId({}, loadUserData(userData))
             ).toEqual(loadUserAction.payload.entities.groups)
         });
     });
@@ -65,6 +100,16 @@ describe("Group Reducers", () => {
             .toEqual(Object.keys(createGroupAction.payload.entities.groups));
         });
 
+        it("handles joining a group", () => {
+            expect(allIds([], joinGroupSuccess(joinGroupData)))
+            .toEqual(Object.keys(joinGroupAction.payload.entities.groups));
+        });
+
+        it("handles leaving a group", () => {
+            expect(allIds([], leaveGroupSuccess(leaveGroupData)))
+            .toEqual(Object.keys(leaveGroupData.payload.entities.groups));
+        });
+
         it("handles deleting a group", () => {
             expect(
                 allIds(Object.keys(createGroupAction.payload.entities.groups), 
@@ -73,7 +118,7 @@ describe("Group Reducers", () => {
         });
 
         it("handles loading a user's groups", () => {
-            expect(allIds([], loadUserDataSuccess(userData))
+            expect(allIds([], loadUserData(userData))
             ).toEqual(Object.keys(loadUserAction.payload.entities.groups))
         });
     });
@@ -114,9 +159,21 @@ describe("Group Reducers", () => {
             });
         });
 
+        it("handles selecting a newly joined group", () => {
+            expect(
+                select({
+                    currentId: "anyId",
+                    previousIds: []
+                }, joinGroupSuccess(joinGroupData))
+            ).toEqual({ 
+                currentId: joinGroupAction.payload.result, 
+                previousIds: ["anyId"] 
+            });
+        });
+
         it("handles loading a user's groups", () => {
             expect(
-                select(initialState, loadUserDataSuccess(userData))
+                select(initialState, loadUserData(userData))
             ).toEqual({ currentId: Object.keys(loadUserAction.payload.entities.groups)[0], previousIds: [] })
         });
 
@@ -127,6 +184,17 @@ describe("Group Reducers", () => {
                     deleteGroupSuccess(deleteGroupData)
                 )
             ).toEqual({ currentId: "anyId", previousIds: ["anotherId"] })
+        });
+    });
+
+    describe("queuedInvite (Group)", () => {
+        it("should return the initial state", () => {
+            expect(queuedInvite(undefined, {})).toEqual(null);
+        });
+
+        it("handles storing a group invite to be joined later", () => {
+            expect(queuedInvite(null, joinGroupQueuedInvite(queuedInviteData)))
+            .toEqual(queuedInviteAction.payload);
         });
     });
 });

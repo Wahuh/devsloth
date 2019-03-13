@@ -1,26 +1,28 @@
 import React, { Component } from "react";
-import Container from "../../reuse/Container";
-import ChangeUsername from "../ChangeUsername";
 import DeleteAccount from "../DeleteAccount";
 import UpdateEmail from "../UpdateEmail";
 import Menu from "../../reuse/Menu";
 import MenuItem from "../../reuse/MenuItem";
 import Typography from "../../reuse/Typography";
 import styles from "./UserSettings.scss";
+import UserLogout from "../UserLogout";
+import Column from "../../reuse/Column";
+import UserAccount from "../UserAccount";
 
 const screens = {
-    username: <ChangeUsername />,
-    email: <UpdateEmail />,
-    delete: <DeleteAccount />,
+    account: <UserAccount />,
+    userDelete: <DeleteAccount />,
+    logout: <UserLogout />
 }
 
 class UserSettings extends Component {
     state = {
-        screen: "username",
+        screen: "account",
         active: {
-            username: true,
+            account: true,
             email: false,
-            delete: false
+            userDelete: false,
+            logout: false,
         }
     }
 
@@ -33,35 +35,34 @@ class UserSettings extends Component {
 
     render() {
         const { screen, active } = this.state;
+        const { account, email, userDelete, logout } = active;
 
         return (
-            <div className={styles.UserSettings}>
-                <div className={styles.MenuContainer}>
-                    <Menu>
-                        <MenuItem active={active.username} onClick={() => this.changeScreen("username")}>
-                            <Typography type="button" color={active.username ? "secondary" : "tertiary"}>
-                                Change Username
-                            </Typography>
-                        </MenuItem>
-            
-                        <MenuItem active={active.email} onClick={() => this.changeScreen("email")}> 
-                            <Typography type="button" color={active.email ? "secondary" : "tertiary"}>
-                                Update Email
-                            </Typography>
-                        </MenuItem>
-            
-                        <MenuItem active={active.delete} onClick={() => this.changeScreen("delete")}>
-                            <Typography type="button" color={active.delete ? "secondary" : "tertiary"}>
-                                Delete Account
-                            </Typography>
-                        </MenuItem>
-                    </Menu>
-                </div>
+            <Column maxHeight maxWidth>
+                <Menu>
+                    <MenuItem active={active.account} onClick={() => this.changeScreen("account")}>
+                        <Typography type="description" color={account ? "secondary" : "primary"}>
+                            My Account
+                        </Typography>
+                    </MenuItem>
+        
+                    <MenuItem active={active.userDelete} onClick={() => this.changeScreen("userDelete")}>
+                        <Typography type="description" color={userDelete ? "secondary" : "primary"}>
+                            Delete Account
+                        </Typography>
+                    </MenuItem>
 
-                <Container>
+                    <MenuItem active={active.logout} onClick={() => this.changeScreen("logout")}>
+                        <Typography type="description" color={logout ? "secondary" : "primary"}>
+                            Logout
+                        </Typography>
+                    </MenuItem>
+                </Menu>
+
+                <Column maxHeight maxWidth>
                     {screens[screen]}
-                </Container>
-            </div>
+                </Column>
+            </Column>
         );
     }
 }

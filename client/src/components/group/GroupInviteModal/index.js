@@ -1,39 +1,70 @@
 import { connect } from "react-redux";
-import { hideUiModal } from "../../ui/duck/actions";
-import { getCurrentGroupInviteId } from "../../group/duck/selectors";
+import { removeUiModal } from "../../ui/duck/actions";
+import { getCurrentGroupName, getSelectedGroupName } from "../../group/duck/selectors";
 
 import React from "react";
-import Button from "../../reuse/Button";
-import CloseIcon from "../../reuse/icons/CloseIcon";
+import CloseButton from "../../reuse/buttons/CloseButton";
 import FloatInput from "../../reuse/FloatInput";
-import ModalContent from "../../reuse/ModalContent";
 import Modal from "../../reuse/Modal";
-import styles from "./GroupInviteModal.scss";
+import { getDefaultChannelInviteId, getCurrentChannelName, getSelectedChannelName } from "../../channel/duck/selectors";
+import Typography from "../../reuse/Typography";
+import ActionBar from "../../reuse/ActionBar";
+import Button from "../../reuse/Button";
+import { copyGroupInvite } from "../duck/actions";
+import { MODAL_GROUP_INVITE } from "../../ui/constants";
+import Column from "../../reuse/Column";
 
-const GroupInviteModal = ({ onHide, inviteId }) => {
+const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName, isMounted }) => {
+    let input = React.createRef();
     return (
-        <Modal onHide={onHide}>
-            <ModalContent>
-                <FloatInput 
-                    value={`${window.location.hostname}/invite/${inviteId}`}
-                    label="Invite Link"
-                    type="text"
-                    readOnly
-                    top
-                />
+        <Modal id="GROUP_INVITE" onHide={onHide}>
+            <Column maxHeight justifyContent="space-between">
+                <Column paddingTop="xl" paddingX="xl">
+                    <Typography margin="sm" type="heading" color="secondary">
+                        Invite members
+                    </Typography>
 
-                <Button onClick={onHide} theme="icon" className={styles.CloseButton}>
-                    <CloseIcon />
-                </Button>
-            </ModalContent>
+                    <Typography type="description" margin="sm" color="tertiary">
+                        To invite someone to <Typography color="primary" type="inline" bold text={groupName} />, just send them the link below:
+                    </Typography>
+
+                    <CloseButton onClick={onHide} />
+
+                    <FloatInput 
+                        innerRef={input}
+                        value={`${window.location.hostname}/invite/${inviteId}`}
+                        label="Invitation Link"
+                        type="text"
+                        readOnly
+                        top
+                    />
+                
+                    <Column>
+                        <Typography type="body" color="tertiary">
+                            This link redirects new members to the registration page if they don't have an account. After registering, they'll automatically join the <Typography color="primary" type="inline" bold text={`#${channelName}`} /> channel.
+                        </Typography>
+                    </Column>
+                </Column>
+
+                <ActionBar>
+                    <Button onClick={() => {
+                        input.current.select();
+                        document.execCommand("copy");
+                        onCopy(input.current.value);
+                    }} theme="secondaryAction" text="Copy Link" />
+                </ActionBar>
+            </Column>
         </Modal>
     );
 }
 
 const mapStateToProps = state => ({
-    inviteId: getCurrentGroupInviteId(state)
+    inviteId: getDefaultChannelInviteId(state),
+    channelName: getSelectedChannelName(state),
+    groupName: getSelectedGroupName(state)
 });
 
 export default connect(mapStateToProps, {
-    onHide: hideUiModal
+    onHide: () => removeUiModal(MODAL_GROUP_INVITE),
+    onCopy: copyGroupInvite
 })(GroupInviteModal);

@@ -1,74 +1,61 @@
 import React from "react";
+import Body from "./types/Body";
+import Caption from "./types/Caption";
+import Description from "./types/Description";
+import Inline from "./types/Inline";
+import Heading from "./types/Heading";
+import Subheading from "./types/Subheading";
+import Tooltip from "./types/Tooltip";
 import styles from "./Typography.scss";
+import Title from "./types/Title";
 //import colors from "../colors";
+const components = {
+    "body": Body,
+    "caption": Caption,
+    "description": Description,
+    "heading": Heading,
+    "subheading": Subheading,
+    "tooltip": Tooltip,
+    "inline": Inline,
+    "title": Title
+}
 
-const Typography = ({ color, children, overflow, type }) => {
+const aligns = {
+    "center": styles.center
+}
+
+const margins = {
+    "sm": styles.sm,
+    "md": styles.md,
+    "lg": styles.lg,
+    "none": styles.none
+}
+
+const weights = {
+    "bold": styles.bold
+}
+
+
+const Typography = ({ color, children, bold, type, text, margin, align, spacing }) => {
     const colors = {
         primary: styles.Primary,
         secondary: styles.Secondary,
         tertiary: styles.Tertiary,
+        quaternary: styles.Quaternary,
         error: styles.error
     };
 
-    const style = {
-        textOverflow: "",
-        overflow: "",
-        whiteSpace: "",
-        width: "",
+    let TextComponent = type ? components[type] : components["body"];
+    if (!TextComponent) {
+        TextComponent = components["body"];
     }
-
-    if (overflow) {
-        style.textOverflow = "ellipsis";
-        style.overflow = "hidden";
-        style.whiteSpace = "nowrap";
-        style.width = "10vw";
-    }
-    let text = children;
-    let textComponent = null;
-
-    switch(type) {
-        case "title":
-            textComponent = <h1 className={color ? `${styles.Title} ${colors[color]}` : styles.Title}>{text}</h1>
-            break;
-
-        case "h2":
-            textComponent = <h2 style={style} className={className}>{text}</h2>
-            break;
-
-        case "heading":
-            textComponent = <h3 className={color ? `${styles.Heading} ${colors[color]}` : styles.Heading}>{text}</h3>
-            break;
-
-        case "h4":
-            textComponent = <h4 style={style} className={className}>{text}</h4>
-            break;
-
-        case "body":
-            textComponent = <p className={color ? `${styles.Body} ${colors[color]}` : styles.Body}>{text}</p>
-            break;
-        
-        case "bullet":
-            textComponent = <p style={style} className={styles.Bullet}>{text}</p>
-            break;
-
-        case "subtitle":
-            textComponent = <h4 style={style} className={styles.Subtitle}>{text}</h4>
-            break;
-        
-        case "button":
-            textComponent = <p className={color ? `${styles.ButtonText} ${colors[color]}` : styles.ButtonText}>{text}</p>
-            break;
-        
-        case "caption":
-            textComponent = <p className={color ? `${styles.Caption} ${colors[color]}` : styles.Caption}>{text}</p>
-            break;
-
-        default:
-            textComponent = <p style={style} className={styles.Body}>{text}</p>
-            break;
-    }
-
-    return (textComponent);
+    return (
+        <TextComponent className={
+            `${colors[color]} ${margin ? margins[margin] : margins["none"]} ${bold && weights["bold"]} ${align && aligns[align]} ${spacing && styles.spacing}`}>
+            {text}
+            {children}
+        </TextComponent>
+    );
 }
 
 export default Typography;

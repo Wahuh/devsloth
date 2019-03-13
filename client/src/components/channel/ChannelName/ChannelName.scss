@@ -1,0 +1,16 @@
+.ChannelName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 0;
+    .ChannelHash {
+        color: var(--color-channel-hash);
+        margin-right: 4px;
+    }
+
+    h4 {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}

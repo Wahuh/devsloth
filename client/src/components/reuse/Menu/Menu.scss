@@ -1,11 +1,14 @@
 @import "../../../styles/color";
 
 .Menu {
+    display: flex;
+    flex-direction: row;
     list-style: none;
-    padding: 0;
-    margin: 0;
-    background-color: $secondary;
+    padding: 1.5rem 2rem;
+    border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    padding: 0.5rem;
+    margin: 0;
+    // box-shadow: inset 0px -2px 0px 0px black;
+    flex-shrink: 0;
+    position: relative;
 }

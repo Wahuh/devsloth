@@ -13,6 +13,11 @@ const memberSchema = new Schema({
         ref: "Channel"
     }],
 
+    tasks: [{
+        type: Schema.Types.ObjectId,
+        ref: "Task"
+    }],
+
     group: {
         type: Schema.Types.ObjectId,
         ref: "Group",

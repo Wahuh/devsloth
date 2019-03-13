@@ -1,34 +1,35 @@
 import { connect } from "react-redux";
-import { getIsFetching } from "../duck/selectors";
+import { getIsAuthenticated, getIsRejected } from "../duck/selectors";
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
-import SlackerLoader from "../SlackerLoader";
 import RegistrationForm from "../RegistrationForm";
 import LoginForm from "../LoginForm";
+import SlackerLoader from "../SlackerLoader";
+import Column from "../../reuse/Column";
 import styles from "./Authentication.scss";
 
-const Authentication = ({ isFetching, login }) => (
-    <div className={styles.Authentication}>
-        <div className={styles.FormContainer}>
-            <SlackerLoader />
-            
-            {login ? <LoginForm /> : <RegistrationForm />}
+const Authentication = ({ isAuthenticated, isRejected }) => (
+    isAuthenticated ? (
+        <Redirect to="/@me" />
+    ) : (
+        <Column alignItems="center" justifyContent="center" maxHeight maxWidth>
+            <section className={styles.Authentication}>
+                <SlackerLoader />
+                
+                <Route path="/register" component={RegistrationForm} />
+                <Route path="/login" component={LoginForm} /> 
 
-            <Link className={styles.AuthLink} onClick={isFetching ? e => e.preventDefault() : null} to={login ? "/register" : "/login"}>
-                {login ? "Register >" : "Login >"}
-            </Link>
-        </div>
-
-        <div className={styles.ContentContainer}>
-            hello
-        </div>
-    </div>
+                {isRejected && <Redirect to="/login" /> }
+            </section>
+        </Column>
+    )
 );
 
 const mapStateToProps = state => ({
-    isFetching: getIsFetching(state),
+    isAuthenticated: getIsAuthenticated(state),
+    isRejected: getIsRejected(state)
 });
 
 export default connect(mapStateToProps)(Authentication);

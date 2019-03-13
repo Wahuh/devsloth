@@ -154,8 +154,6 @@ export function normalise(data, schemaName) {
         task: taskSchema,
         channel: channelSchema,
     };
-    console.log(groupRefSchema);
-    console.log(schemas[schemaName]);
 
     const normalizrData = normalize(data, schemas[schemaName]);
     let normalised = {}
@@ -179,9 +177,5 @@ const ndata= { users: [],
        name: 'Global',
        __v: 4 },
     __v: 0 }
-
-
-// const be = normalise(data, "user");
-// console.log("normalizing", be);
 
 export default normalise;

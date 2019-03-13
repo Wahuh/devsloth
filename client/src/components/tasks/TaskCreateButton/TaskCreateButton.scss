@@ -1,0 +1,15 @@
+.TaskCreateButton {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-700);
+    border-radius: 3px;
+    cursor: pointer;
+    // box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
+    border: 1px solid var(--color-800);
+
+    padding: 0.5rem 0.75rem;
+    flex: 0 0 auto;
+    width: 16rem;
+    margin-top: 0.5rem;
+    justify-content: space-between;
+}

@@ -11,6 +11,9 @@ export const loginAuthRequest = createAction(types.AUTH_LOGIN_REQUEST);
 export const loginAuthSuccess = createAction(types.AUTH_LOGIN_SUCCESS);
 export const loginAuthFailure = createAction(types.AUTH_LOGIN_FAILURE, null, metaCreator);
 
+export const logoutAuth = createAction(types.AUTH_LOGOUT);
+export const logoutAuthSuccess = createAction(types.AUTH_LOGOUT_SUCCESS);
+
 export const jwtAuthRequest = createAction(types.AUTH_JWT_REQUEST);
 export const jwtAuthSuccess = createAction(types.AUTH_JWT_SUCCESS);
 export const jwtAuthFailure = createAction(types.AUTH_JWT_FAILURE, null, metaCreator);

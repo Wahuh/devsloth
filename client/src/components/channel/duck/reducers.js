@@ -1,114 +1,117 @@
 import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 import { 
-    mergeObject,
-    mergeArray,
-    removeFromArray,
-    removeFromObject,
-    removeFromObjectByMatch
- } from "../../../utils";
-
-import { 
     createGroupSuccess,
-    deleteGroupSuccess
+    deleteGroupSuccess,
+    joinGroupSuccess,
+    addGroup,
+    removeGroup
 } from "../../group/duck/actions";
 import {
     createChannelSuccess,
     deleteChannelSuccess,
     updateChannelSuccess,
-    selectChannel
+    selectChannel,
+    receiveChannelCreate,
+    addChannel,
+    removeChannels
 } from "./actions";
+import { loadUserData } from "../../user/duck/actions";
 
 export const byId = handleActions(
     {
-        [createGroupSuccess]: (state, { payload }) => addChannel(state, payload),
-        [deleteGroupSuccess]: (state, { payload }) => removeGroupChannels(state, payload),
-        [createChannelSuccess]: (state, { payload }) => addChannel(state, payload),
-        [deleteChannelSuccess]: (state, { payload }) => removeChannel(state, payload),
+        [loadUserData]: (state, { payload }) => addChannels(state, payload),
+        [addChannel]: (state, { payload }) => addChannels(state, payload),
+        [addGroup]: (state, { payload }) => addChannels(state, payload),
+        [removeChannels]: (state, { payload }) => deleteChannels(state, payload),
+        [updateChannelSuccess]: (state, { payload }) => updateChannel(state, payload),
+        // [deleteChannelSuccess]: (state, { payload }) => removeChannel(state, payload),
+        [receiveChannelCreate]: (state, { payload }) => addChannels(state, payload),
     }, {}
 );
 
 export const allIds = handleActions(
     {
-        [createChannelSuccess]: (state, { payload }) => addChannelId(state, payload),
-        [deleteChannelSuccess]: (state, { payload }) => removeChannelId(state, payload),
-        [createGroupSuccess]: (state, { payload }) => addChannelId(state, payload),
-        [deleteGroupSuccess]: (state, { payload }) => removeGroupChannelIds(state, payload),
+        [loadUserData]: (state, { payload }) => addChannelIds(state, payload),
+        [addChannel]: (state, { payload }) => addChannelIds(state, payload),
+        [addGroup]: (state, { payload }) => addChannelIds(state, payload),
+        [removeChannels]: (state, { payload }) => deleteChannelIds(state, payload),
+        // [deleteChannelSuccess]: (state, { payload }) => removeChannelId(state, payload),
     }, []
 );
 
-export const currentIds = handleActions(
+export const selectedIds = handleActions(
     {
-        [selectChannel]: (state, { payload }) => updateCurrentChannelIdFromSelect(state, payload),
-        [createChannelSuccess]: (state, { payload }) => updateCurrentChannelId(state, payload),
-        [deleteChannelSuccess]: (state, { payload }) => deleteCurrentChannelId(state, payload),
-        [createGroupSuccess]: (state, { payload }) => updateCurrentChannelIdFromGroup(state, payload),
-        [deleteGroupSuccess]: (state, { payload }) => removeGroupId(state, payload)
+        [loadUserData]: (state, { payload }) => mapGroupsToChannels(state, payload),
+        [addChannel]: (state, { payload }) => updateSelectedChannel(state, payload),
+        [selectChannel]: (state, { payload }) => addChannelToMap(state, payload),
     }, {}
 );
 
-const addChannel = (state, { entities }) => {
-    console.log(entities)
+
+//group delete action, deletes all channels of the same group
+
+const addChannels = (state, { entities }) => {
     const { channels } = entities;
-    return mergeObject(state, channels);
+    return { ...state, ...channels };
 }
 
-const addChannelId = (state, { entities }) => {
+const addChannelIds = (state, { entities }) => {
     const { channels } = entities;
-    return mergeArray(state, Object.keys(channels));
-}
-
-const removeChannel = (state, { _id }) => {
-    return removeFromObject(state, _id)
-}
-
-const removeChannelId = (state, { _id }) => {
-    return removeFromArray(state, _id)
-}
-
-const removeGroupChannels = (state, { _id }) => {
-    //if the group property of a channel matches the supplied group id, remove it
-    return removeFromObjectByMatch(state, "group", _id);
-}
-
-const removeGroupChannelIds = (state, { _id, channelIds }) => {
-    return state.filter(id => !channelIds.includes(id));
-    //if the group property of a channel matches the supplied group id, remove it
-}
-
-const updateCurrentChannelId = (state, { entities, result: channelId }) => {
-    const { channels } = entities;
-    const { group } = channels[channelId];
-    return { ...state, [group]: channelId };
-};
-
-const updateCurrentChannelIdFromGroup = (state, { entities, result: groupId }) => {
-    const { channels } = entities;
-    const channelId = Object.keys(channels)[0];
-    return { ...state, [groupId]: channelId };
-}
-
-const deleteCurrentChannelId = (state, { _id }) => {
-    const result = Object.values(state).some(v => v === _id);
-    if (result) {
-        return Object.entries(state)
-        .map( ([k, v]) => v === _id ? [k, null] : [k, v] )
-        .reduce((accum, [k, v]) => {
-            accum[k] = v;
-            return accum;
-        }, {})
+    if (channels) {
+        return [ ...state, ...Object.keys(channels) ];
     }
     return state;
 }
 
-const updateCurrentChannelIdFromSelect = (state, map) => {
-    return { ...state, ...map };
-} 
+const updateChannel = (state, { entities, result: channelId }) => {
+    const { channels } = entities;
 
-const removeGroupId = (state, { _id }) => removeFromObject(state, _id);
+    const updatedChannel = channels[channelId];
+    const channel = { ...state[channelId] };
+    channel.name = updatedChannel.name;
+    channel.topic = updatedChannel.topic;
+    return { ...state, [channelId]: channel };
+}
+
+const mapGroupsToChannels = (state, { entities }) => {
+    const { groups, channels } = entities;
+    if (groups) {
+        const groupIds = Object.keys(groups);
+        return groupIds
+        .reduce( (object, groupId) => ({ ...object, [groupId]: groups[groupId].channels.find(
+                channelId => channels[channelId].group === groupId && channels[channelId].isDefault
+            ) 
+        }), {});
+    }
+}
+
+const addChannelToMap = (state, payload) => {
+    return { ...state, ...payload };
+}
+
+const updateSelectedChannel = (state, { entities, result: channelId }) => {
+    const { channels } = entities;
+    const { group: groupId } = channels[channelId];
+    return { ...state, [groupId]: channelId };
+}
+
+const deleteChannels = (state, { result: channelIds }) => {
+    console.log(channelIds);
+    const result = channelIds.reduce((total, key) => {
+        const { [key]: dummy, ...remainder } = total;
+        return remainder;
+    }, state);
+    console.log(result, "DELETED CHANNELS", state);
+    return result;
+}
+
+const deleteChannelIds = (state, { result: channelIds }) => {
+    return state.filter(channelId => !channelIds.includes(channelId));
+}
 
 export default combineReducers({
     byId,
     allIds,
-    currentIds
+    selectedIds
 });

@@ -1,53 +1,64 @@
 import { connect } from "react-redux";
-import { getAllTasks } from "../duck/selectors";
-import { showUiModal } from "../../ui/duck/actions";
+import { getSelectedChannelId } from "../../channel/duck/selectors";
 
-import React from "react";
-import AddButton from "../../reuse/buttons/AddButton";
-import List from "../../reuse/List";
-import ListItem from "../../reuse/ListItem";
-import Row from "../../reuse/Row";
-import Typography from "../../reuse/Typography";
-import Button from "../../reuse/Button";
-import PlusIcon from "../../reuse/icons/PlusIcon";
-import Task from "../Task";
+import React, { Component } from "react";
+import AutoSizer from "react-virtualized-auto-sizer";
+import { arrayMove } from "react-sortable-hoc";
+import SortableList from "./VirtualList";
+import { getListTasks } from "../duck/selectors";
 import styles from "./TaskList.scss";
+import { moveTaskRequest } from "../duck/actions";
 
-const TaskList = ({ tasks, onShowModal }) => {
-    const taskItems = tasks.map(task => 
-        <ListItem className={styles.TaskItem}>
-            <Task name={task.name} />
-        </ListItem>
-    ); 
 
-    return (
-        <List className={styles.TaskList}>
-            <ListItem className={styles.TaskHeading}>
-                <Row alignItems="center">
-                    <Typography color="tertiary" type="heading">Tasks</Typography>
-                    <AddButton onClick={onShowModal} className={styles.AddButton} />
-                </Row>
-            </ListItem>
-            <ListItem>
-                <Row>
-                    <Button theme="outlined" className={styles.TaskListButton}>
-                    <Typography color="tertiary" type="button">Active</Typography>
-                    </Button>
+class TaskList extends Component {
+    registerListRef = (listInstance) => {
+        this.List = listInstance;
+    };
 
-                    <Button theme="outlined" className={styles.TaskListButton}>
-                        <Typography color="tertiary" type="button">Done</Typography>
-                    </Button>
-                </Row>
-            </ListItem>
-            {taskItems}
-        </List>
-    );
+    handleSortEnd = ({ oldIndex, newIndex }) => {
+        const { tasks, onMove } = this.props;
+        if (oldIndex === newIndex) {
+            return;
+        }
+        const movedId = tasks[oldIndex]._id;
+        if (oldIndex > 0) {
+            onMove({ 
+                beforeOldIndex: { _id: tasks[oldIndex - 1]._id, next: tasks[oldIndex + 1]._id },
+                newIndex: { _id: movedId, next: tasks[newIndex + 1]._id },
+                beforeNewIndex: { _id: tasks[newIndex]._id, next: movedId }, 
+            });
+        } else {
+            onMove({
+                newIndex: { _id: movedId, next: tasks[newIndex + 1]._id },
+                beforeNewIndex: { _id: tasks[newIndex]._id, next: movedId }, 
+            });
+        }
+    }
+
+    render() {
+        const { tasks } = this.props;
+
+        return tasks ? (
+            <div className={styles.ListWrapper}>
+                <AutoSizer>
+                    {({ height }) => (
+                        <SortableList
+                            getRef={this.registerListRef}
+                            tasks={tasks}
+                            height={height}
+                            onSortEnd={this.handleSortEnd}
+                        />
+                    )}
+                </AutoSizer>
+            </div>
+        ) : null;
+    }
 }
 
-const mapStateToProps = state => ({
-    tasks: getAllTasks(state)
+const mapStateToProps = (state, ownProps) => ({
+    tasks: getListTasks(state, ownProps._id),
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: () => showUiModal("TASK")
+    onMove: moveTaskRequest
 })(TaskList);

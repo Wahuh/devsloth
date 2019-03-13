@@ -1,0 +1,35 @@
+.Toast {
+    position: fixed;
+    background-color: var(--color-900);
+    display: flex;
+    flex-direction: row;
+    min-width: 300px;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    border-radius: 2px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+
+    .Status {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0 10px;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+    }
+
+    .Message {
+        width: 100%;
+        padding: 0.7rem 1rem;
+    }
+}
+
+.Success {
+    background-color: var(--color-success);
+}
+
+.Failure {
+    background-color: var(--color-error);
+}

@@ -1,0 +1,31 @@
+.ListCreateForm {
+    input {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        
+        background-color: var(--color-700);
+        border-radius: 5px;
+        width: 300px;
+        align-self: flex-start;
+        line-height: 1.5rem;
+        margin-left: 1rem;
+        margin: 0 0 1rem 0.75rem;
+        padding: 0.5rem 1rem;
+        flex-shrink: 0;
+    }
+
+    .input::placeholder {
+        opacity: 1;
+        color: var(--color-placeholder);
+    }
+    
+    .input:placeholder-shown {
+        opacity: 1;
+        color: var(--color-placeholder);
+    }
+    
+
+    button {
+        margin-left: 0.5rem;
+    }
+}

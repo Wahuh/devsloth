@@ -12,6 +12,6 @@ const {
 
 me.get("/", auth, wrapAsync(getCurrentUser));
 me.delete("/", auth, wrapAsync(removeUser));
-me.patch("/", auth, wrapAsync(updateUser));
+me.put("/", auth, wrapAsync(updateUser));
 
 module.exports = me;

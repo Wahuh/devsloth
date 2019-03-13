@@ -1,5 +1,42 @@
 @import "../../../styles/color";
 
+.SpinnerSmall {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    :first-child {
+        content: '';
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid white;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+    :nth-child(2) {
+        content: '';
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid white;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+}
+
 .SpinnerContainer {
     width: 60px;
     height: 60px;

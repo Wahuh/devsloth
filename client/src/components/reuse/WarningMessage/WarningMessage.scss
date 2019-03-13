@@ -1,0 +1,9 @@
+.WarningMessage {
+    background-color: var(--color-warning);
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: 1px solid #faebcc;
+    > * {
+        color: #8a6d3b;
+    }
+}

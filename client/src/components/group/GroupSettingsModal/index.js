@@ -1,25 +1,28 @@
 import { connect } from "react-redux";
-import { hideUiModal } from "../../ui/duck/actions";
+import { removeUiModal } from "../../ui/duck/actions";
 
 import React, { Component } from "react";
 import GroupEditForm from "../GroupEditForm";
 import GroupRolesEdit from "../GroupRolesEdit";
+import GroupLeaveForm from "../GroupLeaveForm";
 import GroupDeleteForm from "../GroupDeleteForm";
 
 import Button from "../../reuse/Button";
-import CloseIcon from "../../reuse/icons/CloseIcon";
-import Container from "../../reuse/Container";
+import CloseButton from "../../reuse/buttons/CloseButton";
 import Modal from "../../reuse/Modal";
-import ModalContent from "../../reuse/ModalContent";
 import Menu from "../../reuse/Menu";
 import MenuItem from "../../reuse/MenuItem";
 import Typography from "../../reuse/Typography";
-import styles from "./GroupSettingsModal.scss";
+import { error } from "util";
+import { MODAL_GROUP_SETTINGS } from "../../ui/constants";
+import { getMemberIsOwner, getMemberIdUser } from "../../members/duck/selectors";
+import Column from "../../reuse/Column";
 
 const screens = {
     groupEdit: <GroupEditForm />,
-    rolesEdit: <GroupRolesEdit />,
-    groupDelete: <GroupDeleteForm />
+    // rolesEdit: <GroupRolesEdit />,
+    groupDelete: <GroupDeleteForm />,
+    groupLeave: <GroupLeaveForm />
 }
 
 class GroupSettingsModal extends Component {
@@ -29,6 +32,7 @@ class GroupSettingsModal extends Component {
             groupEdit: true,
             rolesEdit: false,
             rolesAssign: false,
+            groupLeave: false,
             groupDelete: false
         }
     }
@@ -41,21 +45,21 @@ class GroupSettingsModal extends Component {
     }
 
     render() {
-        const { onHide } = this.props;
+        const { onHide, isOwner } = this.props;
         const { screen, active } = this.state;
-        const { groupEdit, rolesEdit, rolesAssign, groupDelete } = active;
+        const { groupEdit, rolesEdit, rolesAssign, groupDelete, groupLeave } = active;
 
         return (
-            <Modal onHide={onHide}>
-                <ModalContent>
-                    <Menu className={styles.SettingsMenu}>
+            <Modal size="lg" onHide={onHide}>
+                <Column maxHeight maxWidth>
+                    <Menu>
                         <MenuItem active={groupEdit} onClick={() => this.changeScreen("groupEdit")}>
-                            <Typography type="button" color={groupEdit ? "secondary" : "primary"}>
+                            <Typography type="description" color={groupEdit ? "secondary" : "primary"}>
                                 Overview
                             </Typography>
                         </MenuItem>
 
-                        <MenuItem active={rolesEdit} onClick={() => this.changeScreen("rolesEdit")}>
+                        {/* <MenuItem active={rolesEdit} onClick={() => this.changeScreen("rolesEdit")}>
                             <Typography type="button" color={rolesEdit ? "secondary" : "primary"}>
                                 Edit Roles
                             </Typography>
@@ -65,28 +69,37 @@ class GroupSettingsModal extends Component {
                             <Typography type="button" color={rolesAssign ? "secondary" : "primary"}>
                                 Assign Roles
                             </Typography>
-                        </MenuItem>
+                        </MenuItem> */}
+                        {!isOwner && 
+                            <MenuItem active={groupLeave} onClick={() => this.changeScreen("groupLeave")}>
+                                <Typography type="description" color="error">
+                                    Leave Group
+                                </Typography>
+                            </MenuItem>
+                        }
 
+                        {isOwner && 
                         <MenuItem active={groupDelete} onClick={() => this.changeScreen("groupDelete")}>
-                            <Typography type="button" color="error">
+                            <Typography type="description" color="error">
                                 Delete Group
                             </Typography>
                         </MenuItem>
+                    }
                     </Menu>
-
-                    <Container>
+                    <Column maxHeight maxWidth>
                         {screens[screen]}
-                    </Container>
-
-                    <Button onClick={onHide} theme="icon" className={styles.CloseButton}>
-                        <CloseIcon />
-                    </Button>
-                </ModalContent>
+                    </Column>
+                </Column>
+                <CloseButton onClick={onHide} />
             </Modal>
         );
     }
 }
 
-export default connect(null, {
-    onHide: hideUiModal
+const mapStateToProps = state => ({
+    isOwner: getMemberIsOwner(state, getMemberIdUser(state))
+});
+
+export default connect(mapStateToProps, {
+    onHide: () => removeUiModal(MODAL_GROUP_SETTINGS),
 })(GroupSettingsModal);

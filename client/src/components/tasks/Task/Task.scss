@@ -1,11 +1,56 @@
+@import "../../../styles/fonts";
+
 .Task {
+    background-color: var(--color-300);
+    width: 16rem;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid var(--color-800);
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.5rem;
 
+    display: inline-block;
+    position: relative;
+
+    p {
+        overflow-wrap: break-word;
+    }
+
+    .TaskEditButton {
+        background-color: transparent;
+        padding: 0.2rem;
+        visibility: hidden;
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        border-radius: 3px;
+        svg {
+            fill: var(--color-font-quaternary);
+        }
+    }
+    .TaskEditButton:hover {
+        background-color: var(--color-secondary);
+    }
 }
 
-.TaskButton {
-    background-color: transparent;
+.Task:hover {
+    .TaskEditButton {
+        visibility: visible;
+    }
+    background-color: var(--color-primary-hover);
 }
 
-.TaskName {
-    margin-right: 1rem;
+.Task:last-child {
+    margin-bottom: 0;
+}
+
+
+.TextMock {
+    font-family: $main-font;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    overflow-wrap: break-word;
+    max-width: calc(16rem - 26px);
 }

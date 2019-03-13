@@ -1,58 +1,57 @@
 @import "../../../styles/color";
 @import "../../../styles/fonts";
 
-.InputContainer {
-    display: flex;
-    flex-direction: row;
-}
-
-.PasswordButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    fill: var(--color-primary-font);
-    background-color: transparent;
-}
-
 .FloatInput {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     width: 100%;
-    border: 1px solid transparent;
+    height: 4rem;
     border-radius: 5px;
-    padding: 0.4rem 0.5rem;
-    background-color: var(--color-primary);
+    padding: 0.375rem 0.75rem;
+    background-color: var(--color-700);
+    border: 1px solid var(--color-900);
+    margin-bottom: 1rem;
+
+    .Input {
+        outline: none;
+        border: none;   
+        font-family: $main-font;
+        font-size: 1rem;
+        color: var(--color-primary-font);
+        caret-color: var(--color-primary-font);
+        width: 100%;
+        background-color: var(--color-700);
+        padding: 0;
+
+    }
+    
+    .Input::placeholder {
+        opacity: 1;
+        color: var(--color-placeholder);
+    }
+    
+    .Input:placeholder-shown {
+        opacity: 1;
+        color: var(--color-placeholder);
+    }
+    
+    .Input:invalid {
+        box-shadow: none; //disables red input border on Firefox
+    }
+    
+    .Input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px var(--color-700) inset;
+        -webkit-text-fill-color: var(--color-primary-font) !important;
+    }
+    
+    .Input:focus {
+        outline: none; 
+    }
 }
 
-.FloatInputFocused {
-    outline: none;
-    border: 1px solid $primary-action;
-}
 
-.FloatInputError {
-    outline: none;
-    border: 1px solid $error;
-}
 
-.Input {
-    outline: none;
-    border: none;   
-    font-family: $main-font;
-    font-size: 1rem;
-    color: var(--color-primary-font);
-    caret-color: var(--color-primary-font);
-    width: 100%;
-    background-color: var(--color-primary);
-}
-
-.Input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px var(--color-primary) inset;
-    -webkit-text-fill-color: var(--color-primary-font) !important;
-}
-
-.Input:focus {
-    outline: none; 
-}
 
 .Label {
     flex-shrink: 0;
@@ -77,13 +76,22 @@
 .LabelContainer {
     display: flex;
     flex-direction: row;
-    height: 100%;
 }
 
 .LabelContainer > * {
-    margin-right: 0.4rem;
+    margin-right: 0.25rem;
 }
 
 .Delete {
     
+}
+
+.isFocused {
+    outline: none;
+    border: 1px solid var(--color-focus);
+}
+
+.isError {
+    outline: none;
+    border: 1px solid var(--color-error);
 }

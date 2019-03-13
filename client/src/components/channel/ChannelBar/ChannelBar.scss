@@ -1,0 +1,23 @@
+@import '../../../styles/layout';
+
+@media #{$Mobile} {
+    .ChannelBar {
+        display: none;
+    }
+}
+
+@media #{$Tablet}  {
+    .ChannelBar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+@media #{$Desktop} {
+    .ChannelBar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}

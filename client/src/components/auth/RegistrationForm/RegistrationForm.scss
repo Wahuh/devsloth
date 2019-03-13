@@ -1,43 +1,7 @@
 @import "../../../styles/color";
 @import "../../../styles/layout";
 
-@media #{$Tablet}  {
-    .RegistrationForm {
-        width: 50%;
-    }
-
-    .RegistrationForm > * {
-        margin-bottom: 1rem;
-    }
-}
-
-@media #{$Desktop} {
-    .RegistrationForm {
-        width: 50%;
-    }
-
-    .RegistrationForm > * {
-        margin-bottom: 1rem;
-    }
-}
-
-@media #{$Mobile} {
-    .RegistrationForm {
-        width: 100%;
-    }
-
-    .RegistrationForm > * {
-        margin-bottom: 0.5rem;
-    }
-}
-
-.RegistrationForm {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-}
-
-
-.FloatInput {
-    position: relative;
+.LoginLink {
+    color: var(--color-primary-action-light);
+    text-decoration: none;
 }

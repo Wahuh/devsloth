@@ -1,51 +1,50 @@
-import { take, put, call, apply, fork } from "redux-saga/effects";
-import socketApi from "../../../api/socketApi";
-import { CHAT_MESSAGE_SEND_REQUEST, CHAT_TYPING_REQUEST } from "./types";
-import { CHANNEL_SELECT } from "../../channel/duck/types";
-import { receiveChatMessageSuccess } from "./actions";
+import { take, put, call, apply, throttle, takeLatest } from "redux-saga/effects";
+import { CHAT_MESSAGE_SEND_REQUEST, CHAT_TYPING_REQUEST, CHAT_MESSAGE_RECEIVE, CHAT_TYPING_START } from "./types";
+import { sendChatMessage, startChatTyping, stopChatTyping, receiveChatMessage } from "./actions";
+import { delay } from "redux-saga";
+import { MEMBER_JOIN } from "../../members/duck/types";
 
-import { normalize } from "normalizr";
-import schemas from "../../../schemas";
-
-export function* watchConnection() {
-    const socket = yield call(socketApi.connect);
-    const socketChannel = yield call(socketApi.createSocketChannel, socket);
-    yield fork(watchChannelSelect, socket);
-    yield fork(watchSendMessageRequest, socket);
-    yield fork(watchTyping, socket);
-    let _id = 0;
-    while(true) {
-        const action = yield take(socketChannel);
-        yield put(action);
-        // console.log("act", action)
-        // payload._id = _id;
-        // console.log(payload);
-        // const normalized = yield call(normalize, payload, schemas.message);
-        // console.log("normalized", normalized);
-        // yield put(receiveChatMessageSuccess(normalized));
-        // _id += 1;
-    }
-}
-
-function* watchChannelSelect(socket) {
-    while(true) {
-        const { payload } = yield take(CHANNEL_SELECT);
-        console.log("socketpayload", payload);
-        yield apply(socket, socket.emit, ["channel", payload]);
-    }
-}
-
-function* watchSendMessageRequest(socket) {
+export function* watchSendMessage() {
     while(true) {
         const { payload } = yield take(CHAT_MESSAGE_SEND_REQUEST);
-        console.log("chatpayload", payload);
-        yield apply(socket, socket.emit, ["chat", payload]);
+        yield put(sendChatMessage(payload));
     }
 }
 
-function* watchTyping(socket) {
+export function* watchMemberJoin() {
     while(true) {
-        const { payload } = yield take(CHAT_TYPING_REQUEST);
-        yield apply(socket, socket.emit, ["typing", payload]);
+        const { payload } = yield take(MEMBER_JOIN);
+        const { entities, result: memberId } = payload;
+        const { members } = entities;
+        const member = members[memberId];
+        const { channels: channelIds, alias } = member;
+        const message = {
+            text: `${alias} has joined the group`,
+            channelId: channelIds[0],
+            memberId,
+            notification: true,
+            timestamp: Date.now()
+        };
+        yield put(receiveChatMessage(message));
     }
 }
+
+export function* watchTyping() {
+    yield throttle(500, CHAT_TYPING_REQUEST, handleTyping);
+}
+
+export function* watchStopTyping() {
+    yield takeLatest(CHAT_TYPING_START, handleStopTyping);
+}
+
+function* handleTyping(action) {
+    const { payload } = action; 
+    yield put(startChatTyping(payload));
+}
+
+function* handleStopTyping(action) {
+    yield delay(500)
+    const { payload } = action;
+    yield put(stopChatTyping(payload));
+}
+

@@ -1,33 +1,6 @@
 @import "../../../styles/fonts";
 @import "../../../styles/color";
 
-.Body {
-	font-family: $main-font;
-	font-size: 1rem;
-	line-height: 1.5rem;
-	margin-bottom: 1rem;
-	margin-top: 0;
-}
-
-
-.Heading {
-	font-size: 1.2rem;
-	line-height: 1.5em;
-	margin: 0;
-	font-weight: 500;
-	font-family: $main-font;
-}
-
-.Bullet {
-	font-family: $main-font;
-	font-size: 1rem;
-	line-height: 1.5rem;
-	margin: 0;
-	display: list-item;
-    list-style-type: disc;
-    list-style-position: inside;
-}
-
 .Title {
 	font-size: 3rem;
 	line-height: 1.5em;
@@ -36,57 +9,59 @@
 	font-family: $main-font;
 }
 
-.ButtonText {
-	font-family: $main-font;
-	font-size: 1rem;
-	line-height: 1.5rem;
-	margin: 0;
-}
-
-.Body2 {
-	font-family: $main-font;
-	font-size: 1rem;
-	line-height: 1.5rem;
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.Body3 {
-	font-family: $main-font;
-	font-size: 13px;
-	line-height: 23px;
-	margin-bottom: 17px;
-	margin-top: 0;
-}
-
-.Caption {
-	font-family: $main-font;
-	font-size: 0.85rem;
-	line-height: 1.5em;
-	margin: 0;
-}
-
 .Subtitle {
 	font-family: $main-font;
-	font-size: 16px;
-	font-weight: bold;
+	font-size: 1.5rem;
+	font-weight: 500;
 	line-height: 1.5rem;
-	margin-bottom: 0;
+	margin-bottom: 1rem;
 	margin-top: 0;
 }
 
 .Primary {
-    color: var(--color-primary-font);
+    color: var(--color-font-primary);
 }
 
 .Secondary {
-    color: var(--color-secondary-font);
+    color: var(--color-font-secondary);
 }
 
 .Tertiary {
-	
+	color: var(--color-font-tertiary);
+}
+
+.Quaternary {
+	color: var(--color-font-quaternary);
 }
 
 .error {
 	color: var(--color-error);
+}
+
+.sm {
+	margin-bottom: 0.5rem;
+}
+
+.md {
+	margin-bottom: 1rem;
+}
+
+.lg {
+	margin-bottom: 1.5rem;
+}
+
+.none {
+	margin: 0 !important;
+}
+
+.bold {
+	font-weight: 500;
+}
+
+.center {
+	text-align: center;
+}
+
+.spacing {
+	letter-spacing: 0.1rem;
 }

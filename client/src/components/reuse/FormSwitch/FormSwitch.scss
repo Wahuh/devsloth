@@ -1,0 +1,63 @@
+.FormSwitch {
+    display: inline-block;
+
+    label {
+        display: flex;
+        flex-direction: row;
+    }
+
+    input {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+        position: absolute;
+    }
+
+    .Switch {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        width: 5.5rem;
+     
+        border-radius: 1.5rem;
+        position: relative;
+        margin-right: 1rem;
+        transition: background-color 0.3s;
+        .SwitchText {
+            width: 4rem;
+            transition: all 0.3s;
+        }
+
+        .Handle {
+            position: absolute;
+            height: 1.5rem;
+            width: 1.5rem;
+            background-color: white;
+            border-radius: 100%;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    .On {
+        background-color: var(--color-primary-action);
+        .SwitchText {
+            margin-left: 0;
+        }
+
+        .Handle {
+            left: calc(100% - 1.5rem);
+        }
+    }
+
+    .Off {
+        background-color: var(--color-focus);
+        .SwitchText {
+            margin-left: 1.5rem;
+        }
+        .Handle {
+            left: 0;
+        }
+    }
+}

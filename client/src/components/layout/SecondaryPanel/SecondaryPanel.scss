@@ -2,12 +2,16 @@
 @import "../../../styles/color";
 
 @media #{$Tablet}  {
-
+    .SecondaryPanel {
+        display: none;
+        height: calc(100vh - 4rem);
+    }
 }
 
 @media #{$Desktop} {
     .SecondaryPanel {
-        width: 40%;
+        flex: 0 0 calc(300px + 4rem);
+        height: calc(100vh - 4rem);
     }
 }
 
@@ -16,11 +20,12 @@
         position: fixed;
         transform: translate3d(150vw, 0, 0);
         width: 50vw;
+        height: calc(100vh - 3rem);
     }
 }
 
 .SecondaryPanel { 
-    height: 100%;
-
-    background-color: var(--color-primary);
+    background-color: var(--color-600);
+    border-left: 2px solid var(--color-tertiary);
+    overflow-x: hidden;
 }

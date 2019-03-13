@@ -1,0 +1,13 @@
+.GroupModalButton {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    fill: var(--color-group-list-button-fill);
+    background-color: var(--color-action);
+    svg {
+        flex-shrink: 0;
+    }
+}

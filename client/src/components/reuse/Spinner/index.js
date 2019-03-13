@@ -1,10 +1,16 @@
 import React, { Fragment } from "react";
+import classNames from "classnames";
 import styles from "./Spinner.scss";
 
-const Spinner = ({ spin }) => (
-    <div className={styles.SpinnerContainer}>
-        <div className={spin ? `${styles.Spinner} ${styles.Spin}` : styles.Spinner}></div>
-        <div className={spin ? `${styles.InnerSpinner} ${styles.SpinSlow}` : styles.InnerSpinner}></div>
+const sizes = {
+    "sm": styles.SpinnerSmall,
+    "lg": styles.SpinnerContainer
+};
+
+const Spinner = ({ spin, size }) => (
+    <div className={classNames(sizes[size])}>
+        <div className={classNames({ [styles.Spin]: spin })}></div>
+        <div className={classNames({ [styles.SpinSlow]: spin })}></div>
     </div>
 );
 

@@ -2,34 +2,26 @@ import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 import {
     sendChatMessageSuccess, 
-    receiveChatMessageSuccess,
-    receiveChatTypingSuccess
+    receiveChatMessage
 } from "./actions";
 import { mergeObject, mergeArray } from "../../../utils";
 
 const byId = handleActions(
     {
         [sendChatMessageSuccess]: (state, { payload }) => addMessage(state, payload),
-        [receiveChatMessageSuccess]: (state, { payload }) => addMessage(state, payload),
+        [receiveChatMessage]: (state, { payload }) => addMessage(state, payload),
     }, {}
 );
 
 const allIds = handleActions(
     {
         [sendChatMessageSuccess]: (state, { payload }) => addMessageId(state, payload),
-        [receiveChatMessageSuccess]: (state, { payload }) => addMessageId(state, payload),
-    }, []
-);
-
-const isTyping = handleActions(
-    {
-        [receiveChatTypingSuccess]: (state, { payload }) => state.indexOf(payload) > -1 ? state : [ ...state, payload ]
+        [receiveChatMessage]: (state, { payload }) => addMessageId(state, payload),
     }, []
 );
 
 const addMessage = (state, { entities }) => {
     const { messages } = entities;
-    console.log("merge", mergeObject(state, messages));
     return mergeObject(state, messages);
 }
 
@@ -40,5 +32,4 @@ const addMessageId = (state, { result }) => {
 export default combineReducers({
     byId,
     allIds,
-    isTyping
 });

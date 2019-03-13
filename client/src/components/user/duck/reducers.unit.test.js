@@ -2,7 +2,7 @@ import {
     id,
     email,
 } from "./reducers";
-import { loadUserDataSuccess } from "./actions";
+import { loadUserData } from "./actions";
 
 import { userData } from "../../../tests/data/user";
 import { loadUserPayload } from "../../../tests/payloads/user";
@@ -16,7 +16,7 @@ describe("User Reducers", () => {
 
         it("handles loading the user's data", () => {
             const { result: userId } = loadUserPayload;
-            expect(id(initialState, loadUserDataSuccess(userData)))
+            expect(id(initialState, loadUserData(userData)))
             .toEqual(userId);
         });
     });
@@ -30,7 +30,7 @@ describe("User Reducers", () => {
         it("handles loading the user's data", () => {
             const { entities, result: userId } = loadUserPayload;
             const { user } = entities;
-            expect(email(initialState, loadUserDataSuccess(userData)))
+            expect(email(initialState, loadUserData(userData)))
             .toEqual(user[userId].email);
         });
     });

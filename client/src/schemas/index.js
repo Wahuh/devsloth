@@ -3,6 +3,7 @@ import { normalize, schema } from "normalizr";
 const idAttribute = "_id";
 
 const taskSchema = new schema.Entity("tasks", {}, { idAttribute });
+const localTaskSchema = new schema.Entity("tasks", {}, { idAttribute: "localId" });
 
 const groupRefSchema = new schema.Entity(
     "groups", 
@@ -18,10 +19,18 @@ const channelMemberSchema = new schema.Entity(
     { idAttribute }
 );
 
+const listSchema = new schema.Entity(
+    "lists",
+    {
+        tasks: [taskSchema]
+    },
+    { idAttribute }
+);
+
 const channelSchema = new schema.Entity(
     "channels", 
     { 
-        tasks: [taskSchema],
+        lists: [listSchema],
         members: [channelMemberSchema]
     }, 
     { idAttribute }
@@ -57,6 +66,22 @@ const appSchema = new schema.Entity(
     { idAttribute }
 );
 
+const userSchema = new schema.Entity(
+    "user",
+    {
+        groups: [groupSchema]
+    },
+    { idAttribute }
+);
+
+const toastSchema = new schema.Entity(
+    "toasts", {}, { idAttribute }
+);
+
+const inviteSchema = new schema.Entity(
+    "invites", {}, { idAttribute }
+);
+
 export function normalizeAppData(data) {
     const normalizrData = normalize(data, appSchema);
     let normalised = {}
@@ -69,7 +94,14 @@ export function normalizeAppData(data) {
 }
 
 export default {
+    user: userSchema,
     group: groupSchema,
     message: messageSchema,
-    channel: channelSchema
+    channel: channelSchema,
+    member: memberSchema,
+    task: taskSchema,
+    list: listSchema,
+    localTask: localTaskSchema,
+    toast: toastSchema,
+    invite: inviteSchema
 }

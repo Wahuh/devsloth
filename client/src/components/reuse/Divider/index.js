@@ -1,9 +1,24 @@
 import React from "react";
+import classNames from "classnames";
 import styles from "./Divider.scss";
 
-const Divider = ({ vertical }) => {
+const sizes = {
+    "sm": styles.sm,
+    "md": styles.md,
+    "lg": styles.lg
+}
+
+const Divider = ({ vertical, horizontal, size }) => {
     return (
-        <hr className={vertical ? styles.DividerVertical : styles.Divider} />
+        <hr className={
+            classNames(
+                styles.Divider,
+                sizes[size],
+                {
+                    [styles.Vertical]: vertical
+                }
+            )
+        } />
     );
 }
 

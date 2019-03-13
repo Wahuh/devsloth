@@ -1,5 +1,3 @@
-@import "../../../styles/color";
-
 .GroupList {
     display: flex;
     flex-direction: column;
@@ -10,45 +8,3 @@
     margin: 0;
 }
 
-.GroupItem {
-    width: 100%;
-    height: 72px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    margin-bottom: 0;
-}
-
-.GroupItemSelected {
-    width: 100%;
-    height: 72px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    margin-bottom: 0;
-}
-
-.GroupItemSelected::after {
-    content : "";
-    position: absolute;
-    left: 0;
-    height: 50.4px;
-    border-left: 5px inset $primary-action;
-}
-
-
-.AddGroupButton {
-    width: 70%;
-    height: 70%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    fill: $white;
-}
-
-.AddGroupButton > * {
-    flex-shrink: 0;
-}

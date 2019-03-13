@@ -1,20 +1,22 @@
 import { connect } from "react-redux";
-import { hideUiModal } from "../../ui/duck/actions";
+import { removeUiModal } from "../../ui/duck/actions";
 
 import React from "react";
 import ChannelCreateForm from "../../channel/ChannelCreateForm";
+
+import CloseButton from "../../reuse/buttons/CloseButton";
 import Modal from "../../reuse/Modal";
 import styles from "./ChannelModal.scss";
+import { MODAL_CHANNEL_CREATE } from "../../ui/constants";
 
 const ChannelModal = ({ onHide }) => (
     <Modal onHide={onHide}>
-        <div className={styles.ChannelModal}>
-            <ChannelCreateForm />
-        </div>
+        <CloseButton onClick={onHide} />
+        <ChannelCreateForm />
     </Modal>
 );
 
 
 export default connect(null, {
-    onHide: hideUiModal
+    onHide: () => removeUiModal(MODAL_CHANNEL_CREATE)
 })(ChannelModal);

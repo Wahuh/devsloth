@@ -2,40 +2,52 @@ import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 
 import {
-    createGroupSuccess,
-    deleteGroupSuccess,
-    updateGroupSuccess,
     selectGroup,
+    joinGroupQueuedInvite,
+    addGroup,
+    editGroup,
+    removeGroup,
 } from "./actions";
-
-import { loadUserDataSuccess } from "../../user/duck/actions";
+import { loadUserData } from "../../user/duck/actions";
 
 export const byId = handleActions(
     {
-        [loadUserDataSuccess]: (state, { payload }) => addGroups(state, payload),
-        [createGroupSuccess]: (state, { payload }) => addGroups(state, payload),
-        [deleteGroupSuccess]: (state, { payload }) => removeGroup(state, payload),
-        [updateGroupSuccess]: (state, { payload }) => updateGroup(state, payload),
+        [loadUserData]: (state, { payload }) => addGroups(state, payload),
+        [addGroup]: (state, { payload }) => addGroups(state, payload),
+        [removeGroup]: (state, { payload }) => deleteGroup(state, payload),
+        [editGroup]: (state, { payload }) => updateGroup(state, payload),
     }, {}
 );
 
 export const allIds = handleActions(
     {
-        [loadUserDataSuccess]: (state, { payload }) => addGroupIds(state, payload),
-        [createGroupSuccess]: (state, { payload }) => addGroupIds(state, payload),
-        [deleteGroupSuccess]: (state, { payload }) => removeGroupId(state, payload),
+        [loadUserData]: (state, { payload }) => addGroupIds(state, payload),
+        [addGroup]: (state, { payload }) => addGroupIds(state, payload),
+        [removeGroup]: (state, { payload }) => removeGroupId(state, payload),
     }, []
 );
 
-export const select = handleActions(
-    {
-        [loadUserDataSuccess]: (state, { payload }) => updateSelectFromUserData(state, payload),
-        [createGroupSuccess]: (state, { payload }) => updateSelect(state, payload),
-        [deleteGroupSuccess]: (state, { payload }) => removeFromSelect(state, payload),
-        [selectGroup]: (state, { payload }) => updateSelect(state, payload)
-    }, { currentId: null, previousIds: [] }
+export const selectedId = handleActions(
+    {   
+        [addGroup]: (state, { payload }) => updateSelectedId(state, payload),
+        [selectGroup]: (state, { payload }) => updateSelectedId(state, payload),
+        [removeGroup]: (state, { payload }) => deleteSelectedId(state, payload),
+    }, null
 );
 
+export const queuedInvite = handleActions(
+    {
+        [joinGroupQueuedInvite]: (state, { payload }) => payload
+    }, null
+);
+
+const updateSelectedId = (state, { result: groupId }) => {
+    return groupId;
+}
+
+const deleteSelectedId = (state, { result: groupId }) => {
+    return groupId === state ? null : state;
+}
 
 const addGroups = (state, { entities }) => {
     const { groups } = entities;
@@ -44,10 +56,11 @@ const addGroups = (state, { entities }) => {
 
 const addGroupIds = (state, { entities }) => {
     const { groups } = entities;
-    return [ ...state, ...Object.keys(groups) ];
+    if (groups) return [ ...state, ...Object.keys(groups) ];
+    return state;
 }
 
-const removeGroup = (state, { result: groupId }) => {
+const deleteGroup = (state, { result: groupId }) => {
     const { [groupId]: removedGroup, ...rest } = state;
     return rest;
 }
@@ -64,38 +77,10 @@ const updateGroup = (state, { entities, result: id }) => {
     return { ...state, [id]: group };
 }
 
-const updateSelect = (state, { result: newId }) => {
-    const { currentId, previousIds } = state;
-    if (currentId) {
-        return { currentId: newId, previousIds: [ ...previousIds, currentId ] };
-    }
-    return { currentId: newId, previousIds: [] };
-}
-
-const updateSelectFromUserData = (state, { entities }) => {
-    const { groups } = entities;
-    return { currentId: Object.keys(groups)[0], previousIds: [] }
-}
-
-const removeFromSelect = (state, { entities, result: deletedId }) => {
-    const select = { ...state };
-    const { currentId, previousIds } = select;
-
-    if (currentId === deletedId) {
-        if (previousIds.length == 0) {
-            select.currentId = null;
-            return select;
-        }
-        select.currentId = select.previousIds.pop();
-        return select;
-    } else if (previousIds.includes(deletedId)) {
-        select.previousIds = previousIds.filter(id => id !== deletedId);
-        return select;
-    }
-}
 
 export default combineReducers({
     byId,
     allIds,
-    select
+    selectedId,
+    queuedInvite
 });

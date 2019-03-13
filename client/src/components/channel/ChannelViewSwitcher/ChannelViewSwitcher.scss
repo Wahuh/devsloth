@@ -1,0 +1,38 @@
+.ChannelViewSwitcher {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .ViewButton {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 3px;
+        margin-right: 0.5rem;
+        svg {
+            fill: var(--color-primary-icon);
+            height: 20px;
+            width: 20px;
+        }
+    }
+
+    .ViewButton:not(.Active):hover {
+        background-color: var(--color-600)
+    }    
+}
+
+.Divider {
+    width: 1px;
+    height: 36px;
+    background-color: var(--color-300);
+    flex: 1;
+}
+
+.Active {
+    background-color: var(--color-900);
+    svg {
+        fill: var(--color-action) !important;
+    }
+}

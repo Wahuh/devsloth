@@ -5,6 +5,11 @@ export function getCurrentUser() {
     return http.get(CURRENT_USER_ENDPOINT);
 }
 
+export function updateUser(user) {
+    return http.put(CURRENT_USER_ENDPOINT, user);
+}
+
 export default {
-    getCurrentUser
+    getCurrentUser,
+    updateUser
 }

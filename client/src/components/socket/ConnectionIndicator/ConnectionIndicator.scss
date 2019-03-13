@@ -1,0 +1,28 @@
+@import "../../../styles/color";
+
+.ConnectionIndicator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+.Status {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: 0.25rem;
+}
+
+.Connected {
+    background-color: $success;
+}
+
+.Disconnected {
+    background-color: $error;
+}
+
+.Connecting {
+    background-color: orange;
+}

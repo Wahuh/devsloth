@@ -1,0 +1,11 @@
+.Wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    .CloseButton {
+        padding: 0.375rem;
+        padding-bottom: 0;
+    }
+}

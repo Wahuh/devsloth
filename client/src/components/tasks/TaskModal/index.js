@@ -1,26 +1,23 @@
 import { connect } from "react-redux";
-import { getTaskModal } from "../duck/selectors";
-import { hideTaskModal } from "../duck/actions";
-import { hideUiModal } from "../../ui/duck/actions";
+
+import { removeUiModal } from "../../ui/duck/actions";
 
 import React from "react";
-import CreateTask from "../CreateTask";
+import TaskEditForm from "../TaskEditForm";
 
+import CloseButton from "../../reuse/buttons/CloseButton";
 import Modal from "../../reuse/Modal";
 import styles from "./TaskModal.scss";
+import { MODAL_TASK_EDIT } from "../../ui/constants";
+import Column from "../../reuse/Column";
 
-const TaskModal = ({ showTaskModal, onHide }) => (
-    <Modal show={showTaskModal} onHide={onHide} >
-        <div className={styles.TaskModal}>
-            <CreateTask />
-        </div>
+const TaskModal = ({ onHide }) => (
+    <Modal className={styles.TaskModal} size="lg" onHide={onHide}>
+        <CloseButton onClick={onHide} />
+        <TaskEditForm />
     </Modal>
 );
 
-const mapStateToProps = state => ({
-    showTaskModal: getTaskModal(state),
-});
-
-export default connect(mapStateToProps, {
-    onHide: hideUiModal
+export default connect(null, {
+    onHide: () => removeUiModal(MODAL_TASK_EDIT)
 })(TaskModal);

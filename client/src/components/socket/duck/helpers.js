@@ -1,0 +1,1 @@
+export const eventMeta = event => () => ({ event });

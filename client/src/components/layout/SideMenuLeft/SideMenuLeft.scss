@@ -3,8 +3,17 @@
 
 #SideMenuLeft {
     height: inherit;
-    background-color: black;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    overflow-y: auto;
+    background-color: var(--color-900);
+    padding-right: 2px;
+    // box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     width: 72px;
+    overflow-y: auto;
+}
+
+#SideMenuLeft::-webkit-scrollbar {
+    width: 0.375rem;
+}
+
+#SideMenuLeft::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }

@@ -4,9 +4,10 @@ const { User, validateUser } = require("../models/user.model");
 const { Member } = require("../models/member.model");
 const { Channel } = require("../models/channel.model");
 const { Group } = require("../models/group.model");
+require("../models/list.model");
 require("../models/task.model");
 
-const registerUser = async (req, res) => {
+const registerUserGlobal = async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -17,7 +18,7 @@ const registerUser = async (req, res) => {
     const group = await Group.findById(process.env.GLOBAL_GROUP_ID)
     const channel = await Channel.findOne({ 
         group: process.env.GLOBAL_GROUP_ID,
-        name: "general"
+        name: "everyone"
     });
 
 
@@ -54,13 +55,13 @@ const registerUser = async (req, res) => {
     .send(populatedUser);
 };
 
-const registerUserWithoutGlobalGroup = async (req, res) => {
+const registerUser = async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) return res.status(400).send("This email address has already been registered.")
-
+    if (existingUser) return res.status(200).send("This email address has already been registered.")
+    
     const user = await User.create({
         email: req.body.email,
         username: req.body.username,
@@ -70,15 +71,8 @@ const registerUserWithoutGlobalGroup = async (req, res) => {
     const populatedUser = await User
     .findById(user._id)
     .select("-password")
-    .populate({
-        path: "groups",
-        populate: [
-            { path: "channels", populate: { path: "members" } },
-            { path: "members" },
-            { path: "roles" }
-        ]
-    });
-    
+    .populate(populate);
+
     const token = populatedUser.generateAuthToken();
     res
     .header("Authorization", `Bearer ${token}`)
@@ -92,14 +86,7 @@ const authenticateUser = async (req, res) => {
 
     const user = await User
     .findOne({ email: req.body.email })
-    .populate({
-        path: "groups",
-        populate: [
-            { path: "channels", populate: { path: "members" } },
-            { path: "members" },
-            { path: "roles" }
-        ]
-    });
+    .populate(populate);
 
     if (!user) return res.status(400).send("Invalid email or password");
 
@@ -108,6 +95,7 @@ const authenticateUser = async (req, res) => {
 
     const { _id, email, username, groups } = user;
     const token = user.generateAuthToken();
+    console.log(user);
     res
     .status(200)
     .header("Authorization", `Bearer ${token}`)
@@ -115,7 +103,23 @@ const authenticateUser = async (req, res) => {
     .send({ _id, email, username, groups });
 }
 
+const populate = {
+    path: "groups",
+    populate: [
+        { 
+            path: "channels", 
+            populate: [
+                { path: "members" },
+                { 
+                    path: "lists",
+                    populate: { path: "tasks" }
+                }
+            ] 
+        },
+        { path: "members" },
+        // { path: "roles" }
+    ]
+}
 
 exports.authenticateUser = authenticateUser;
 exports.registerUser = registerUser;
-exports.registerUserWithoutGlobalGroup = registerUserWithoutGlobalGroup;

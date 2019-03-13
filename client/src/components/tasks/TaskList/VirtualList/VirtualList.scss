@@ -1,0 +1,29 @@
+@import "../../../../styles/fonts";
+@import "../../../../styles/color";
+
+.Scroller {
+    // overflow-y: auto;
+    // width: calc(18rem);
+}
+
+.Scroller::-webkit-scrollbar {
+    width: 7px;
+}
+
+.Scroller::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border-radius: 10px;
+    border: 1px solid var(--color-700);
+}
+
+
+.Edit {
+    background-color: var(--color-primary) !important;
+}
+
+.ListWrapper {
+    padding: 0;
+    flex: 1 1 auto;
+    width: 18rem;
+
+}

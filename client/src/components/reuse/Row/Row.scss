@@ -1,4 +1,140 @@
-.Row {
+@import "../../../styles/margin";
+@import "../../../styles/padding";
+
+.row {
     display: flex;
     flex-direction: row;
+}
+
+.maxWidth {
+    width: 100%;
+}
+
+.maxHeight {
+    height: 100%;
+}
+
+.justifyContentSpaceBetween {
+    justify-content: space-between;
+}
+
+.justifyContentCenter {
+    justify-content: center;
+}
+
+.justifyContentFlexEnd {
+    justify-content: flex-end;
+}
+
+.alignItemsCenter {
+    align-items: center;
+}
+
+.paddingXs {
+    padding: 0.25rem;
+}
+
+.paddingSm {
+    padding: 0.5rem;
+}
+
+.paddingMd {
+    padding: 1rem;
+}
+
+.paddingLg {
+    padding: 1.5rem;
+}
+
+.paddingXl {
+    padding: 2rem;
+}
+
+
+.paddingXXs {
+    padding: 0 0.25rem;
+}
+
+.paddingXSm {
+    padding: 0 0.5rem;
+}
+
+.paddingXMd {
+    padding: 0 1rem;
+}
+
+.paddingXLg {
+    padding: 0 1.5rem;
+}
+
+.paddingXXl {
+    padding: 0 2rem;
+}
+
+.paddingYXs {
+    padding: 0.25rem 0;
+}
+
+.paddingYSm {
+    padding: 0.5rem 0;
+}
+
+.paddingYMd {
+    padding: 1rem 0; 
+}
+
+.paddingYLg {
+    padding: 1.5rem 0;
+}
+
+.paddingYXl {
+    padding: 2rem 0;
+}
+
+.paddingTopXs {
+    padding-top: 0.25rem;
+}
+
+.paddingTopSm {
+    padding-top: 0.5rem;
+}
+
+.paddingTopMd {
+    padding-top: 1rem; 
+}
+
+.paddingTopLg {
+    padding-top: 1.5rem;
+}
+
+.paddingTopXl {
+    padding-top: 2rem;
+}
+
+.paddingTopXxl {
+    padding-top: 3rem;
+}
+
+.paddingBottomXs {
+    padding-bottom: 0.25rem;
+}
+
+.paddingBottomSm {
+    padding-bottom: 0.5rem;
+}
+
+.paddingBottomMd {
+    padding-bottom: 1rem; 
+}
+
+.paddingBottomLg {
+    padding-bottom: 1.5rem;
+}
+
+.paddingBottomXl {
+    padding-bottom: 2rem;
+}
+
+.paddingBottomXxl {
+    padding-bottom: 3rem;
 }

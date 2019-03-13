@@ -3,14 +3,14 @@
 
 @media #{$Tablet}  {
     .Content {
-        width: 75vw;
+        width: 100vw;
     }
 
 }
 
 @media #{$Desktop} {
     .Content {
-        width: 83vw;
+        width: calc(100% - 21rem);
     }
 }
 

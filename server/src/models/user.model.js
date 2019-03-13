@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const { Member } = require("../models/member.model");
+const { Channel } = require("../models/channel.model");
+const { Group } = require("../models/group.model");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
@@ -54,6 +57,11 @@ userSchema.pre("save", async function(next) {
     } catch (err) {
         return next(err);
     }
+});
+
+userSchema.pre("remove", async function(next) {
+    const user = this;
+    await Group.deleteMany({ owner: user._id });
 });
 
 userSchema.methods.generateAuthToken = function() {

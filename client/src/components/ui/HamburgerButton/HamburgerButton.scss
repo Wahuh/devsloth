@@ -1,0 +1,21 @@
+@import '../../../styles/layout';
+
+@media #{$Tablet}  {
+}
+
+@media #{$Desktop} {
+    .HamburgerButton {
+        display: none;
+    }
+}
+
+@media #{$Mobile} {
+    .Header {
+        justify-content: space-between;
+    }
+}
+
+.HamburgerButton {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem !important;
+}

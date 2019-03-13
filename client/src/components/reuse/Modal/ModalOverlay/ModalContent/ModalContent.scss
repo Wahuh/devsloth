@@ -1,0 +1,69 @@
+@import "../../../styles/layout";
+
+@media #{$Tablet}  {
+    .ModalContent {
+        width: 90%;
+        max-width: 500px;
+        height: 50%;
+    }
+}
+
+@media #{$Desktop} {
+    .ModalContent {
+        width: 100%;
+        height: 100%;
+        max-width: 600px;
+        max-height: 600px;
+    }
+}
+
+@media #{$Mobile} {
+    .ModalContent {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.ModalContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-500);
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    animation-name: scaleIn;
+    animation-duration: 0.3s;
+}
+
+.ModalContent:hover {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.Leave {
+    animation-name: scaleOut;
+    animation-duration: 0.3s;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.8);
+    }
+    
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleOut {
+    0% {
+        transform: scale(1);
+    }
+    
+    100% {
+        transform: scale(0.8);
+    }
+}
+
+

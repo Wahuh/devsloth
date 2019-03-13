@@ -5,7 +5,6 @@ export const auth = (state = { isFetching: false }, { type }) => {
 
         case types.AUTH_LOGIN_REQUEST:
         case types.AUTH_REGISTRATION_REQUEST:
-            console.log(type);
             return { isFetching: true };
 
         case types.AUTH_LOGIN_FAILURE:

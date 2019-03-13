@@ -5,12 +5,19 @@
     box-sizing: border-box;
 }
 
-
-body {
-    margin: 0;
+html {
     height: 100vh;
     width: 100vw;
 }
+
+body {
+    margin: 0;
+    background-color: var(--color-500);
+    >:first-child {
+        height: 100vh;
+    }
+}
+
 
 #ModalRoot {
     position: relative;

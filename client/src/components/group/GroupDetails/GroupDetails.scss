@@ -6,18 +6,19 @@
     align-items: center;
     color: white;
     width: 100%;
-    padding-top: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    height: 4rem;
+    padding: 0 1rem; 
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+    border-bottom: 1px solid var(--color-900);
 }
 
-.Wrapper {
-    width: 80%;
-}
 
 .GroupName {
     min-width: 0;
-    flex-basis: 50%;
+    flex: 1 1 0;
     h3 {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -27,5 +28,9 @@
 
 .ButtonContainer {
     display: inline-block;
-    flex-shrink: 0;
+    flex: 0 0 auto;
+    button {
+        padding: 0;
+    }
+    margin-left: 0.5rem;
 }

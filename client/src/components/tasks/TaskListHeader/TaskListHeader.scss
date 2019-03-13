@@ -1,0 +1,49 @@
+@import "../../../styles/fonts";
+@import "../../../styles/color";
+
+.TaskListHeader {
+    width: 16rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 0 0 2rem;
+    margin-bottom: 0.5rem;
+
+    .TaskListHeaderInput {
+        flex: 1 1 auto;
+        height: 2rem;
+    }
+
+    .ButtonWrapper {
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
+
+    .Wrapper {
+        display: flex;
+        flex-direction: row;
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
+
+    .RelativeWrapper {
+        position: relative;
+    }
+
+    h3 {
+        padding-left: 0.75rem;
+        flex: 0 1 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .TaskCount {
+        flex: 0 0 auto;
+        background-color: var(--color-700);
+        padding: 0.25rem 0.5rem;
+        border-radius: 5px;
+        margin-left: 0.5rem;
+        margin-right: 0.25rem;
+    }
+}

@@ -27,10 +27,15 @@ export const login = (user) => {
     });
 }
 
+export const logout = () => {
+    localStorage.removeItem("jwt");
+}
+
 export default {
     getJwt,
     setJwt,
     setJwtHeader,
     login,
+    logout,
     register
 }

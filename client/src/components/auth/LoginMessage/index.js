@@ -8,11 +8,11 @@ import Typography from "../../reuse/Typography";
 const LoginMessage = ({ error, isFetching }) => {
     let message;
     if (error) {
-        message = <Typography align="center" color="crimson">{error}</Typography>;
+        message = <Typography type="body" color="error">{error}</Typography>;
     } else if (isFetching) {
         message = <FetchingMessage message="Logging you in" /> 
     } else {
-        message = <Typography align="center">Welcome back to Slacker</Typography>
+        message = <Typography color="primary">Welcome back to Slacker</Typography>
     }
     return message;
 }

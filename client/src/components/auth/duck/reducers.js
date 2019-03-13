@@ -1,77 +1,40 @@
 import { combineReducers } from "redux";
-import { APP_LOAD_DATA_FAILURE } from "../../app/duck/types";
-import {
-    AUTH_JWT_SUCCESS,
-    AUTH_LOGIN_SUCCESS,
-    AUTH_REGISTRATION_SUCCESS
-} from "./types";
+import { handleActions } from "redux-actions";
 
-const _id = (state = null, action) => {
-    const { type, payload } = action;
-    switch(type) {
-        case AUTH_JWT_SUCCESS:
-        case AUTH_LOGIN_SUCCESS:
-        case AUTH_REGISTRATION_SUCCESS:
-            return payload._id;
+import { 
+    jwtAuthRequest,
+    jwtAuthSuccess,
+    jwtAuthFailure,
+    loginAuthSuccess,
+    registrationAuthSuccess,
+    logoutAuthSuccess
+ } from "./actions";
 
-        default:
-            return state;
-    }
-}
+ export const isFetching = handleActions(
+    {
+        [jwtAuthRequest]: () => true,
+        [jwtAuthSuccess]: () => false,
+        [jwtAuthFailure]: () => false, 
+    }, true
+);
 
-const username = (state = null, action) => {
-    const { type, payload } = action;
-    switch(type) {
-        case AUTH_JWT_SUCCESS:
-        case AUTH_LOGIN_SUCCESS:
-        case AUTH_REGISTRATION_SUCCESS:
-            return payload.username;
+export const isRejected = handleActions(
+    {
+        [jwtAuthFailure]: () => true
+    }, false
+)
 
-        default:
-            return state;
-    }
-}
-
-const email = (state = null, action) => {
-    const { type, payload } = action;
-    switch(type) {
-        case AUTH_JWT_SUCCESS:
-        case AUTH_LOGIN_SUCCESS:
-        case AUTH_REGISTRATION_SUCCESS:
-            return payload.email;
-
-        default:
-            return state;
-    }
-}
-
-const isLoggedIn = (state = false, action) => {
-    const { type } = action;
-    switch(type) {
-        case AUTH_JWT_SUCCESS:
-        case AUTH_LOGIN_SUCCESS:
-        case AUTH_REGISTRATION_SUCCESS:
-            return true;
-
-        default:
-            return state;
-    }
-}
-
-const isRejected = (state = false, action) => {
-    const { type, payload } = action;
-    switch(type) {
-        case APP_LOAD_DATA_FAILURE:
-            return true;
-        default:
-            return state;
-    }
-}
+export const isAuthenticated = handleActions(
+    {
+        [jwtAuthSuccess]: () => true,
+        [loginAuthSuccess]: () => true,
+        [registrationAuthSuccess]: () => true, 
+        [logoutAuthSuccess]: () => false
+    }, false
+)
 
 export default combineReducers({
-    _id,
-    email,
-    username,
-    isLoggedIn,
-    isRejected
+    isFetching,
+    isRejected,
+    isAuthenticated
 })

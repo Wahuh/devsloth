@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const { Member } = require("../models/member.model");
+const { Channel } = require("../models/channel.model");
+const { User } = require("../models/user.model");
 const shortid = require("shortid");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
@@ -14,15 +17,13 @@ const groupSchema = new Schema({
 
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "Member"
+        ref: "User"
     },
-
-    inviteId: {
-        type: String,
-        unique: true,
-        default: shortid.generate
-    }
-
+    // inviteId: {
+    //     type: String,
+    //     unique: true,
+    //     default: shortid.generate
+    // }
 }, {
     toObject: {
         virtuals: true
@@ -30,6 +31,14 @@ const groupSchema = new Schema({
     toJSON: {
         virtuals: true 
     }
+});
+
+groupSchema.pre("remove", async function(next) {
+    const group = this;
+    await Channel.deleteMany({ group: group._id });
+    await Member.deleteMany({ group: group._id });
+    await User.updateMany({ groups: group._id }, { $pull: { groups: { $in: group._id } } });
+    next();
 });
 
 groupSchema.virtual("channels", {
@@ -53,9 +62,9 @@ groupSchema.virtual("roles", {
 
 function validateGroup(group) {
     const schema = {
-        name: Joi.string().required(),
-        //users:
+        name: Joi.string().required().min(2).max(100),
     }
+    return Joi.validate(group, schema);
 }
 
 exports.Group = mongoose.model("Group", groupSchema);

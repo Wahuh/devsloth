@@ -1,202 +1,214 @@
 import { byId, allIds, currentIds } from "./reducers";
-import { createGroupSuccess, deleteGroupSuccess } from "../../group/duck/actions";
-import * as actions from "./actions";
+import { 
+    createGroupSuccess, 
+    deleteGroupSuccess,
+    joinGroupSuccess
+} from "../../group/duck/actions";
+import {
+    createChannelSuccess,
+    deleteChannelSuccess,
+    updateChannelSuccess,
+    selectChannel
+} from "./actions";
 
-const createGroupPayload = {
-    "entities": {
-      "members": {
-        "5c1147b3c6e5611ef45229b5": {
-          "channels": [
-            "5c11330955e8631a10b56c95",
-            "5c114af4033247581cf3fe02",
-            "5c114b26191a671ff014284f",
-            "5c114ba2a6d2e1246072ba95",
-            "5c13f898d4399631f4b3287f",
-            "5c13f97cd4399631f4b32881",
-            "5c14ed35e270b13708661a10"
-          ],
-          "_id": "5c1147b3c6e5611ef45229b5",
-          "groups": [
-            "5c11330955e8631a10b56c94",
-            null,
-            null,
-            "5c114ba2a6d2e1246072ba94",
-            "5c13f898d4399631f4b3287e",
-            "5c13f97cd4399631f4b32880",
-            "5c14ed35e270b13708661a0f"
-          ]
-        }
-      },
-      "channels": {
-        "5c14ed35e270b13708661a10": {
-          "_id": "5c14ed35e270b13708661a10",
-          "name": "general",
-          "group": "5c14ed35e270b13708661a0f",
-          "__v": 0,
-          "members": [
-            "5c1147b3c6e5611ef45229b5"
-          ],
-          "tasks": null,
-          "id": "5c14ed35e270b13708661a10"
-        }
-      },
-      "groups": {
-        "5c14ed35e270b13708661a0f": {
-          "_id": "5c14ed35e270b13708661a0f",
-          "name": "adad",
-          "__v": 0,
-          "channels": [
-            "5c14ed35e270b13708661a10"
-          ],
-          "members": [
-            "5c1147b3c6e5611ef45229b5"
-          ],
-          "roles": null,
-          "id": "5c14ed35e270b13708661a0f"
-        }
-      }
-    },
-    "result": "5c14ed35e270b13708661a0f"
-}
+import { 
+    createChannelData, 
+    deleteChannelData,
+    updateChannelData
+} from "../../../tests/data/channel";
 
-const createChannelPayload = 
-{
-    "entities": {
-      "members": {
-        "5c1147b3c6e5611ef45229b5": {
-          "channels": [
-            "5c156bfd5cd22e3ec0ef5f6e"
-          ],
-          "_id": "5c1147b3c6e5611ef45229b5"
-        }
-      },
-      "channels": {
-        "5c156bfd5cd22e3ec0ef5f6e": {
-          "_id": "5c156bfd5cd22e3ec0ef5f6e",
-          "name": "heya",
-          "group": "5c11330955e8631a10b56c94",
-          "__v": 0,
-          "members": [
-            "5c1147b3c6e5611ef45229b5"
-          ],
-          "tasks": null,
-          "id": "5c156bfd5cd22e3ec0ef5f6e"
-        }
-      }
-    },
-    "result": "5c156bfd5cd22e3ec0ef5f6e"
-  }
+import {
+    createGroupData,
+    deleteGroupData,
+    joinGroupData,
+} from "../../../tests/data/group";
 
+import {
+    createGroupAction,
+    deleteGroupAction,
+    joinGroupAction,
+} from "../../../tests/actions/group";
 
-describe("channel reducer", () => {
-    describe("byId", () => {
+import { createChannelAction, deleteChannelAction, updateChannelAction } from "../../../tests/actions/channel";
+import { loadUserData } from "../../user/duck/actions";
+import { loadUserAction } from "../../../tests/actions/user";
+import { userData } from "../../../tests/data/user";
+
+describe("Channel Reducers", () => {
+    describe("byId (channel)", () => {
         it("should return the initial state", () => {
             expect(byId(undefined, {})).toEqual({});
         })
 
         it("handles creating a channel", () => {
             expect(
-                byId({}, actions.createChannelSuccess(createChannelPayload))
+                byId({}, createChannelSuccess(createChannelData))
             )
-            .toEqual({
-                "5c156bfd5cd22e3ec0ef5f6e": {
-                    "_id": "5c156bfd5cd22e3ec0ef5f6e",
-                    "name": "heya",
-                    "group": "5c11330955e8631a10b56c94",
-                    "__v": 0,
-                    "members": [
-                      "5c1147b3c6e5611ef45229b5"
-                    ],
-                    "tasks": null,
-                    "id": "5c156bfd5cd22e3ec0ef5f6e"
-                  }
-            });
+            .toEqual(createChannelAction.payload.entities.channels);
         });
 
         it("handles deleting a channel", () => {
             expect(
-                byId({
-                    "5c156bfd5cd22e3ec0ef5f6e": {
-                        "_id": "5c156bfd5cd22e3ec0ef5f6e",
-                        "name": "heya",
-                        "group": "5c11330955e8631a10b56c94",
-                        "__v": 0,
-                        "members": [
-                          "5c1147b3c6e5611ef45229b5"
-                        ],
-                        "tasks": null,
-                        "id": "5c156bfd5cd22e3ec0ef5f6e"
-                      }
-                }, actions.deleteChannelSuccess({ _id: "5c156bfd5cd22e3ec0ef5f6e" }))
+                byId(
+                    createChannelAction.payload.entities.channels, 
+                    deleteChannelSuccess(deleteChannelData))
             ).toEqual({})
+        });
+
+        it("handles updating a channel", () => {
+            const initialState = createChannelAction.payload.entities.channels;
+            const channelId = updateChannelAction.payload.result;
+            const newChannelName = updateChannelAction.payload.entities.channels[channelId].name
+            expect(
+                byId(initialState, updateChannelSuccess(updateChannelData))
+            ).toEqual({
+                ...initialState,
+                [channelId]: {
+                    ...createChannelAction.payload.entities.channels[channelId],
+                    name: newChannelName
+                }
+            });
+        });
+
+        it("handles a group being created", () => {
+            expect(
+                byId({}, createGroupSuccess(createGroupData))
+            ).toEqual(createGroupAction.payload.entities.channels)
+        });
+
+        
+        it("handles a group being joined", () => {
+            expect(
+                byId({}, joinGroupSuccess(joinGroupData))
+            ).toEqual(joinGroupAction.payload.entities.channels)
+        });
+
+        it("handles a group being deleted", () => {
+            expect(
+                byId(createGroupAction.payload.entities.channels,
+                    deleteGroupSuccess(deleteGroupData))
+            ).toEqual({})
+        }); 
+
+        it("handles loading a user's channels", () => {
+            expect(
+                byId({}, loadUserData(userData))
+            ).toEqual(loadUserAction.payload.entities.channels)
         });
     });
 
-    describe("allIds", () => {
+    describe("allIds (channel)", () => {
         it("should return the initial state", () => {
             expect(allIds(undefined, {})).toEqual([]);
         });
 
         it("handles creating a channel", () => {
             expect(
-                allIds([], actions.createChannelSuccess(createChannelPayload))
-            ).toEqual(["5c156bfd5cd22e3ec0ef5f6e"])
+                allIds([], createChannelSuccess(createChannelData))
+            ).toEqual(Object.keys(createChannelAction.payload.entities.channels))
         });
 
         it("handles deleting a channel", () => {
             expect(
-                allIds(["5c156bfd5cd22e3ec0ef5f6e"], actions.deleteChannelSuccess({ _id: "5c156bfd5cd22e3ec0ef5f6e"}))
+                allIds(Object.keys(createChannelAction.payload.entities.channels), 
+                deleteChannelSuccess(deleteChannelData))
             ).toEqual([])
         });
 
-        it("handles creating a channel after a group is created", () => {
+        it("handles a group being created", () => {
             expect(
-                allIds([], createGroupSuccess(createGroupPayload))
-            ).toEqual(["5c14ed35e270b13708661a10"])
+                allIds([], createGroupSuccess(createGroupData))
+            ).toEqual(Object.keys(createGroupAction.payload.entities.channels))
         });
 
-        it("handles deleting channels after a group is deleted", () => {
+        it("handles a group being joined", () => {
             expect(
-                allIds(["5c14ed35e270b13708661a10"], deleteGroupSuccess({ _id: "5c14ed35e270b13708661a0f" }))
+                allIds([], joinGroupSuccess(joinGroupData))
+            ).toEqual(Object.keys(joinGroupAction.payload.entities.channels))
+        });
+
+        it("handles a group being deleted", () => {
+            expect(
+                allIds(Object.keys(createGroupAction.payload.entities.channels), deleteGroupSuccess(deleteGroupData))
             ).toEqual([])
+        });
+
+        it("handles loading a user's channels", () => {
+            expect(allIds([], loadUserData(userData))
+            ).toEqual(Object.keys(loadUserAction.payload.entities.channels))
         });
     });
 
-    describe("currentIds", () => {
+    describe("currentIds (channel)", () => {
         it("should return the initial state", () => {
             expect(currentIds(undefined, {})).toEqual({});
         });
 
         it("handles selecting a channel", () => {
             expect(
-                currentIds({}, actions.selectChannel({ "5c11330955e8631a10b56c94": "5c156bfd5cd22e3ec0ef5f6e" }))
-            ).toEqual({ "5c11330955e8631a10b56c94": "5c156bfd5cd22e3ec0ef5f6e" })
+                currentIds({}, selectChannel({ group: "5c11330955e8631a10b56c94", _id: "5c156bfd5cd22e3ec0ef5f6e" }))
+            ).toEqual({ "5c11330955e8631a10b56c94": ["5c156bfd5cd22e3ec0ef5f6e"] })
         });
 
-        it("handles creating a channel", () => {
+        it("handles a channel being created", () => {
+            const channelId = createChannelAction.payload.result;
+            const groupId = createChannelAction.payload.entities.channels[channelId].group;
             expect(
-                currentIds({}, actions.createChannelSuccess(createChannelPayload))
-            ).toEqual({ "5c11330955e8631a10b56c94": "5c156bfd5cd22e3ec0ef5f6e" })
+                currentIds({}, createChannelSuccess(createChannelData))
+            ).toEqual({ [groupId]: [channelId] })
         });
 
-        it("handles deleting a channel", () => {
-            const initialState = { "5c11330955e8631a10b56c94": "5c156bfd5cd22e3ec0ef5f6e" };
+        it("handles a channel being deleted", () => {
+            const { result: channelId } = createChannelAction.payload;
+            const { channels } = createChannelAction.payload.entities;
+            const { group: groupId } = channels[channelId];
+            const initialState = {
+                [groupId]: [channelId]
+            };
+
             expect(
-                currentIds(initialState, actions.deleteChannelSuccess({ _id: "5c156bfd5cd22e3ec0ef5f6e" }))
-            ).toEqual({ "5c11330955e8631a10b56c94": null })
+                currentIds(initialState, deleteChannelSuccess(deleteChannelData))
+            ).toEqual({ [groupId]: [] })
         });
 
-        it("handles creating a group", () => {
+        it("handles a group being created", () => {
+            const groupId = createGroupAction.payload.result;
+            const channelIds = createGroupAction.payload.entities.groups[groupId].channels;
+
             expect(
-                currentIds({}, createGroupSuccess(createGroupPayload))
-            ).toEqual({ "5c14ed35e270b13708661a0f": "5c14ed35e270b13708661a10" });
+                currentIds({}, createGroupSuccess(createGroupData))
+            ).toEqual({ [groupId]: channelIds });
         });
 
-        it("handles deleting a group", () => {
-            const initialState = { "5c14ed35e270b13708661a0f": "5c14ed35e270b13708661a10" };
+        it("handles a group being joined", () => {
+            const groupId = joinGroupAction.payload.result;
+            const channelIds = joinGroupAction.payload.entities.groups[groupId].channels;
+
             expect(
-                currentIds(initialState, deleteGroupSuccess({ _id: "5c14ed35e270b13708661a0f" }))
+                currentIds({}, joinGroupSuccess(joinGroupData))
+            ).toEqual({ [groupId]: channelIds });
+        });
+
+        it("handles a group being deleted", () => {
+            const groupId = createGroupAction.payload.result;
+            const channelIds = createGroupAction.payload.entities.groups[groupId].channels;
+
+            const initialState = { [groupId]: channelIds };
+            expect(
+                currentIds(initialState, deleteGroupSuccess(deleteGroupData))
             ).toEqual({})
+        });
+
+        it("handles loading a user's channels", () => {
+            const { groups } = loadUserAction.payload.entities;
+            const groupIds = Object.keys(groups);
+            const expectedMap = groupIds
+            .map(id => [ id, groups[id].channels ])
+            .reduce( (object, [ groupId, channels ]) => ({ ...object, [groupId]: channels.reverse() }), {});
+            expect(currentIds({}, loadUserData(userData))
+            ).toEqual(expectedMap)
         });
     });
 });
+
+//it returns the state if there are no channels

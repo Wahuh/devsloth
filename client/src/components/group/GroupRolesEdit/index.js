@@ -8,7 +8,7 @@ const GroupRolesEdit = () => {
         <div>
             <List>
                 <ListItem>
-                    <Typography type="button">Roles</Typography>
+                    <Typography>Roles</Typography>
                 </ListItem>
             </List>
 

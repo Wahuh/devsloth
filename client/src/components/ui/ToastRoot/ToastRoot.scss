@@ -1,0 +1,21 @@
+.Appear {
+    opacity: 0;
+	transform: translate(-50%, 20%);
+}
+
+.AppearActive {
+    opacity: 1;
+	transform: translate(-50%, 0);
+    transition: all 300ms;
+}
+
+.Leave {
+    opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.LeaveActive {
+    opacity: 0;
+	transform: translate(-50%, 20%);
+    transition: all 300ms;
+}

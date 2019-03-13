@@ -1,7 +1,5 @@
 import axios from "axios";
 
-//function to set this token somewhere??
-//axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("jwt")}`;
 
 function setAuthHeader(token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -10,7 +8,6 @@ function setAuthHeader(token) {
 //log successful requests somewhere?
 axios.interceptors.response.use(null, error => {
     //axios couldn't connect
-    console.log(error.response, error.status);
     if (!error.response) {
         if (!navigator.onLine) {
             //detect if user is offline - need better implementation
@@ -22,11 +19,7 @@ axios.interceptors.response.use(null, error => {
     }
 
     const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
-    
-    // if (!expectedError) {
-    //     console.log("Logging the error", error);
-    //     alert("An unexpected error occurred.");
-    // }
+
 
     return Promise.reject(error);
 });

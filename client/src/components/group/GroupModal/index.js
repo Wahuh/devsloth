@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
-import { hideUiModal } from "../../ui/duck/actions";
+import { removeUiModal } from "../../ui/duck/actions";
 
 import React, { Component } from "react";
-import Button from "../../reuse/Button";
-import CloseIcon from "../../reuse/icons/CloseIcon";
+import CloseButton from "../../reuse/buttons/CloseButton";
 import CreateOrJoin from "../CreateOrJoin";
-import CreateGroupForm from "../CreateGroupForm";
-import JoinGroupForm from "../JoinGroupForm";
+import GroupCreateForm from "../GroupCreateForm";
+import GroupJoinForm from "../GroupJoinForm";
 import Modal from "../../reuse/Modal";
 import styles from "./GroupModal.scss";
+import { MODAL_GROUP_CREATE_OR_JOIN } from "../../ui/constants";
 
 class GroupModal extends Component {
     state = {
@@ -17,12 +17,11 @@ class GroupModal extends Component {
 
     screens = {
         createOrJoin: <CreateOrJoin onCreate={() => this.changeScreen("create")} onJoin={() => this.changeScreen("join")} />,
-        create: <CreateGroupForm onBack={() => this.changeScreen("createOrJoin")} />,
-        join: <JoinGroupForm onBack={() => this.changeScreen("createOrJoin")} />
+        create: <GroupCreateForm onBack={() => this.changeScreen("createOrJoin")} />,
+        join: <GroupJoinForm onBack={() => this.changeScreen("createOrJoin")} />
     }
 
     changeScreen(screen) {
-        console.log(screen);
         this.setState({ screen });
     }
 
@@ -31,17 +30,13 @@ class GroupModal extends Component {
         const { screen } = this.state;
         return (
             <Modal onHide={onHide}>
-                <div className={styles.GroupModal}>
-                    <Button onClick={onHide} theme="icon" className={styles.CloseButton}>
-                        <CloseIcon />
-                    </Button>
-                    {this.screens[screen]}
-                </div>
+                <CloseButton onClick={onHide} />
+                {this.screens[screen]}
             </Modal>
         );
     }
 }
 
 export default connect(null, {
-    onHide: hideUiModal
+    onHide: () => removeUiModal(MODAL_GROUP_CREATE_OR_JOIN)
 })(GroupModal);

@@ -1,33 +1,6 @@
 @import "../../../styles/color";
-@import "../../../styles/layout";
 
-@media #{$Tablet}  {
-    .LoginForm {
-        width: 50%;
-    }
-}
-
-@media #{$Desktop} {
-    .LoginForm {
-        width: 50%;
-    }
-}
-
-@media #{$Mobile} {
-    .LoginForm {
-        width: 100%;
-    }
-}
-
-.LoginForm {
-    display: flex;
-    flex-direction: column;
-}
-
-.LoginForm > * {
-    margin-bottom: 1rem;
-}
-
-.FloatInput {
-    position: relative;
+.RegisterLink {
+    color: var(--color-primary-action-light);
+    text-decoration: none;
 }

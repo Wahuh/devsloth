@@ -1,36 +1,39 @@
 import { connect } from "react-redux";
-import { getUsername } from "../../auth/duck/selectors"
-import { showUiModal } from "../../ui/duck/actions";
+import { getUsername } from "../duck/selectors";
+import { addUiModal } from "../../ui/duck/actions";
+import { MODAL_USER_SETTINGS } from "../../ui/constants";
 
 import React from "react";
-import Typography from "../../reuse/Typography";
+import ConnectionIndicator from "../../socket/ConnectionIndicator";
+
 import Button from "../../reuse/Button";
-import Row from "../../reuse/Row";
-import Column from "../../reuse/Column";
 import SettingsIcon from "../../reuse/icons/SettingsIcon";
+import Tooltip from "../../reuse/Tooltip";
+import Typography from "../../reuse/Typography";
+
 import styles from "./UserDetails.scss";
 
 const UserDetails = ({ username, onShowModal }) => (
     <div className={styles.UserDetails}>
-        <Row className={styles.User}>
-            <div className={styles.UserIcon}></div>
-            <Column>
-                <Typography color="secondary" type="button">
+        <div className={styles.UserIcon}></div>
+
+        <div className={styles.User}>
+            <div className={styles.Username}>
+                <Typography color="secondary">
                     {username}
                 </Typography>
+            </div>
 
-                <Row alignItems="center">
-                    <div className={styles.Connected}></div>
-                    <Typography color="primary" type="caption">
-                        Online
-                    </Typography>
-                </Row>
-            </Column>
-        </Row>
+            <ConnectionIndicator />
+        </div>
 
-        <Button theme="icon" onClick={() => onShowModal("USER")}>
-            <SettingsIcon />
-        </Button>
+        <div className={styles.SettingsButton} data-tip data-for="UserSettingsButton">
+            <Button theme="icon" onClick={onShowModal}>
+                <SettingsIcon />
+            </Button>
+
+            <Tooltip id="UserSettingsButton" message="User Settings" />
+        </div>
     </div>
 );
 
@@ -39,5 +42,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: showUiModal
+    onShowModal: () => addUiModal(MODAL_USER_SETTINGS)
 })(UserDetails);

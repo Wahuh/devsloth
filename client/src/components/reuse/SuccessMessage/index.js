@@ -4,7 +4,7 @@ import styles from "./SuccessMessage.scss";
 
 const SuccessMessage = ({ message }) => (
     <div className={styles.SuccessMessage}>
-        <Typography type="button">{message}</Typography>
+        <Typography>{message}</Typography>
     </div>
 
 )

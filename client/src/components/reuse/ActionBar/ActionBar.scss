@@ -1,13 +1,48 @@
 @import "../../../styles/color";
+@import '../../../styles/layout';
+
+@media #{$Tablet}  {
+    .Header {
+        height: 4rem;
+        padding: 0 1rem;
+    }
+}
+
+@media #{$Desktop} {
+    .Header {
+        height: 4rem;
+        padding: 0 1rem;
+    }
+}
+
+@media #{$Mobile} {
+    .Header {
+        justify-content: space-between;
+        height: 3rem;
+    }
+}
 
 .ActionBar {
-    background-color: $secondary;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-direction: row;
     align-items: center;
-    padding: 1rem 1.5rem;
+    padding: 0 2rem 2rem 2rem;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    >* {
+        margin-right: 1rem;
+    }
+
+    >*:last-child {
+        margin-right: 0;
+    }
+    // button:last-child {
+    //     margin-left: auto;
+    // }
+
+    // button: {
+    //     margin-right: auto;
+    // }
 }

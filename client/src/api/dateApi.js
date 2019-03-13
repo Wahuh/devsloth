@@ -1,37 +1,21 @@
+import isThisWeek from "date-fns/is_this_week";
+import isToday from "date-fns/is_today";
+import isYesterday from "date-fns/is_yesterday";
+import format from "date-fns/format";
+
+
+
 export const toDate = timestamp => {
     const date = new Date(timestamp);
-    const today = new Date();
-    let timeVerb;
-
-    return standardDate(date);
+    if (isThisWeek(date)) {
+        const timeFormat = format(date, "h:mm A");
+        if (isToday(date)) return `Today at ${timeFormat}`;
+        else if (isYesterday(date)) return `Yesterday at ${timeFormat}`;
+        else return `Last ${format(date, "dddd")} at ${timeFormat}`;
+    } 
+    return format(date, "Do MMM YYYY");
 }
 
-const standardDate = date => `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
-
-const days = {
-    0: "Sunday",
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-}
-
-const months = {
-    0: "January",
-    1: "February",
-    2: "March",
-    3: "April",
-    4: "May",
-    5: "June",
-    6: "July",
-    7: "August",
-    8: "September",
-    9: "October",
-    10: "November",
-    11: "December"
-}
 
 export default {
     toDate

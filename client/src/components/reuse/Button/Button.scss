@@ -21,6 +21,10 @@
     -moz-appearance: none;
 }
 
+.Button:disabled {
+    opacity: 0.6;
+}
+
 .AddButton {
     background-color: transparent;
     box-shadow: 0 0 0 1pt $primary-action;
@@ -40,20 +44,19 @@
 }
 
 .Action {
-    background: $primary-action;
-    padding: 0.5rem 1rem;
+    background: var(--color-action);
     border: 1px solid transparent;
     border-radius: 3px;
 }
 
 .Action:hover {
-    background: $primary-action-dark;
+    background: var(--color-action-dark);
 }
 
-.Action:focus {
-    outline: none !important;
-    background-color: $focus;
-}
+// .Action:focus {
+//     outline: none !important;
+//     background-color: $focus;
+// }
 
 .Delete {
     background: $error;
@@ -67,20 +70,32 @@
 }
 
 .SecondaryAction {
-    background: $secondary-action;
+    background: var(--color-secondary-action);
     padding: 0.5rem 1rem;
     border: 1px solid transparent;
     border-radius: 3px;
 }
 
-.SecondaryAction:hover {
-    background: $secondary-action-dark;
+// .SecondaryAction:focus {
+//     outline: none !important;
+//     background-color: $focus;
+// }
+
+.SecondaryAction:not(:disabled):hover {
+    background: var(--color-secondary-action-dark);
 }
 
 .Outlined {
-    padding: 0.5rem;
-    border: 1px solid $tertiary-text;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    border: 1px solid var(--color-action);
     background-color: transparent;
+    color: var(--color-action);
+}
+
+.Outlined:hover {
+
+    border-color: var(--color-action-dark);
 }
 
 .Outlined:focus {
@@ -94,9 +109,36 @@
 .Icon {
     background-color: transparent;
     fill: var(--color-primary-icon);
-    padding: 0.5rem;
+    border-radius: 3px;
+    svg {
+        height: 20px;
+        width: 20px;
+    }
 }
 
 .Icon:hover {
-    fill: $white;
+    fill: var(--color-primary-icon-hover);
+}
+
+.Link {
+    background: transparent;
+    transition: none !important;
+    color: var(--color-link);
+    padding: 0.5rem 1rem;
+}
+
+.small {
+    padding: 0.25rem 0.5rem;
+    p {
+        font-size: 0.875rem;
+        line-height: 1rem;
+    }
+}
+
+.medium {
+    padding: 0.5rem 1rem;
+}
+
+.large {
+    padding: 0.5rem 1rem;
 }

@@ -5,6 +5,7 @@ import styles from "./MenuItem.scss";
 const MenuItem = ({ children, id, onClick, active }) => (
     <li 
         onClick={onClick}
+        tabIndex="0"
         key={id} 
         className={active ? `${styles.MenuItem} ${styles.MenuItemActive}` : styles.MenuItem}>
         {children}

@@ -4,7 +4,7 @@ import PlusIcon from "../../icons/PlusIcon";
 import styles from "./AddButton.scss";
 
 const AddButton = ({ onClick }) => (
-    <Button onClick={onClick} className={styles.AddButton}>
+    <Button type="button" onClick={onClick} className={styles.AddButton}>
         <PlusIcon />
     </Button>
 );

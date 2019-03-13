@@ -1,0 +1,20 @@
+@import '../../../styles/layout';
+
+
+@media #{$Tablet}  {
+
+}
+
+@media #{$Desktop} {
+
+}
+
+@media #{$Mobile} {
+
+}
+
+
+.SettingsMenu {
+    display: flex;
+    flex-direction: column;
+}

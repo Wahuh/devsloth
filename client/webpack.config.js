@@ -85,10 +85,5 @@ module.exports = () => {
             }),
             new webpack.DefinePlugin(envKeys)
         ],
-        resolve: {
-            alias: {
-                joi: 'joi-browser'
-            }
-        }
     };
 }

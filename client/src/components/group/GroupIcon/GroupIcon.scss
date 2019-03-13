@@ -1,45 +1,45 @@
 @import "../../../styles/color";
 
-.GroupIcon {
-    color: $primary-text;
-    background-color: $secondary-light;
+.Wrapper {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 70%;
-    height: 70%;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.GroupIcon:hover {
-    .GroupTooltip {
+    position: relative;
+    .GroupIcon {
+        color: $primary-text;
+        background-color: var(--color-500);
         display: flex;
         flex-direction: row;
+        justify-content: center;
         align-items: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
     }
 }
 
-.GroupTooltip {
-    display: none;
+.Active::after {
+    content: "";
     position: absolute;
-    left: 63px;
-    z-index: 1000;
+    left: 0;
+    height: 2.75rem;
+    width: 5px;
+    background-color: var(--color-200);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
-.TooltipContent {
-    padding: 0.4rem 1rem;
-    border-radius: 5px;
-    background-color: aliceblue;
-    max-width: 200px;
-    word-wrap: break-word;
-}
-
-.LeftArrow {
-    width: 0; 
-    height: 0; 
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent; 
-    border-right: 6px solid aliceblue;
-}
+// .Active::after {
+//     content: "";
+//     position: absolute;
+//     left: 0;
+//     height: 0.6rem;
+//     width: 0.3rem;
+//     border-bottom-right-radius: 1.2rem;
+//     border-top-right-radius: 1.2rem;
+//     background-color: var(--color-200);
+// }

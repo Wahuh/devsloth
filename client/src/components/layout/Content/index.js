@@ -3,9 +3,9 @@ import Column from "../../reuse/Column";
 import styles from "./Content.scss";
 
 const Content = ({ children }) => (
-    <Column className={styles.Content}>
+    <div className={styles.Content}>
         {children}
-    </Column>
+    </div>
 );
 
 export default Content;

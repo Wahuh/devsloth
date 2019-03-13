@@ -1,0 +1,38 @@
+.HomeMenu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .SlackerBrand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 4rem;
+        padding: 0 1rem; 
+        border-bottom: 1px solid var(--color-900);
+        margin-bottom: 1rem;
+    }
+
+    .HomeLink {
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        margin-bottom: 0.25rem;
+    }
+    .HomeLink:hover:not(.Active) {
+        background-color: var(--color-500);
+    }
+}
+
+.Active {
+    background-color: var(--color-400);
+    p {
+        color: var(--color-secondary-font);
+    }
+    svg {
+        fill: var(--color-secondary-font);
+    }
+}

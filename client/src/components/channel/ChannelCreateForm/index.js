@@ -1,91 +1,136 @@
 import { connect } from "react-redux";
 import { createChannelRequest } from "../duck/actions";
-import { getCurrentGroupId } from "../../group/duck/selectors";
-import { hideUiModal } from "../../ui/duck/actions";
+import { getSelectedGroupId } from "../../group/duck/selectors";
 
 import React, { Component } from "react";
 
 import ActionBar from "../../reuse/ActionBar";
 import Button from "../../reuse/Button";
-import CloseIcon from "../../reuse/icons/CloseIcon";
 import Column from "../../reuse/Column";
-import Form from "../../reuse/Form";
 import Typography from "../../reuse/Typography";
 import FloatInput from "../../reuse/FloatInput";
+import Form from "../../reuse/Form";
+import FormSwitch from "../../reuse/FormSwitch";
+import FormGroup from "../../reuse/FormGroup";
 
-import styles from "./ChannelCreateForm.scss";
+import { Field, validate, validateField } from "../../../validation";
+import { removeUiModal } from "../../ui/duck/actions";
+import { MODAL_CHANNEL_CREATE } from "../../ui/constants";
+
 
 class ChannelCreateForm extends Component {
     state = {
         channel: {
             name: "",
+            isPublic: true
         },
         validation: {
-
+            name: {}
         }
+    }
+
+    schema = {
+        name: new Field("Channel Name").string().required().min(2).max(50).success("Name looks good.")
     }
     
     handleSubmit = (event) => {
         event.preventDefault();
-        const { onCreate, currentGroupId } = this.props;
-        onCreate({ ...this.state.channel, groupId: currentGroupId });
+        const { onCreate, groupId } = this.props;
+        const validation = validate(this.state.channel, this.schema);
+        if (validation) {
+            this.setState({ 
+                ...this.state, 
+                validation: { 
+                    ...this.state.validation, 
+                    ...validation 
+                } 
+            });
+            return;
+        }
+        onCreate({ ...this.state.channel, groupId });
     }
 
-    handleChange = ({ currentTarget: input }) => {
-
+    handleChange = ({ currentTarget }) => {
+        const { name, value } = currentTarget;
         const validation = { ...this.state.validation };
-        // const errorMessage = this.validateField(input);
-
-        // if (errorMessage) {
-        //     validation[input.name].message = errorMessage; 
-        //     validation[input.name].error = true;
-        // } else {
-        //     validation[input.name].error = false;
-        //     validation[input.name].message = validation[input.name].successMessage;
-        // }
+        const field = this.schema[name];
+        validation[name] = validateField(value, field);
 
         const channel = { ...this.state.channel };
-        channel[input.name] = input.value;
+        if (name === "name") {
+            if (/\s/.test(value)) {
+                channel[name] = value.replace(/.$/, "-");
+            } else {
+                channel[name] = value.toLowerCase();
+            }
+        } else {
+            channel[name] = value;
+        }
         this.setState({ channel, validation });
     }
 
+    handleToggle = ({ currentTarget }) => {
+        const { name } = currentTarget;
+        const value = currentTarget.checked;
+        const channel = { ...this.state.channel };
+        channel[name] = value;
+        this.setState({ channel });
+    }
 
     render() {
-        const { channel } = this.state;
+        const { channel, validation } = this.state;
         const { onHide } = this.props;
-
         return (
-            <form className={styles.ChannelCreateForm} onSubmit={this.handleSubmit}>
-                <Column className={styles.InputContainer}>
-                    <Typography>Create a channel</Typography>
-                    <FloatInput 
-                        value={channel.name}
-                        onChange={this.handleChange}
-                        autoFocus
-                        label="Channel Name"
-                        name="name"
-                        type="text"
-                        placeholder="Enter a channel name"
-                        top
-                    />
-                </Column>
+            <Column maxWidth maxHeight>
+                <Form onSubmit={this.handleSubmit}>
+                    <Column maxHeight maxWidth paddingTop="xl" paddingX="xl">
+                        <Typography margin="sm" bold color="secondary" type="heading">Create a {channel.isPublic ? "public" : "private"} channel</Typography>
+                        <Typography margin="md" color="tertiary" type="description">
+                            Channels are where your members can chat and create tasks. They can be organized into topics or subgroups - <Typography type="inline" bold color="primary" text="#marketing" /> | <Typography type="inline" bold color="primary" text="#art" /> | <Typography type="inline" bold color="primary" text="#videogames" />, for example.
+                        </Typography>
 
-                <ActionBar>
-                    <Button type="button" onClick={onHide} theme="icon">
-                        <CloseIcon />
-                    </Button>
-                    <Button theme="action" text="Create Channel" />
-                </ActionBar>
-            </form>
+                        <FormGroup>
+                            <FloatInput 
+                                value={channel.name}
+                                onChange={this.handleChange}
+                                autoFocus
+                                label="Channel Name"
+                                name="name"
+                                type="text"
+                                placeholder="Enter a channel name"
+                                validation={validation.name}
+                            />
+
+                            <FormSwitch
+                                name="isPublic"
+                                checked={channel.isPublic}
+                                onChange={this.handleToggle}
+                                onText="Public"
+                                offText="Private"
+                            >
+                                <Typography type="body" color="primary">
+                                    {channel.isPublic ? "Anyone in the group can view and join this channel." : "This channel can only be accessed by invite."}
+                                </Typography>
+                            </FormSwitch>
+                        </FormGroup>
+                    </Column>
+
+                    <ActionBar>
+                        <Button onClick={onHide} type="button" theme="outlined" text="Cancel" />
+                        <Button size="md" theme="action" text="Create Channel" />
+                    </ActionBar>
+                </Form>
+            </Column>
+
         );
     }
 }
 
 const mapStateToProps = state => ({
-    currentGroupId: getCurrentGroupId(state)
+    groupId: getSelectedGroupId(state)
 });
 
 export default connect(mapStateToProps, {
     onCreate: createChannelRequest,
-    onHide: hideUiModal
+    onHide: () => removeUiModal(MODAL_CHANNEL_CREATE)
 })(ChannelCreateForm);

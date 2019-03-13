@@ -1,80 +1,116 @@
 import { connect } from "react-redux";
-import { getCurrentGroupName, getCurrentGroupId } from "../../group/duck/selectors";
+import { getCurrentGroupName, getCurrentGroupId, getSelectedGroupId, getSelectedGroupName } from "../../group/duck/selectors";
 import { deleteGroupRequest } from "../duck/actions";
-
+import { getIsFetching } from "../../ui/duck/selectors";
 import React, { Component } from "react";
-import ActionBar from "../ActionBar";
+import ActionBar from "../../reuse/ActionBar";
 import Button from "../../reuse/Button";
+import LoadingButton from "../../reuse/buttons/LoadingButton";
 import FloatInput from "../../reuse/FloatInput";
 import Column from "../../reuse/Column";
 import Typography from "../../reuse/Typography";
-import styles from "./GroupDeleteForm.scss";
+import Form from "../../reuse/Form";
+import { removeUiModal } from "../../ui/duck/actions";
+import { MODAL_GROUP_SETTINGS } from "../../ui/constants";
+import FormGroup from "../../reuse/FormGroup";
+import WarningMessage from "../../reuse/WarningMessage";
+import { Field, validate, validateField } from "../../../validation";
 
 class GroupDeleteForm extends Component {
     state = {
-        name: "",
+        group: {
+            name: "",
+        },
+
+        validation: {
+            name: {}
+        }
+    }
+
+    schema = {
+        name: new Field("Group Name").string().required().min(2).max(50).success("looks good.")
     }
 
     handleSubmit = (event) => {
-        const { onDelete, currentGroupId } = this.props;
+        const { onDelete, groupId, groupName } = this.props;
         event.preventDefault();
-        const result = this.validateForm();
-        if (!result) return
-        onDelete({ _id: currentGroupId });
+        const validation = validate(this.state.group, this.schema);
+        console.log(validation);
+        if (validation) {
+            this.setState({ 
+                ...this.state, 
+                validation: { 
+                    ...this.state.validation, 
+                    ...validation 
+                } 
+            });
+            return;
+        }
+
+        if (this.state.group.name !== groupName) {
+            this.setState({
+                ...this.state,
+                validation: {
+                    name: { error: true, message: "must match" }
+                }
+            });
+        }
+        onDelete(groupId);
     }
 
-    handeChange = ({ currentTarget: input}) => {
-        this.setState({ name: input.value });
-    }
+    handleChange = ({ currentTarget }) => {
+        const { name, value } = currentTarget;
+        const validation = { ...this.state.validation };
+        const field = this.schema[name];
+        validation[name] = validateField(value, field);
 
-    validateForm = () => {
-        const { groupName } = this.props;
-        const { name } = this.state;
-        if (name === groupName) return true;
-        return false;
+        const group = { ...this.state.group };
+        group[name] = value;
+        this.setState({ group, validation });
     }
 
     render() {
-        const { name } = this.state;
-        const { groupName } = this.props;
+        const { group, validation } = this.state;
+        const { groupName, onHide, isFetching } = this.props;
         return (
-            <form onSubmit={this.handleSubmit} className={styles.GroupDeleteForm}>
-                <div className={styles.Wrapper}>
-                    <Typography type="heading">
-                        Delete {groupName}
+            <Form onSubmit={this.handleSubmit}>
+                <Column  paddingX="xl">
+                    <Typography margin="lg" type="heading" color="secondary">
+                        Delete {groupName}?
                     </Typography>
 
+                    <FormGroup>
+                        <WarningMessage message={`Are you sure you wish to delete ${groupName}? This action cannot be undone.`} />
 
-                    <div className={styles.WarningMessage}>
-                        <Typography color="primary" type="button">
-                            Are you sure you wish to delete {groupName}? This action cannot be undone.
-                        </Typography>
-                    </div>
+                        <FloatInput 
+                            placeholder="Enter the name of this group" 
+                            onChange={this.handleChange}
+                            value={group.name}
+                            label="Group Name"
+                            name="name"
+                            type="text"
+                            validation={validation.name}
+                        />
+                    </FormGroup>
 
-                    <FloatInput 
-                        placeholder="Enter the name of this group" 
-                        onChange={this.handeChange}
-                        value={name}
-                        label={`Delete ${groupName}?`}
-                        name="name"
-                        type="text"
-                        top
-                    />
-                </div>
+                </Column>
 
-                <div className={styles.ActionBar}>
-                    <Button theme="delete" text="Delete Group" />
-                </div>
-            </form>
+                <ActionBar>
+                    <Button onClick={onHide} type="button" theme="link" text="Cancel" />
+                    <LoadingButton isLoading={isFetching} theme="delete" text="Delete Group" />
+                </ActionBar>
+            </Form>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    groupName: getCurrentGroupName(state),
-    currentGroupId: getCurrentGroupId(state)
+    groupName: getSelectedGroupName(state),
+    groupId: getSelectedGroupId(state),
+    isFetching: getIsFetching(state, "groupDelete")
 });
 
 export default connect(mapStateToProps, {
     onDelete: deleteGroupRequest,
+    onHide: () => removeUiModal(MODAL_GROUP_SETTINGS)
 })(GroupDeleteForm);
