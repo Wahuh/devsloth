@@ -31,7 +31,10 @@ const GroupDetails = ({ group, onShowModal }) => {
             
             <div data-tip data-for="GroupSettingsIcon" className={styles.ButtonContainer}>
                 <Button onClick={onShowModal} theme="icon">
-                    <SettingsIcon />
+                    <Icon size="md">
+                        <SettingsIcon />
+                    </Icon>
+
                 </Button>
                 <Tooltip id="GroupSettingsIcon" message="Group Settings" />
             </div>

@@ -12,6 +12,7 @@ import Tooltip from "../../reuse/Tooltip";
 import Typography from "../../reuse/Typography";
 
 import styles from "./UserDetails.scss";
+import Icon from "../../reuse/Icon";
 
 const UserDetails = ({ username, onShowModal }) => (
     <div className={styles.UserDetails}>
@@ -29,7 +30,9 @@ const UserDetails = ({ username, onShowModal }) => (
 
         <div className={styles.SettingsButton} data-tip data-for="UserSettingsButton">
             <Button theme="icon" onClick={onShowModal}>
-                <SettingsIcon />
+                <Icon size="md">
+                    <SettingsIcon />
+                </Icon>
             </Button>
 
             <Tooltip id="UserSettingsButton" message="User Settings" />
