@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import { removeUiModal } from "../../ui/duck/actions";
-import { getCurrentGroupName, getSelectedGroupName } from "../../group/duck/selectors";
+import { getSelectedGroupName } from "../../group/duck/selectors";
 
 import React from "react";
 import CloseButton from "../../reuse/buttons/CloseButton";
 import FloatInput from "../../reuse/FloatInput";
 import Modal from "../../reuse/Modal";
-import { getDefaultChannelInviteId, getCurrentChannelName, getSelectedChannelName } from "../../channel/duck/selectors";
+import { getDefaultChannelInviteId, getSelectedChannelName } from "../../channel/duck/selectors";
 import Typography from "../../reuse/Typography";
 import ActionBar from "../../reuse/ActionBar";
 import Button from "../../reuse/Button";
@@ -14,13 +14,13 @@ import { copyGroupInvite } from "../duck/actions";
 import { MODAL_GROUP_INVITE } from "../../ui/constants";
 import Column from "../../reuse/Column";
 
-const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName, isMounted }) => {
+const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName }) => {
     let input = React.createRef();
     return (
         <Modal id="GROUP_INVITE" onHide={onHide}>
             <Column maxHeight justifyContent="space-between">
                 <Column paddingTop="xl" paddingX="xl">
-                    <Typography margin="sm" type="heading" color="secondary">
+                    <Typography margin="md" type="heading" color="secondary">
                         Invite members
                     </Typography>
 
@@ -36,7 +36,6 @@ const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName, is
                         label="Invitation Link"
                         type="text"
                         readOnly
-                        top
                     />
                 
                     <Column>
@@ -51,7 +50,7 @@ const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName, is
                         input.current.select();
                         document.execCommand("copy");
                         onCopy(input.current.value);
-                    }} theme="secondaryAction" text="Copy Link" />
+                    }} theme="action" size="md" text="Copy Link" />
                 </ActionBar>
             </Column>
         </Modal>
