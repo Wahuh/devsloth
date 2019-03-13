@@ -62,11 +62,14 @@ class TaskListHeader extends Component {
         const { isDropdownShown, isRenaming } = this.state;
         let count;
         if (list.tasks) {
-            count = <div className={styles.TaskCount}>
-                        <Typography type="caption" color="quaternary">
-                            {list.tasks.length}
-                        </Typography>
-                    </div>
+            if (list.tasks.length > 0) {
+                count = <div className={styles.TaskCount}>
+                            <Typography type="caption" color="quaternary">
+                                {list.tasks.length}
+                            </Typography>
+                        </div>
+            }
+
         } else {
             count = null;
         }
