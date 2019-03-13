@@ -18,6 +18,7 @@ import TaskBoardList from "../TaskBoardList";
 import TaskListHeader from "../TaskListHeader";
 import TaskCreateButton from "../TaskCreateButton";
 import TaskCreateForm from "../TaskCreateForm";
+import ListCreateForm from "../../lists/ListCreateForm";
 
 const initialState = {
     list: {
@@ -83,7 +84,7 @@ class TaskBoard extends Component {
                         </TaskBoardList>
                     )}
                 {/* </DragDropContext> */}
-                <ListAdd />
+                <ListCreateForm />
                 <div id={styles.ScrollTo}></div>
             </div>
         );
