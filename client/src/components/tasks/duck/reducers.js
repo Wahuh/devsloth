@@ -1,32 +1,24 @@
 import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 import { 
-    createTaskSuccess, 
-    createLocalTask, 
-    updateLocalTask,
-    deleteLocalTask,
     selectTask,
     addTask,
     editTask,
-    editPrevTask,
     reorderTasks
 } from "./actions";
+import { removeChannel } from "../../channel/duck/actions";
 import { loadUserData } from "../../user/duck/actions";
+import { removeGroup } from "../../group/duck/actions";
 
 export const byId = handleActions(
     {
         [loadUserData]: (state,  { payload }) => addTasks(state, payload),
-        [addTask]: (state,  { payload }) => insertTask(state, payload),
-        [editTask]: (state,  { payload }) => updateTask(state, payload),
+        [addTask]: (state, { payload }) => insertTask(state, payload),
+        [editTask]: (state, { payload }) => updateTask(state, payload),
+        [removeChannel]: (state, { payload }) => removeTasksByChannel(state, payload),
         [reorderTasks]: (state,  { payload }) => reorder(state, payload),
+        [removeGroup]: (state,  { payload }) => removeTasksByChannels(state, payload),
     }, {}
-);
-
-export const allIds = handleActions(
-    {
-        [loadUserData]: (state, { payload }) => addTaskIds(state, payload),
-        [addTask]: (state, { payload }) => addTaskIds(state, payload),
-    }, []
 );
 
 export const selectedId = handleActions(
@@ -57,6 +49,8 @@ const reorder = (state, payload) => {
     }
 }
 
+
+
 const updateSelectedTaskId = (state, { result: taskId }) => {
     return taskId;
 }
@@ -68,7 +62,7 @@ const insertTask = (state, { result: taskId, entities }) => {
     if (prev) {
         const prevTask = { ...state[prev] };
         prevTask.next = taskId;
-        console.log("updated", { ...state, [prev]: prevTask, [taskId]: task })
+        console.log("update", prevTask.next, prev);
         return { ...state, [prev]: prevTask, [taskId]: task };
     }
     return { ...state, [taskId]: task };
@@ -90,18 +84,33 @@ const removeTask = (state, { result: taskId }) => {
     return rest;
 }
 
-const removeTaskId = (state, { result: taskId }) => {
-    return state.filter(id => id !== taskId);
+const removeTasksByChannel = (state, { result: channelId }) => {
+    const taskIds = Object.keys(state);
+    if (taskIds) {
+        return taskIds
+        .filter(id => state[id].channel === channelId)
+        .reduce((obj, key) => {
+            const { [key]: dummy, ...rest } = obj;
+            return rest;
+        }, state)
+    }
+    return state;
 }
 
-const addTaskIds = (state, { entities }) => {
-    const { tasks } = entities;
-    if (tasks) return [ ...state, ...Object.keys(tasks) ];
+const removeTasksByChannels = (state, { channelIds }) => {
+    const taskIds = Object.keys(state);
+    if (channelIds && taskIds) {
+        return taskIds
+        .filter(id => channelIds.includes(state[id].channel))
+        .reduce((obj, key) => {
+            const { [key]: dummy, ...rest } = obj;
+            return rest;
+        }, state)
+    }
     return state;
 }
 
 export default combineReducers({
     byId,
-    allIds,
     selectedId
 });
