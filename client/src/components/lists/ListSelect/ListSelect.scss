@@ -1,0 +1,12 @@
+.ListSelectBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 4rem;
+    padding: 0 2rem;
+    width: 100%;
+    select {
+        width: 100%;
+    }
+    margin-bottom: 1rem;
+}
