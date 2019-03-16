@@ -3,7 +3,7 @@ import { getSelectedChannelId, getSelectedChannel } from "../duck/selectors";
 import { updateChannelRequest } from "../duck/actions";
 
 import React, { Component } from "react";
-
+import LoadingButton from "../../reuse/buttons/LoadingButton";
 import Button from "../../reuse/Button";
 import CancelButton from "../../reuse/buttons/CancelButton";
 import FloatInput from "../../reuse/FloatInput";
@@ -15,6 +15,7 @@ import ActionBar from "../../reuse/ActionBar";
 import { removeUiModal } from "../../ui/duck/actions";
 import { MODAL_CHANNEL_SETTINGS } from "../../ui/constants";
 import FormGroup from "../../reuse/FormGroup";
+import { getIsFetching } from "../../ui/duck/selectors";
 
 class ChannelEditForm extends Component {
     state = {
@@ -57,7 +58,7 @@ class ChannelEditForm extends Component {
 
 
     render() {
-        const { channel, isChanged, edit } = this.state;
+        const { channel, isChanged, isFetching, edit } = this.state;
         const { name, topic } = channel;
         const { channelName, onHide } = this.props;
         return (
@@ -94,10 +95,10 @@ class ChannelEditForm extends Component {
                 </Column>
 
                 <ActionBar>
-                    <CancelButton onClick={onHide} />
-                    <Button 
-                        disabled={!isChanged}
-                        theme="secondaryAction" 
+                    <Button theme="outlined" onClick={onHide} text="Cancel" />
+                    <LoadingButton
+                        isLoading={isFetching}
+                        theme="action" 
                         text="Save Changes" 
                     />
                 </ActionBar>
@@ -108,7 +109,8 @@ class ChannelEditForm extends Component {
 
 const mapStateToProps = state => ({
     channelId: getSelectedChannelId(state),
-    channel: getSelectedChannel(state)
+    channel: getSelectedChannel(state),
+    isFetching: getIsFetching(state, "channelUpdate")
 });
 
 export default connect(mapStateToProps, {
