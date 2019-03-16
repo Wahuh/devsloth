@@ -10,8 +10,47 @@
     flex-shrink: 0;
     text-decoration: none;
     
+    .ChannelButtons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex: 0 0 auto;
+    }
+
     .ButtonContainer {
-        margin-left: auto;
+        button {
+            margin-left: 0.25rem;
+        }
+    }
+
+    .ChannelName {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    
+        .ChannelHash {
+            margin-right: 4px;
+            color: var(--color-channel-hash);
+        }
+        
+        .ChannelLock {
+            svg {
+                fill: var(--color-channel-hash);
+                margin-right: 4px;
+                width: 16px;
+                height: 16px;
+            }
+        }
+        
+        .ChannelText {
+            min-width: 0;
+            p {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }    
     }
 }
 
@@ -24,8 +63,14 @@
     p {
         color: var(--color-channel-selected-font);
     }
-    .ChannelHash {
-        fill: var(--color-primary-font);
+    .ChannelName {
+        .ChannelHash {
+            color: var(--color-channel-hash-selected);
+        }
+    }
+
+    svg {
+        fill: var(--color-icon-selected);
     }
 
 }
@@ -43,30 +88,3 @@
 }
 
 
-.Wrapper {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    .ChannelHash {
-        margin-right: 4px;
-        color: var(--color-channel-hash);
-    }
-    .ChannelLock {
-        svg {
-            fill: var(--color-channel-hash);
-            margin-right: 4px;
-            width: 16px;
-            height: 16px;
-        }
-    }
-}
-
-.ChannelName {
-    min-width: 0;
-    p {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-}
