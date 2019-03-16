@@ -1,10 +1,7 @@
+import { createSelector } from "reselect";
+
 import { 
-    getAllGroups,
-    getCurrentGroup,
-    getCurrentGroupId, 
-    getGroupIdSelected,
     getSelectedGroupId,
-    getSelectedGroup
 } from "../../group/duck/selectors";
 
 export const getAllChannels = state => {
@@ -14,6 +11,11 @@ export const getAllChannels = state => {
 .filter(channel => channel.group === groupId)
     return [];
 }
+
+export const getChannelsById = state => state.channels.byId;
+const getSelectedIds = state => state.channels.selectedIds;
+
+
 
 
 export const getDefaultChannelId = state => {
@@ -42,16 +44,7 @@ export const getChannelIds = state => {
     return [];
 }
 
-export const getSelectedChannel = state => {
-    const channelId = getSelectedChannelId(state);
-    if (channelId) return state.channels.byId[channelId];
-    return null;
-}
 
-export const getSelectedChannelId = state => {
-    const groupId = getSelectedGroupId(state);
-    return state.channels.selectedIds[groupId];
-}
 
 export const getSelectedChannelName = state => {
     const channelId = getSelectedChannelId(state);
@@ -87,29 +80,19 @@ export const getChannelIdsToDelete = (state, groupId) => {
     .filter(id => state.channels.byId[id].group === groupId);
 }
 
-export const getCurrentChannel = state => state.channels.byId[getCurrentChannelId(state)];
-
-export const getCurrentChannelId = (state) => {
-    const id = getCurrentGroupId(state);
-    if (id) return state.channels.currentIds[id].slice(-1)[0];
-    return null;
-};
-export const getCurrentChannelIdDefault = state => getCurrentGroup(state)["channels"][0]
-
-export const getCurrentChannelIdsDefault = state => {
-    const groups = getAllGroups(state);
-    return groups.map( ({ _id, channels }) => [_id, channels[0]] )
-    .reduce( (accum, [k, v]) => ({ ...accum, [k]: v }), {});
-}
-
-export const getCurrentChannelName = state => {
-    const id = getCurrentChannelId(state);
-    if (id) return state.channels.byId[id].name;
-    return null;
-}
-
 export const getDefaultChannelInviteId = state => {
     const channel = getAllChannels(state)
     .find(({ isDefault }) => isDefault)
     return channel ? channel.inviteId : null;
 }
+export const getSelectedChannelId = createSelector(
+    [ getSelectedIds, getSelectedGroupId ],
+    (selectedIds, selectedGroupId) => selectedGroupId ? selectedIds[selectedGroupId] : null
+)
+
+export const getSelectedChannel = createSelector(
+    [ getChannelsById, getSelectedChannelId ],
+    (byId, selectedChannelId) => selectedChannelId ? byId[selectedChannelId] : null
+)
+
+
