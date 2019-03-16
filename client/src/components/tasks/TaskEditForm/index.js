@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { createTaskRequest, updateTaskRequest } from "../duck/actions";
-import { getCurrentChannelId, getSelectedChannelId, getSelectedChannelName } from "../../channel/duck/selectors";
+import { getSelectedChannelId, getSelectedChannelName } from "../../channel/duck/selectors";
 
 import React, { Component } from "react";
 import TaskEditOptions from "../TaskEditOptions";
