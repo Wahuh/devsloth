@@ -5,19 +5,17 @@ const { Member }  = require("../models/member.model");
 const { User } = require("../models/user.model");
 const { listSchema } = require("../models/list.model");
 const { Message } = require("../models/message.model");
-
+const clients = require("../clients");
 
 
 const createChannel = async (req, res) => {
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).send("User not found");
-
+    console.log(req.body);
     const { error } = validateChannel(req.body);
     if (error) return res.status(400).send(error.details[0].message); 
 
     const group = await Group
     .findById(req.params.groupId);
-    if (!group) return res.status(404).send("We couldn't find the group");
+    if (!group) return res.status(404).send("Group not found");
 
     const newChannel = await Channel.create({
         name: req.body.name,
@@ -27,7 +25,7 @@ const createChannel = async (req, res) => {
     });
 
     await Member.findOneAndUpdate(
-        { user: user._id, group: group._id }, 
+        { user: req.user.id, group: group._id }, 
         { $push: { channels: newChannel._id } }
     );
     
@@ -36,7 +34,11 @@ const createChannel = async (req, res) => {
     .populate({ path: "members" });
 
     console.log("created", channel);
+    const io = req.app.get("io");
     res.status(201).send(channel);
+    const socket = io.sockets.connected[clients.getClientId(req.user.id)];
+    socket.join(channel._id);
+    return;
 }
 
 const deleteChannel = async (req, res) => {
@@ -58,7 +60,9 @@ const deleteChannel = async (req, res) => {
             { multi: true }
         );
 
-        return res.status(200).send(channel);
+        const io = req.app.get("io");
+        io.to(group._id).emit("channel delete", channel._id);
+        res.status(200).end();
     }
     return res.status(404).send("Insufficient permissions");
 }
@@ -77,7 +81,8 @@ const updateChannel = async (req, res) => {
     const group = await Group.findById(channel.group);
 
     if (group.owner.equals(user._id)) {
-        const updatedChannel = await Channel.findByIdAndUpdate(channel._id, { $set: req.body }, { new: true });
+        channel.set(req.body);
+        const updatedChannel = await channel.save();
         
         // const message = new Message({
         //     text: `${member.alias} has updated the channel topic.`,
@@ -89,8 +94,8 @@ const updateChannel = async (req, res) => {
         // await message.save();
 
         const io = req.app.get("io");
-        io.to(channel._id).emit("channel topic update", updatedChannel);
-        return res.status(200);
+        io.to(channel._id).emit("channel update", updatedChannel);
+        res.status(200).end();
         // .send(updatedChannel);
     }
     return res.status(404).send("Insufficient permissions");
