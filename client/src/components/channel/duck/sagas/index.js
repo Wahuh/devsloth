@@ -1,17 +1,18 @@
 import { all } from "redux-saga/effects";
-import { watchCreateChannelRequest, watchSendChannelCreate } from "./channelCreateSagas";
-import { watchDeleteChannelRequest, watchDeleteChannelSuccess } from "./channelDeleteSagas";
-import { watchUpdateChannelRequest } from "./channelUpdateSagas";
-import { watchChannelConnect } from "./channelConnectSagas";
-import { watchAddChannel } from "./channelAddSagas";
+import { watchChannelCreateRequest } from "./channelCreateSagas";
+import { watchChannelDeleteRequest } from "./channelDeleteSagas";
+import { watchChannelUpdateRequest } from "./channelUpdateSagas";
+import { watchChannelAdd } from "./channelAddSagas";
+import { watchChannelEdit } from "./channelEditSagas";
+import { watchChannelRemove } from "./channelRemoveSagas";
 
 export default function* channelSaga() {
     yield all([
-        watchCreateChannelRequest(),
-        watchChannelConnect(),
-        watchUpdateChannelRequest(),
-        watchDeleteChannelRequest(),
-        watchDeleteChannelSuccess(),
-        watchAddChannel(),
+        watchChannelCreateRequest(),
+        watchChannelUpdateRequest(),
+        watchChannelDeleteRequest(),
+        watchChannelAdd(),
+        watchChannelEdit(),
+        watchChannelRemove()
     ]);
 }
