@@ -4,8 +4,7 @@ import React, { Component } from "react";
 import "./TaskMenu.scss";
 import TaskList from "../TaskList";
 import styles from "./TaskMenu.scss";
-import { getCurrentChannelId } from "../../channel/duck/selectors";
-import { getListIdsChannelCurrent } from "../../lists/duck/selectors";
+import { getListIds } from "../../lists/duck/selectors";
 import { createListRequest } from "../../lists/duck/actions";
 import TaskListHeader from "../TaskListHeader";
 import Button from "../../reuse/Button";
@@ -40,14 +39,14 @@ class TaskMenu extends Component {
         return (
             <div className={styles.TaskMenu}>
 
-                {/* <div className={styles.ListNames}>
+                <div className={styles.ListNames}>
                     {listIds.map(id => <TaskListButton onClick={() => this.selectList(id)} _id={id} selected={_id === id} />)}
-                </div> */}
+                </div>
 
 
 
                 <div className={styles.TaskMenuList}>
-                    {_id && <TaskList _id={_id} />}
+                    {_id && <TaskList listId={_id} />}
                 </div>
             </div>
         );
@@ -55,7 +54,7 @@ class TaskMenu extends Component {
 }
 
 const mapStateToProps = state => ({
-    listIds: getListIdsChannelCurrent(state)
+    listIds: getListIds(state)
 });
 
 export default connect(mapStateToProps, {
