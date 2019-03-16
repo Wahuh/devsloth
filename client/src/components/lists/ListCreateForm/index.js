@@ -67,7 +67,6 @@ class ListCreateForm extends Component {
                     <PlusIcon />
                 </Icon>
                 <Input 
-                    autoFocus
                     onChange={this.handleChange}
                     onEnter={this.handleSubmit}
                     onFocus={this.handleFocus}
