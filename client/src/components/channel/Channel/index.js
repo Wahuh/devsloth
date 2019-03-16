@@ -6,6 +6,7 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import ListItem from "../../reuse/ListItem";
 import Button from "../../reuse/Button";
+import Icon from "../../reuse/Icon";
 import styles from "./Channel.scss";
 import { getOwnerId } from "../../group/duck/selectors";
 import { getChannel, getSelectedChannelId } from "../duck/selectors";
@@ -29,46 +30,56 @@ const Channel = ({ channel, onSelect, isSelected, isOwner, onShowModal, isUserIn
                         event.preventDefault();
                         onSelect(); 
                     }} className={styles.Channel} activeClassName={styles.Selected} to={`${match.url}/@${name}`}>
-                <div className={styles.Wrapper}>
+                
+                <section className={styles.ChannelName}>
                     {isPublic ? (
-                    <div className={styles.ChannelHash}>
-                        <Typography type="subheading">#</Typography>
-                    </div>
-                    ) : (
-                    <div className={styles.ChannelLock}>
-                        <LockIcon />
-                    </div>
+                        <div className={styles.ChannelHash}>
+                            <Typography type="subheading">#</Typography>
+                        </div>
+                        ) : (
+                        <div className={styles.ChannelLock}>
+                            <Icon size="md">
+                                <LockIcon />
+                            </Icon>
+                        </div>
                     )}
 
-                    
-                    <div className={styles.ChannelName}>
+                    <div className={styles.ChannelText}>
                         <Typography color="primary">{name}</Typography>
                     </div>
-                </div>
-                {isSelected && 
-                    <div className={styles.ButtonContainer} data-tip data-for="ChannelInviteIcon">
-                        <Button onClick={onShowInviteModal} className={styles.IconButton} theme="icon">
-                            <InviteIcon />
+                </section>
+
+                <span className={styles.ChannelButtons}>
+                    {isSelected && 
+                        <div className={styles.ButtonContainer} data-tip data-for="ChannelInviteIcon">
+                            <Button onClick={onShowInviteModal} className={styles.IconButton} theme="icon">
+                                <Icon size="md">
+                                    <InviteIcon />
+                                </Icon>
+                            </Button>
+
+                            <Tooltip
+                            id="ChannelInviteIcon" 
+                            message="Create Instant Invite" 
+                            place="top"
+                        /> 
+                        </div>
+                    }
+
+                    {isOwner && <div className={styles.ButtonContainer} data-tip data-for="ChannelSettingsIcon">
+                        <Button onClick={onShowModal} className={classNames(styles.IconButton, { [styles.Hidden]: !isSelected })} theme="icon">
+                            <Icon size="md">
+                                <SettingsIcon />
+                            </Icon>
                         </Button>
-
                         <Tooltip
-                        id="ChannelInviteIcon" 
-                        message="Create Instant Invite" 
-                        place="top"
-                    /> 
-                    </div>
-                }
+                            id="ChannelSettingsIcon" 
+                            message="Channel Settings" 
+                            place="top"
+                        /> 
+                    </div>}
+                </span>
 
-                {isOwner && <div className={styles.ButtonContainer} data-tip data-for="ChannelSettingsIcon">
-                    <Button onClick={onShowModal} className={classNames(styles.IconButton, { [styles.Hidden]: !isSelected })} theme="icon">
-                        <SettingsIcon />
-                    </Button>
-                    <Tooltip
-                        id="ChannelSettingsIcon" 
-                        message="Channel Settings" 
-                        place="top"
-                    /> 
-                </div>}
             </NavLink>
 
 
