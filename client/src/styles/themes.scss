@@ -1,46 +1,4 @@
 .dark {
-    --color-channel-hash: #ccc;
-    --color-group-list: #121212;
-    --color-group-list-button: #0069ed;
-    --color-group-list-button-fill: white;
-    --color-user-details: #2f2f2f;
-    --color-task-list: #2f2f2f;
-    --color-task: ;
-    --color-task-hover: ;
-    --color-toast: white;
-
-    --color-message-date: #B8D8FF;
-    --color-action-bar: #2f2f2f;
-    --color-user: #0069ed;
-
-    --color-placeholder: #aaa;
-    --color-primary: #353535;
-    --color-primary-light: #2e2e2e;
-    --color-primary-dark: #2f2f2f;
-    --color-primary-hover: #484848;
-    --color-divider: #ccc;
-    --color-primary-action: #0069ed;
-    --color-primary-action-light: #B8D8FF;
-    --color-primary-action-dark: #0053ba;
-
-    --color-secondary: #1e1e1e;
-    --color-secondary-hover: #161616;
-    --color-tertiary: #2f2f2f;
-    --color-selected: #161616;
-    --color-secondary-action: #00B16A;
-    --color-secondary-action-dark: #1E824C;
-
-    --color-secondary-icon: #696969;
-    --color-primary-icon: #ccc;
-    --color-primary-icon-hover: white;
-
-    --color-owner: #F0DF0F;
-
-    --color-error: #FF8C8A;
-    --color-success: #9BFE83;
-    --color-focus: #7462e0; 
-    --color-link: #52a0ff;
-
     --color-100: white;
     --color-200: #ccc; 
     --color-300: #404040; 
@@ -51,13 +9,19 @@
     --color-800: #1a1a1a; 
     --color-900: #0d0d0d;
 
-
     --color-action: #7657FF;
+    --color-action-font: white;
     --color-action-dark: #5a35ff;
+    --color-action-hover: #5a35ff;
     --color-border: #0d0d0d;
     --color-border-secondary: #1a1a1a;
+    --color-channel-hash: #ccc;
+    --color-channel-hash-selected: #ccc;
     --color-channel-selected: #373737;
     --color-channel-selected-font:white;
+    --color-divider: #ccc;
+    --color-error: #FF8C8A;
+    --color-focus: #7462e0; 
     --color-font-quaternary: #B8D8FF;
     --color-font-placeholder: #aaa;
     --color-font-primary: #ccc;
@@ -68,67 +32,32 @@
     --color-home-icon: #B8D8FF;
     --color-home-icon-active: ;
     --color-icon: #ccc;
+    --color-icon-button-active: #0d0d0d;
+    --color-icon-button-hover: #373737;
+    --color-icon-hover: #7657FF;
+    --color-icon-selected: white;
     --color-input: #1e1e1e;
     --color-input-border: #0d0d0d;
     --color-input-form: #1e1e1e;
     --color-input-form-border: #0d0d0d;
     --color-input-label: #B8D8FF;
+    --color-link: #52a0ff;
+    --color-owner: #F0DF0F;
     --color-scrollbar: #aaa;
     --color-side-menu-right: #1a1a1a;
+    --color-success: #9BFE83;
     --color-task: #404040;
     --color-task-border: #1a1a1a;
     --color-task-count: #1e1e1e;
     --color-task-hover: #484848;
+    --color-toast: white;
     --color-tooltip: black;
     --color-tooltip-font: white;
-
-
+    --color-user: #0069ed;
     --color-warning: #fcf8e3;
 }
 
 .light {
-    --color-channel-hash: #ccc;
-    --color-group-list: #121212;
-    --color-group-list-button: #0069ed;
-    --color-group-list-button-fill: white;
-    --color-user-details: #2f2f2f;
-    --color-task-list: #2f2f2f;
-    --color-task-hover: ;
-    --color-toast: white;
-
-    --color-message-date: #B8D8FF;
-    --color-action-bar: #2f2f2f;
-
-
-    --color-placeholder: #aaa;
-    --color-primary: #353535;
-    --color-primary-light: #2e2e2e;
-    --color-primary-dark: #2f2f2f;
-    --color-primary-hover: #484848;
-    --color-divider: #ccc;
-    --color-primary-action: #0069ed;
-    --color-primary-action-light: #B8D8FF;
-    --color-primary-action-dark: #0053ba;
-
-    --color-secondary: #1e1e1e;
-    --color-secondary-hover: #161616;
-    --color-tertiary: #2f2f2f;
-    --color-selected: #161616;
-
-    --color-secondary-action: #00B16A;
-    --color-secondary-action-dark: #1E824C;
-
-    --color-secondary-icon: #696969;
-    --color-primary-icon: #ccc;
-    --color-primary-icon-hover: white;
-
-
-
-    --color-error: #FF8C8A;
-    --color-success: #9BFE83;
-    --color-focus: #7462e0; 
-    --color-link: #52a0ff;
-
     --color-100: red;
     --color-200: #ccc; 
     --color-300: #404040; 
@@ -140,40 +69,52 @@
     --color-900: rgb(253, 253, 253);
 
     --color-action: #7657FF;
+    --color-action-font: white;
     --color-action-dark: #5a35ff;
+    --color-action-hover: #ad9bff;
     --color-border: #ddd;
     --color-border-secondary: #ddd;
-    --color-channel-selected:#7657FF;
+    --color-channel-hash: #ccc;
+    --color-channel-hash-selected: #dcc6e0;
+    --color-channel-selected: #595959;
     --color-channel-selected-font:white;
-    --color-font-placeholder: #6e6e6e;
+    --color-divider: #ccc;
+    --color-error: #aa0000;
+    --color-focus: #7462e0; 
+    --color-font-placeholder: #7b7b7b;
     --color-font-primary: rgba(0,0,0,.84);
     --color-font-quaternary: #0069ed;
     --color-font-secondary: black;
     --color-font-tertiary: #6e6e6e;
-    --color-group-icon: #e5dfff;
+    --color-group-icon: #dfdfdf;
     --color-header: #f8f8f8;
     --color-home-icon: #7657FF;
     --color-home-icon-active: white;
     --color-home-button: white;
-    --color-home-button-active: #7657FF;
-    --color-home-icon-border: #7657FF;
+    --color-home-button-active: #9279ff;
+    --color-home-icon-border: #9279ff;
     --color-icon: #333;
+    --color-icon-button-active: #dfdfdf;
+    --color-icon-button-hover: #e7e7e7;
+    --color-icon-hover: #7657FF;
+    --color-icon-selected: white;
     --color-input: white;
     --color-input-border: #bbb;
     --color-input-label: #0069ed;
     --color-input-form: white;
     --color-input-form-border: #bbb;
+    --color-link: #52a0ff;
     --color-owner: #F0DF0F;
     --color-scrollbar: #bbb;
     --color-side-menu-right: #f8f8f8;
+    --color-success: #00552a;
     --color-task: white;
     --color-task-border: #bbb;
     --color-task-count: #f7f7f7;
     --color-task-hover: #f7f7f7;
+    --color-toast: white;
     --color-tooltip: #1e1e1e;
     --color-tooltip-font: white;
     --color-user: #019875;
-
-
     --color-warning: #fcf8e3;
 }
