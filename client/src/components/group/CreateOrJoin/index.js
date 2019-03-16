@@ -14,7 +14,7 @@ const CreateOrJoin = ({ onCreate, onJoin }) => (
         
         <Column flex="1" alignItems="center" justifyContent="center">
             <Typography type="body" color="primary">Got an invite? Join here!</Typography>
-            <Button theme="secondaryAction" text="Join a group" onClick={onJoin} />
+            <Button theme="outlined" text="Join a group" onClick={onJoin} />
         </Column>
     </Row>
 );
