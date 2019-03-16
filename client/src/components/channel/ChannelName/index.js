@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getCurrentChannelName, getSelectedChannelName } from "../duck/selectors";
+import { getSelectedChannelName } from "../duck/selectors";
 
 import React from "react";
 import Typography from "../../reuse/Typography";
