@@ -1,31 +1,25 @@
 import { connect } from "react-redux";
-import { getSelectedChannelId } from "../../channel/duck/selectors";
 
-import React, { Component } from "react";
+import React from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { arrayMove } from "react-sortable-hoc";
 import SortableList from "./VirtualList";
-import { getListTasks } from "../duck/selectors";
 import styles from "./TaskList.scss";
 import { moveTaskRequest } from "../duck/actions";
+import { makeGetListTaskIdsOrdered } from "../../lists/duck/selectors";
 
 
-class TaskList extends Component {
-    registerListRef = (listInstance) => {
-        this.List = listInstance;
-    };
-
-    handleSortEnd = ({ oldIndex, newIndex }) => {
-        const { tasks, onMove } = this.props;
+const TaskList = ({ tasks, taskIds, onMove }) => {
+    const handleSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex === newIndex) {
             return;
         }
-        const movedId = tasks[oldIndex]._id;
+        const movedId = taskIds[oldIndex];
         if (oldIndex > 0) {
             onMove({ 
-                beforeOldIndex: { _id: tasks[oldIndex - 1]._id, next: tasks[oldIndex + 1]._id },
-                newIndex: { _id: movedId, next: tasks[newIndex + 1]._id },
-                beforeNewIndex: { _id: tasks[newIndex]._id, next: movedId }, 
+                beforeOldIndex: { _id: taskIds[oldIndex - 1], next: taskIds[oldIndex + 1] },
+                newIndex: { _id: movedId, next: taskIds[newIndex + 1] },
+                beforeNewIndex: { _id: taskIds[newIndex], next: movedId }, 
             });
         } else {
             onMove({
@@ -34,31 +28,30 @@ class TaskList extends Component {
             });
         }
     }
-
-    render() {
-        const { tasks } = this.props;
-
-        return tasks ? (
-            <div className={styles.ListWrapper}>
-                <AutoSizer>
-                    {({ height }) => (
-                        <SortableList
-                            getRef={this.registerListRef}
-                            tasks={tasks}
-                            height={height}
-                            onSortEnd={this.handleSortEnd}
-                        />
-                    )}
-                </AutoSizer>
-            </div>
-        ) : null;
-    }
+    return taskIds ? (
+        <div className={styles.ListWrapper}>
+            <AutoSizer>
+                {({ height }) => (
+                    <SortableList
+                        taskIds={taskIds}
+                        height={height}
+                        onSortEnd={handleSortEnd}
+                        distance={2}
+                    />
+                )}
+            </AutoSizer>
+        </div>
+    ) : null;
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    tasks: getListTasks(state, ownProps._id),
-});
+const makeMapStateToProps = () => {
+    const getListTaskIdsOrdered = makeGetListTaskIdsOrdered();
+    const mapStateToProps = (state, ownProps) => ({
+        taskIds: getListTaskIdsOrdered(state, ownProps),
+    });
+    return mapStateToProps
+}
 
-export default connect(mapStateToProps, {
+export default connect(makeMapStateToProps, {
     onMove: moveTaskRequest
 })(TaskList);
