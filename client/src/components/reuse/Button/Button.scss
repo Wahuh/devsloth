@@ -45,6 +45,7 @@
 
 .Action {
     background: var(--color-action);
+    color: var(--color-action-font);
     border: 1px solid transparent;
     border-radius: 3px;
 }
@@ -86,6 +87,7 @@
 }
 
 .Outlined {
+    transition: none !important;
     padding: 0.5rem 1rem;
     border-radius: 3px;
     border: 1px solid var(--color-action);
@@ -93,13 +95,8 @@
     color: var(--color-action);
 }
 
-.Outlined:hover {
-
-    border-color: var(--color-action-dark);
-}
-
-.Outlined:focus {
-    border: 1px solid $primary-action;
+.Outlined:hover, .Outlined:focus, .Outlined:active {
+    border-color: var(--color-action-hover) !important;
 }
 
 .Rounded {
