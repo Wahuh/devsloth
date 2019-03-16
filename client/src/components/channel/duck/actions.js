@@ -62,7 +62,7 @@ export const updateChannelFailure = createAction(CHANNEL_UPDATE_FAILURE, null,
 
 
 export const deleteChannelRequest = createAction(CHANNEL_DELETE_REQUEST, _id => ({ _id }));
-export const deleteChannelSuccess = createAction(CHANNEL_DELETE_SUCCESS, payloadCreator);
+export const deleteChannelSuccess = createAction(CHANNEL_DELETE_SUCCESS, _id => payloadCreator({ _id }));
 export const deleteChannelFailure = createAction(CHANNEL_DELETE_FAILURE, null);
 export const deleteChannel = createAction(CHANNEL_DELETE_FAILURE);
 
