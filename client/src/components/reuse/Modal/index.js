@@ -40,12 +40,15 @@ class Modal extends Component {
     }
 
     render() {
-        const { children, size, align, className } = this.props;
+        const { children, size, align, className, isCustom } = this.props;
         return ReactDOM.createPortal(
             <ModalOverlay>
-                <div className={classNames(styles.ModalContent, className, aligns[align], size ? sizes[size] : sizes["md"] )}>
-                    {children}
-                </div>
+                {isCustom ? children :
+                    <div className={classNames({ [styles.ModalContent]: !isCustom }, sizes[size], className, aligns[align])}>
+                        {children}
+                    </div>
+                }
+
             </ModalOverlay>,
             this.element
         )
