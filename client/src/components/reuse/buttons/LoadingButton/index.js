@@ -9,7 +9,7 @@ const LoadingButton = ({ isLoading, text, onClick, theme }) => (
     <span className={styles.LoadingButton}>
         <Button disabled={isLoading} size="md" theme={theme} onClick={onClick}>
             <span className={isLoading ? styles.Hidden : styles.Visible}> 
-                <Typography type="body" color="secondary">
+                <Typography type="body">
                     {text}
                 </Typography>
             </span>
