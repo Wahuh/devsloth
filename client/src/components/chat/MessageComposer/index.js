@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getCurrentChannelName, getCurrentChannelId, getSelectedChannelId, getSelectedChannelName } from "../../channel/duck/selectors";
+import { getSelectedChannelId, getSelectedChannelName } from "../../channel/duck/selectors";
 import { getCurrentMemberId, getMemberIdUser } from "../../members/duck/selectors";
 import { getCurrentGroupName, getSelectedGroupName } from "../../group/duck/selectors";
 
