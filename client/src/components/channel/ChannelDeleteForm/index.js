@@ -1,9 +1,11 @@
 import { connect } from "react-redux";
-import { getCurrentChannelName, getSelectedChannelId } from "../duck/selectors";
+import { getSelectedChannelId, getSelectedChannelName } from "../duck/selectors";
 import { deleteChannelRequest } from "../duck/actions";
 
 import React, { Component } from "react";
 import Button from "../../reuse/Button";
+import LoadingButton from "../../reuse/buttons/LoadingButton";
+import { getIsFetching } from "../../ui/duck/selectors";
 import Typography from "../../reuse/Typography";
 import styles from "./ChannelDeleteForm.scss";
 import Form from "../../reuse/Form";
@@ -21,7 +23,7 @@ class ChannelDeleteForm extends Component {
     }
 
     render() {
-        const { channelName, onHide } = this.props;
+        const { channelName, onHide, isFetching } = this.props;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Column paddingX="xl" className={styles.Wrapper}>
@@ -31,8 +33,8 @@ class ChannelDeleteForm extends Component {
                 </Column>
 
                 <ActionBar>
-                    <CancelButton onClick={onHide} />
-                    <Button theme="delete" text="Delete Channel" />
+                    <Button onClick={onHide} theme="outlined" text="Cancel" />
+                    <LoadingButton isLoading={isFetching} theme="delete" text="Delete Channel" />
                 </ActionBar>
             </Form>
         );
@@ -40,8 +42,9 @@ class ChannelDeleteForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    channelName: getCurrentChannelName(state),
-    channelId: getSelectedChannelId(state)
+    channelName: getSelectedChannelName(state),
+    channelId: getSelectedChannelId(state),
+    isFetching: getIsFetching(state, "channelDelete")
 });
 
 export default connect(mapStateToProps, {
