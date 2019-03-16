@@ -1,25 +1,68 @@
-import { getCurrentChannelId, getSelectedChannelId } from "../../channel/duck/selectors";
+import { createSelector } from "reselect";
+import { getSelectedChannel } from "../../channel/duck/selectors";
 
 
-export const getCurrentChannelLists = state => {
-    const channelId = getCurrentChannelId(state);
-    if (channelId) {
-        return state.lists.allIds
-        .map(id => state.lists.byId[id])
-        .filter(({ channel }) => channel === channelId)
+
+export const getList = (state, props) => state.lists.byId[props.listId];
+    export const getListName = createSelector(getList, list => list.name);
+export const getListIds = createSelector(
+    getSelectedChannel,
+    ({ lists }) => lists ? lists : null
+);
+
+export const getTasksById = state => state.tasks.byId;
+
+export const getListTaskIds = (state, props) => {
+    const list = state.lists.byId[props.listId];
+    return list.hasOwnProperty("tasks") ? list.tasks : null;
+}   
+
+export const getListHead = createSelector(
+    [ getTasksById, getListTaskIds ],
+    (byId, taskIds) => {
+        if (taskIds) {
+            const head = taskIds.find(id => byId[id].isHead == true)
+            return head ? head : null;
+        }
+        return null;
     }
-    return [];
+)
+
+export const makeGetListTaskNames = () => (
+    createSelector(
+        [getListTaskIds, getTasksById],
+        (taskIds, byId) => taskIds.map(id => byId[id])
+    )
+);
+
+export const getListTasksOrdered = (state, props) => props.taskIds.map(id => state.tasks.byId[id]);
+
+export const makeGetListTaskNamesOrdered = () => {
+    return createSelector(
+        getListTasksOrdered,
+        tasks => tasks.map(({ name }) => name)
+    );
 }
 
-export const getList = (state, id) => state.lists.byId[id]
+export const makeGetListTaskIdsOrdered = () => {
+    return createSelector(
+        [ getTasksById, getListHead ],
+        (byId, head) => {
+            if (head) {
+                let taskIds = [];
+                let current = head;
+                while(current !== null) {
+                    const task = byId[current];
+                    taskIds.push(current);
+                    console.log(current);
+                    current = task.next;
 
-export const getListIdsChannelCurrent = state => {
-    const channelId = getSelectedChannelId(state);
-    if (channelId) {
-        return state.lists.allIds
-            .filter(listId => state.lists.byId[listId].channel === channelId)
-    }
-    return [];
+                }
+                return taskIds;
+            } 
+            return null;
+        }
+    );
 }
 
 export const getSelectedChannelLists = state => {
