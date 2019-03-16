@@ -4,20 +4,31 @@ import { CHANNEL_CREATE_REQUEST } from "../types";
 import { createChannelSuccess, createChannelFailure } from "../actions";
 import { MODAL_CHANNEL_CREATE } from "../../../ui/constants";
 import { removeUiModal, addUiFetching, removeUiFetching } from "../../../ui/duck/actions";
+import { toastify } from "../../../ui/duck/sagas";
 
-export function* watchCreateChannelRequest() {
-    yield takeEvery(CHANNEL_CREATE_REQUEST, handleCreateChannel);
+export function* watchChannelCreateRequest() {
+    yield takeEvery(CHANNEL_CREATE_REQUEST, handleChannelCreate);
 }
 
-function* handleCreateChannel(payload) {
+function* handleChannelCreate({ payload }) {
     yield put(addUiFetching("channelCreate"));
     try {
         const { data } = yield call(channelApi.createChannel, payload);
         yield put(createChannelSuccess(data));
         yield put(removeUiModal(MODAL_CHANNEL_CREATE));
-        yield put(removeUiFetching("channelCreate"));
+        yield call(toastify, { 
+            message: "Channel created successfully!",
+            duration: 3000,
+            status: "success"
+        });
     } catch (error) {
         yield put(createChannelFailure(error));
+        yield call(toastify, { 
+            message: "Failed to create channel. Please try again",
+            duration: 3000,
+            status: "error"
+        });
+    } finally {
         yield put(removeUiFetching("channelCreate"));
     }
 }
