@@ -3,10 +3,10 @@ import { Route } from "react-router-dom";
 import MainPanel from "../../layout/MainPanel";
 import SecondaryPanel from "../../layout/SecondaryPanel";
 import TaskBoard from "../../tasks/TaskBoard";
-import TaskMenu from "../../tasks/TaskMenu";
 import Row from "../../reuse/Row";
 import MessageList from "../../chat/MessageList";
 import MessageComposer from "../../chat/MessageComposer";
+import ChannelMenu from "../ChannelMenu";
 
 const ChannelView = ({ match }) => (
     <Row maxHeight maxWidth>
@@ -18,7 +18,7 @@ const ChannelView = ({ match }) => (
                 </MainPanel>
 
                 <SecondaryPanel>
-                    <TaskMenu />
+                    <ChannelMenu />
                 </SecondaryPanel>
             </Fragment>
         )} />
