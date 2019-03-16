@@ -9,7 +9,7 @@ import { memberJoin, receiveMemberChannelJoin, receiveMemberChannelLeave, receiv
 import { SOCKET_ACTION_EMIT, SOCKET_DISCONNECT } from "../types";
 import { receiveMessage, receiveMessageTypingStart, receiveMessageTypingStop } from "../../../messages/duck/actions";
 import { socketConnected, socketDisconnected, namespacesConnected, receiveConnectAll } from "../actions";
-import { receiveChannelCreate, receiveChannelDelete, receiveChannelUpdate, receiveChannelConnect, updateChannelSuccess } from "../../../channel/duck/actions";
+import { receiveChannelCreate, receiveChannelDelete, receiveChannelUpdate, receiveChannelConnect, updateChannelSuccess, deleteChannelSuccess } from "../../../channel/duck/actions";
 import { receiveGroupDelete, receiveGroupUpdate, receiveGroupConnect, updateGroupSuccess } from "../../../group/duck/actions";
 import { receiveListCreate, receiveListDelete, receiveListUpdate, createListSuccess, updateListSuccess } from "../../../lists/duck/actions";
 import { receiveTaskCreate, receiveTaskUpdate, receiveTaskDelete, createTaskSuccess, updateTaskSuccess } from "../../../tasks/duck/actions";
@@ -21,10 +21,6 @@ const connect = userId => {
             resolve(socket);
         })
     );
-}
-
-const connectToNamespace = (namespace) => {
-    io.connect(`${process.env.API_URL}/${namespace}`);
 }
 
 const createSocketChannel = socket => 
@@ -60,8 +56,13 @@ const createSocketChannel = socket =>
                 emit(updateGroupSuccess(payload));
             });
 
-            socket.on("channel topic update", channel => {
-                emit(updateChannelSuccess(channel))
+            socket.on("channel update", channel => {
+                emit(updateChannelSuccess(channel));
+            });
+
+            socket.on("channel delete", channelId => {
+                console.log("channeldel", deleteChannelSuccess(channelId))
+                emit(deleteChannelSuccess(channelId));
             });
 
             socket.on("channel list create", list => {
@@ -72,11 +73,11 @@ const createSocketChannel = socket =>
             });
 
             socket.on("channel task create", task => {
+                console.log("create", task._id, task.prev) 
                 emit(createTaskSuccess(task));
             })
 
             socket.on("channel task update", task => {
-                console.log(task, "receive");
                 emit(updateTaskSuccess(task));
             })
 
