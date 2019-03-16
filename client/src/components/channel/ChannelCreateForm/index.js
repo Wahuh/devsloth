@@ -6,12 +6,14 @@ import React, { Component } from "react";
 
 import ActionBar from "../../reuse/ActionBar";
 import Button from "../../reuse/Button";
+import LoadingButton from "../../reuse/buttons/LoadingButton";
 import Column from "../../reuse/Column";
 import Typography from "../../reuse/Typography";
 import FloatInput from "../../reuse/FloatInput";
 import Form from "../../reuse/Form";
 import FormSwitch from "../../reuse/FormSwitch";
 import FormGroup from "../../reuse/FormGroup";
+import { getIsFetching } from "../../ui/duck/selectors";
 
 import { Field, validate, validateField } from "../../../validation";
 import { removeUiModal } from "../../ui/duck/actions";
@@ -79,7 +81,7 @@ class ChannelCreateForm extends Component {
 
     render() {
         const { channel, validation } = this.state;
-        const { onHide } = this.props;
+        const { onHide, isFetching } = this.props;
         return (
             <Column maxWidth maxHeight>
                 <Form onSubmit={this.handleSubmit}>
@@ -117,7 +119,7 @@ class ChannelCreateForm extends Component {
 
                     <ActionBar>
                         <Button onClick={onHide} type="button" theme="outlined" text="Cancel" />
-                        <Button size="md" theme="action" text="Create Channel" />
+                        <LoadingButton isLoading={isFetching} size="md" theme="action" text="Create Channel" />
                     </ActionBar>
                 </Form>
             </Column>
@@ -127,7 +129,8 @@ class ChannelCreateForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    groupId: getSelectedGroupId(state)
+    groupId: getSelectedGroupId(state),
+    isFetching: getIsFetching(state, "channelCreate")
 });
 
 export default connect(mapStateToProps, {
