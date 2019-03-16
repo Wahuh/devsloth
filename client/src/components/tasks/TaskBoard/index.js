@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { createListRequest } from "../../lists/duck/actions";
 import { getSelectedChannelId } from "../../channel/duck/selectors";
-import { getListIdsChannelCurrent } from "../../lists/duck/selectors";
+import { getListIds } from "../../lists/duck/selectors";
 
 import React, { Component } from "react";
 import AddButton from "../../reuse/buttons/AddButton";
@@ -78,8 +78,8 @@ class TaskBoard extends Component {
                 {/* <DragDropContext onDragEnd={this.handleDragEnd}> */}
                     {listIds.map(id => 
                         <TaskBoardList>
-                            <TaskListHeader _id={id} />
-                            <TaskList key={id} _id={id} />
+                            <TaskListHeader listId={id} />
+                            <TaskList key={id} listId={id} />
                             <TaskCreateForm _id={id} />
                         </TaskBoardList>
                     )}
@@ -93,7 +93,7 @@ class TaskBoard extends Component {
 
 const mapStateToProps = state => ({
     channelId: getSelectedChannelId(state),
-    listIds: getListIdsChannelCurrent(state)
+    listIds: getListIds(state)
 });
 
 export default connect(mapStateToProps, {
