@@ -2,12 +2,12 @@ import { put, takeEvery } from "redux-saga/effects";
 import { CHANNEL_DELETE_SUCCESS } from "../types";
 import { removeChannel } from "../actions";
 
-export function* watchRemoveChannel() {
+export function* watchChannelRemove() {
     yield takeEvery([
         CHANNEL_DELETE_SUCCESS,
-    ], handleRemoveChannel);
+    ], handleChannelRemove);
 }
 
-function* handleRemoveChannel({ payload }) {
+function* handleChannelRemove({ payload }) {
     yield put(removeChannel(payload));
 }
