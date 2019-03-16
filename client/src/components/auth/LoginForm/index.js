@@ -93,7 +93,7 @@ class LoginForm extends Component {
                             </Typography>
                         </Link>
 
-                        <LoadingButton isLoading={isFetching} theme="secondaryAction" text="Login" /> 
+                        <LoadingButton isLoading={isFetching} theme="action" text="Login" /> 
                     </Row>
                 </FormGroup>
             </Form>
