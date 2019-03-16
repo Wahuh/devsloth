@@ -1,32 +1,15 @@
-import React, { Component, createRef } from "react";
+import React from "react";
 import styles from "./Dropdown.scss";
+import { useComponentVisible } from "../../ui/duck/hooks";
 
-class Dropdown extends Component {
-    node = createRef();
+const Dropdown = ({ children }) => {
+    const { ref, isComponentVisible } = useComponentVisible(true);
 
-    componentWillMount() {
-        document.addEventListener("mousedown", this.handleClose, false);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("mousedown", this.handleClose, false);
-    }
-
-    handleClose = event => {
-        const { onClose } = this.props;
-        if (!this.node.contains(event.target)) {
-            onClose();
-        }
-    }
- 
-    render() {
-        const { children } = this.props;
-        return (
-            <ul className={styles.Dropdown} ref={this.node}>
-                {children}
-            </ul>
-        );
-    }
+    return (
+        <ul className={styles.Dropdown} ref={ref}>
+            {isComponentVisible && children}
+        </ul>
+    );
 }
 
 export default Dropdown;
