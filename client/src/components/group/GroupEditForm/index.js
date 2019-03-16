@@ -140,10 +140,10 @@ class GroupEditForm extends Component {
                     {isEditable ? (
                         <Fragment>
                             <Button onClick={this.handleEdit} type="button" text="Cancel" theme="outlined" />
-                            <LoadingButton isLoading={isFetching} theme="secondaryAction" text="Save Changes" />
+                            <LoadingButton isLoading={isFetching} size="md" theme="action" text="Save Changes" />
                         </Fragment>
                     ) : (
-                        <Button type="button" onClick={this.handleEdit} text="Edit Group" size="md" theme="secondaryAction" />
+                        <Button type="button" onClick={this.handleEdit} text="Edit Group" size="md" theme="action" />
                     )}
                 </ActionBar>
             </Form>
