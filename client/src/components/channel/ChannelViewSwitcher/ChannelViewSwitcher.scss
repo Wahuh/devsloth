@@ -19,7 +19,7 @@
     }
 
     .ViewButton:not(.Active):hover {
-        background-color: var(--color-600)
+        background-color: var(--color-icon-button-hover);
     }    
 }
 
@@ -31,7 +31,7 @@
 }
 
 .Active {
-    background-color: var(--color-900);
+    background-color: var(--color-icon-button-active);
     svg {
         fill: var(--color-action) !important;
     }
