@@ -51,6 +51,7 @@ channelSchema.pre("remove", async function(next) {
     const channel = this;
     await Task.deleteMany({ channel: channel._id });
     await Message.deleteMany({ channel: channel._id });
+    await List.deleteMany({ channel: channel._id });
     next();
 });
 
