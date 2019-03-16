@@ -1,20 +1,14 @@
 import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 import { 
-    createGroupSuccess,
-    deleteGroupSuccess,
-    joinGroupSuccess,
     addGroup,
-    removeGroup
 } from "../../group/duck/actions";
 import {
-    createChannelSuccess,
-    deleteChannelSuccess,
-    updateChannelSuccess,
     selectChannel,
-    receiveChannelCreate,
     addChannel,
-    removeChannels
+    removeChannels,
+    editChannel,
+    removeChannel
 } from "./actions";
 import { loadUserData } from "../../user/duck/actions";
 
@@ -24,9 +18,8 @@ export const byId = handleActions(
         [addChannel]: (state, { payload }) => addChannels(state, payload),
         [addGroup]: (state, { payload }) => addChannels(state, payload),
         [removeChannels]: (state, { payload }) => deleteChannels(state, payload),
-        [updateChannelSuccess]: (state, { payload }) => updateChannel(state, payload),
-        // [deleteChannelSuccess]: (state, { payload }) => removeChannel(state, payload),
-        [receiveChannelCreate]: (state, { payload }) => addChannels(state, payload),
+        [editChannel]: (state, { payload }) => updateChannel(state, payload),
+        [removeChannel]: (state, { payload }) => deleteChannel(state, payload),
     }, {}
 );
 
@@ -36,6 +29,8 @@ export const allIds = handleActions(
         [addChannel]: (state, { payload }) => addChannelIds(state, payload),
         [addGroup]: (state, { payload }) => addChannelIds(state, payload),
         [removeChannels]: (state, { payload }) => deleteChannelIds(state, payload),
+        [removeChannel]: (state, { payload }) => deleteChannelId(state, payload),
+        
         // [deleteChannelSuccess]: (state, { payload }) => removeChannelId(state, payload),
     }, []
 );
@@ -45,11 +40,23 @@ export const selectedIds = handleActions(
         [loadUserData]: (state, { payload }) => mapGroupsToChannels(state, payload),
         [addChannel]: (state, { payload }) => updateSelectedChannel(state, payload),
         [selectChannel]: (state, { payload }) => addChannelToMap(state, payload),
+        [removeChannel]: (state, { payload }) => removeChannelFromMap(state, payload),
     }, {}
 );
 
 
 //group delete action, deletes all channels of the same group
+const addChannelToMap = (state, payload) => {
+    return { ...state, ...payload };
+}
+
+const removeChannelFromMap = (state, { result: channelId }) => {
+    const groupId = Object.keys(state).find(groupId => state[groupId] === channelId);
+    if (groupId) {
+        return { ...state, [groupId]: null };
+    }
+    return state;
+}
 
 const addChannels = (state, { entities }) => {
     const { channels } = entities;
@@ -86,14 +93,20 @@ const mapGroupsToChannels = (state, { entities }) => {
     }
 }
 
-const addChannelToMap = (state, payload) => {
-    return { ...state, ...payload };
-}
 
 const updateSelectedChannel = (state, { entities, result: channelId }) => {
     const { channels } = entities;
     const { group: groupId } = channels[channelId];
     return { ...state, [groupId]: channelId };
+}
+
+const deleteChannel = (state, { result: channelId }) => {
+    const { [channelId]: removedChannel, ...rest } = state;
+    return rest;
+}
+
+const deleteChannelId = (state, { result: channelId }) => {
+    return state.filter(id => id !== channelId);
 }
 
 const deleteChannels = (state, { result: channelIds }) => {
