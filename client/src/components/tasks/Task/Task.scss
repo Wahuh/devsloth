@@ -6,11 +6,24 @@
     border-radius: 3px;
     cursor: pointer;
     border: 1px solid var(--color-task-border);
-    padding: 0.25rem 0.75rem;
+    margin: 0;
+    padding: 0;
     margin-bottom: 0.5rem;
-
-    display: inline-block;
+    display: flex;
     position: relative;
+
+    a {
+        text-decoration: none;
+        padding: 0.25rem 0.75rem;
+        height: 100%;
+        width: 100%;
+    }
+    a:focus, a:hover {
+        background-color: var(--color-task-hover);
+        + .TaskEditButton {
+            opacity: 1;
+        }
+    }
 
     p {
         overflow-wrap: break-word;
@@ -19,7 +32,7 @@
     .TaskEditButton {
         background-color: transparent;
         padding: 0.2rem;
-        visibility: hidden;
+        opacity: 0;
         position: absolute;
         top: 0.25rem;
         right: 0.25rem;
@@ -27,18 +40,32 @@
         svg {
             fill: var(--color-font-quaternary);
         }
+        
     }
+
+    .TaskEditButton:focus .TaskEditButton:hover  {
+        opacity: 1;
+    }
+
     .TaskEditButton:hover {
+        + a {
+            background-color: var(--color-task-hover);
+        }
         background-color: var(--color-secondary);
     }
 }
-
 .Task:hover {
     .TaskEditButton {
-        visibility: visible;
+        opacity: 1;
     }
-    background-color: var(--color-task-hover);
 }
+
+// .Task:hover {
+//     .TaskEditButton {
+//         visibility: visible;
+//     }
+//     background-color: var(--color-task-hover);
+// }
 
 .Task:last-child {
     margin-bottom: 0;
