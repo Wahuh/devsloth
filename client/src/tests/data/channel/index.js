@@ -1,65 +1,119 @@
-export const createChannelData = {
-  "_id": "5c2a10da4029df2678363326",
-  "name": "newChannel",
-  "group": "5c216ee5b65e0c10b4348597",
-  "__v": 0,
-  "members": [
-    {
-      "channels": [
-        "5c216ee5b65e0c10b4348598",
-        "5c28ec5884ffbb0624176a03",
-        "5c28ec5b84ffbb0624176a04",
-        "5c28ec6784ffbb0624176a06",
-        "5c28ec6b84ffbb0624176a07",
-        "5c28ed7984ffbb0624176a08",
-        "5c2a10da4029df2678363326"
-      ],
-      "_id": "5c216ee5b65e0c10b4348599",
-      "alias": "Tbong",
-      "user": "5c2110b0d0d4ef2fd4130f54",
-      "group": "5c216ee5b65e0c10b4348597",
-      "__v": 0,
-      "id": "5c216ee5b65e0c10b4348599"
-    }
-  ],
-  "tasks": null,
-  "id": "5c2a10da4029df2678363326"
-}
-
-export const updateChannelData = {
-  "_id": "5c2a10da4029df2678363326",
-  "name": "changed the newChannel name",
-  "group": "5c216ee5b65e0c10b4348597",
-  "__v": 0,
-  "members": null,
-  "tasks": null,
-  "id": "5c2a10da4029df2678363326"
-}
-
-  export const deleteChannelData = {
-    "_id": "5c2a10da4029df2678363326",
-    "name": "changed the newChannel name",
-    "group": "5c216ee5b65e0c10b4348597",
-    "__v": 0,
-    "members": [
-      {
-        "channels": [
-          "5c216ee5b65e0c10b4348598",
-          "5c28ec5884ffbb0624176a03",
-          "5c28ec5b84ffbb0624176a04",
-          "5c28ec6784ffbb0624176a06",
-          "5c28ec6b84ffbb0624176a07",
-          "5c28ed7984ffbb0624176a08",
-          "5c2a10da4029df2678363326"
-        ],
-        "_id": "5c216ee5b65e0c10b4348599",
-        "alias": "Tbong",
-        "user": "5c2110b0d0d4ef2fd4130f54",
-        "group": "5c216ee5b65e0c10b4348597",
-        "__v": 0,
-        "id": "5c216ee5b65e0c10b4348599"
+export const deleteChannel = {
+  action: {
+      "type": "tasks/TASK_CREATE_SUCCESS",
+      "payload": {
+        "entities": {
+          "tasks": {
+            "5c8a6e84d5811c18a424c0bd": {
+              "_id": "5c8a6e84d5811c18a424c0bd",
+              "prev": null,
+              "name": "This is a test task",
+              "next": null,
+              "isHead": true,
+              "members": [],
+              "list": "5c8a5bc7d5811c18a424c0b6",
+              "channel": "5c8a5bbfd5811c18a424c0b4"
+            }
+          }
+        },
+        "result": "5c8a6e84d5811c18a424c0bd"
       }
-    ],
-    "tasks": null,
-    "id": "5c2a10da4029df2678363326"
+  },
+  expectedState: {
+      "5c8a6e84d5811c18a424c0bd": {
+          "_id": "5c8a6e84d5811c18a424c0bd",
+          "prev": null,
+          "name": "This is a test task",
+          "next": null,
+          "isHead": true,
+          "members": [],
+          "list": "5c8a5bc7d5811c18a424c0b6",
+          "channel": "5c8a5bbfd5811c18a424c0b4"
+      }
+  },
+
+  payload: {
+      "entities": {
+        "tasks": {
+          "5c8a6e84d5811c18a424c0bd": {
+            "_id": "5c8a6e84d5811c18a424c0bd",
+            "prev": null,
+            "name": "This is a test task",
+            "next": null,
+            "isHead": true,
+            "members": [],
+            "list": "5c8a5bc7d5811c18a424c0b6",
+            "channel": "5c8a5bbfd5811c18a424c0b4"
+          }
+        }
+      },
+      "result": "5c8a6e84d5811c18a424c0bd"
   }
+}
+
+export const updateTask = {
+  initialState: {
+      "5c8a6e84d5811c18a424c0bd": {
+          "next": null,
+          "isHead": true,
+          "members": [],
+          "_id": "5c8a6e84d5811c18a424c0bd",
+          "list": "5c8a5bc7d5811c18a424c0b6",
+          "name": "This is a test task",
+          "channel": "5c8a5bbfd5811c18a424c0b4",
+          "__v": 0,
+      }
+  },
+  expectedState: {
+      "5c8a6e84d5811c18a424c0bd": {
+          "next": null,
+          "isHead": true,
+          "members": [],
+          "_id": "5c8a6e84d5811c18a424c0bd",
+          "list": "5c8a5bc7d5811c18a424c0b6",
+          "name": "This is a test task32",
+          "channel": "5c8a5bbfd5811c18a424c0b4",
+          "__v": 0,
+          "description": "Updated the description32"
+      }
+  },
+  action: {
+      "type": "tasks/TASK_UPDATE_SUCCESS",
+      "payload": {
+        "entities": {
+          "tasks": {
+            "5c8a6e84d5811c18a424c0bd": {
+              "next": null,
+              "isHead": true,
+              "members": [],
+              "_id": "5c8a6e84d5811c18a424c0bd",
+              "list": "5c8a5bc7d5811c18a424c0b6",
+              "name": "This is a test task",
+              "channel": "5c8a5bbfd5811c18a424c0b4",
+              "__v": 0,
+              "description": "Updated the description32"
+            }
+          }
+        },
+        "result": "5c8a6e84d5811c18a424c0bd"
+      }
+    },
+    "payload": {
+      "entities": {
+        "tasks": {
+          "5c8a6e84d5811c18a424c0bd": {
+            "next": null,
+            "isHead": true,
+            "members": [],
+            "_id": "5c8a6e84d5811c18a424c0bd",
+            "list": "5c8a5bc7d5811c18a424c0b6",
+            "name": "This is a test task",
+            "channel": "5c8a5bbfd5811c18a424c0b4",
+            "__v": 0,
+            "description": "Updated the description32"
+          }
+        }
+      },
+      "result": "5c8a6e84d5811c18a424c0bd"
+    }
+}
