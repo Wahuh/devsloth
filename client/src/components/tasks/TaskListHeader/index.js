@@ -58,10 +58,9 @@ class TaskListHeader extends Component {
 
     render() {
         const { list } = this.props;
-        console.log(list, "updated");
         const { isDropdownShown, isRenaming } = this.state;
         let count;
-        if (list.tasks) {
+        if (list && list.tasks) {
             if (list.tasks.length > 0) {
                 count = <div className={styles.TaskCount}>
                             <Typography type="caption" color="quaternary">
@@ -125,7 +124,7 @@ class TaskListHeader extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    list: getList(state, ownProps._id)
+    list: getList(state, ownProps)
 });
 
 export default connect(mapStateToProps, {
