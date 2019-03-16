@@ -61,7 +61,7 @@ class GroupJoinForm extends Component {
     
                 <ActionBar>
                     <Button onClick={onBack} theme="link" text="Back" />
-                    <LoadingButton isLoading={isFetching} text="Join Group" />
+                    <LoadingButton theme="action" isLoading={isFetching} text="Join Group" />
                 </ActionBar>
             </Form>
         );
