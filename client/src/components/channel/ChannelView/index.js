@@ -4,7 +4,7 @@ import MainPanel from "../../layout/MainPanel";
 import SecondaryPanel from "../../layout/SecondaryPanel";
 import TaskBoard from "../../tasks/TaskBoard";
 import Row from "../../reuse/Row";
-import MessageList from "../../chat/MessageList";
+import MessageList from "../../messages/MessageList";
 import MessageComposer from "../../chat/MessageComposer";
 import ChannelMenu from "../ChannelMenu";
 
