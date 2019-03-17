@@ -46,11 +46,7 @@ export const getChannelIds = state => {
 
 
 
-export const getSelectedChannelName = state => {
-    const channelId = getSelectedChannelId(state);
-    if (channelId) return state.channels.byId[channelId].name;
-    return null;
-}
+
 
 export const getSelectedChannelTopic = state => {
     const channelId = getSelectedChannelId(state);
@@ -68,12 +64,6 @@ export const getSelectedChannelMemberCount = state => {
 
 export const getChannel = (state, channelId) => state.channels.byId[channelId] 
 
-export const getAllChannelIds = state => {
-    const groupId = getCurrentGroupId(state);
-    if (groupId) return state.channels.allIds
-    .filter(id => state.channels.byId[id].group === groupId);
-    return [];
-}
 
 export const getChannelIdsToDelete = (state, groupId) => {
     return state.channels.allIds
@@ -95,4 +85,16 @@ export const getSelectedChannel = createSelector(
     (byId, selectedChannelId) => selectedChannelId ? byId[selectedChannelId] : null
 )
 
+// export const getSelectedChannel = state => {
+//     const selectedChannelId = getSelectedChannelId(state);
+//     return state.channels.byId[selectedChannelId];
+// }
 
+export const getSelectedChannelName = createSelector(
+    [ getSelectedChannel ],
+    channel => channel ? channel.name : null
+)
+// export const getSelectedChannelName = state => {
+//     const channelId = getSelectedChannelId(state);
+//     return channelId ? state.channels.byId[channelId].name : null;
+// }
