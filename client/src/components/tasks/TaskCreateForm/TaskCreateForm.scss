@@ -13,6 +13,12 @@
     border-radius: 3px;
     padding: 0.25rem 0.5rem;
 
+    svg {
+        fill: var(--color-icon);
+        width: 18px;
+        height: 18px;
+    }
+
     .TaskCreateInput {
         flex: 1;
         font-size: 1rem;
@@ -32,8 +38,6 @@
         border: none !important;
     }
 }
-
-
 
 .isFocused {
     outline: none;
