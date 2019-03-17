@@ -1,20 +1,23 @@
-import { createSelector } from "reselect";
+import { createSelector, createSelectorCreator, defaultMemoize } from "reselect";
 import { getSelectedChannel } from "../../channel/duck/selectors";
 
+export const getList = (state, props) => {
+    return state.lists.byId[props.listId];
+}
 
+export const getListName = createSelector(getList, list => list.name);
 
-export const getList = (state, props) => state.lists.byId[props.listId];
-    export const getListName = createSelector(getList, list => list.name);
-export const getListIds = createSelector(
-    getSelectedChannel,
-    ({ lists }) => lists ? lists : null
-);
+export const getChannelListIds = state => {
+    const { lists } = getSelectedChannel(state);
+    return lists || null;
+}
+
 
 export const getTasksById = state => state.tasks.byId;
 
 export const getListTaskIds = (state, props) => {
     const list = state.lists.byId[props.listId];
-    return list.hasOwnProperty("tasks") ? list.tasks : null;
+    return list ? list.tasks : null;
 }   
 
 export const getListHead = createSelector(
@@ -37,32 +40,56 @@ export const makeGetListTaskNames = () => (
 
 export const getListTasksOrdered = (state, props) => props.taskIds.map(id => state.tasks.byId[id]);
 
-export const makeGetListTaskNamesOrdered = () => {
-    return createSelector(
-        getListTasksOrdered,
-        tasks => tasks.map(({ name }) => name)
-    );
+
+const createCachedArraySelector = () => {
+    let cachedArray = [];
+    return (state, props) => {
+        const taskIds = getListTaskIds(state, props);
+        if (taskIds && taskIds.length !== 0) {
+            if (taskIds.length !== cachedArray.length) {
+                let result = [];
+                const byId = state.tasks.byId;
+                let current = taskIds.find(id => byId[id].isHead == true);
+                while(current !== null) {
+                    const task = byId[current];
+                    result.push(current);
+                    current = task.next;
+                }
+                cachedArray = result;
+                return result;
+            }
+            //if order different?
+            return cachedArray;
+        } 
+        return null;
+    }
 }
 
 export const makeGetListTaskIdsOrdered = () => {
-    return createSelector(
-        [ getTasksById, getListHead ],
-        (byId, head) => {
-            if (head) {
-                let taskIds = [];
-                let current = head;
-                while(current !== null) {
-                    const task = byId[current];
-                    taskIds.push(current);
-                    console.log(current);
-                    current = task.next;
+    return createCachedArraySelector();
+}
 
-                }
-                return taskIds;
-            } 
-            return null;
+const createCachedTaskNamesSelector = () => {
+    let cachedNames = [];
+    return (state, props) => {
+        const byId = state.tasks.byId;
+        const taskNames = props.taskIds.map(id => byId[id].name)
+        if (taskNames.length !== cachedNames.length) {
+            return taskNames;
         }
-    );
+        let areArraysEqual = true;
+        for(let i = tasksNames.length; i--;) {
+            if(tasksNames[i] !== cachedNames[i]) {
+                areArraysEqual = false;
+                break;
+            }
+        }
+        return areArraysEqual ? cachedNames : taskNames;
+    }
+}
+
+export const makeGetListTaskNamesOrdered = () => {
+    return createCachedTaskNamesSelector();
 }
 
 export const getSelectedChannelLists = state => {
@@ -75,10 +102,7 @@ export const getSelectedChannelLists = state => {
     return null;
 }
 
-export const getLastTaskId = (state, listId) => {
-    if (state.lists.byId[listId].tasks) {
-        return state.lists.byId[listId].tasks
-        .find(taskId => !state.tasks.byId[taskId].next)
-    }
-    return null;
-}
+export const getLastTaskId = createSelector(
+    [ getTasksById, getListTaskIds ],
+    (byId, taskIds) => taskIds ? taskIds.find(id => !byId[id].next) : null
+)
