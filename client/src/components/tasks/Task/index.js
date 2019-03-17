@@ -8,14 +8,9 @@ import Button from "../../reuse/Button";
 import ChatBubbleIcon from "../../reuse/icons/ChatBubbleIcon";
 import DeleteButton from "../../reuse/buttons/DeleteButton";
 import EditIcon from "../../reuse/icons/EditIcon";
-import Row from "../../reuse/Row";
-import TextArea from "../../reuse/TextArea";
 import Typography from "../../reuse/Typography";
-import ListItem from "../../reuse/ListItem";
 import styles from "./Task.scss";
 import { MODAL_TASK_EDIT, MODAL_TASK_DROPDOWN } from "../../ui/constants";
-import Icon from "../../reuse/Icon"
-
 import { selectTask } from "../duck/actions";
 import TaskDropdown from "../TaskDropdown";
 import { getTask } from "../duck/selectors";
@@ -48,21 +43,26 @@ export const Task = ({ task, onEdit, onSelect, match }) => {
                 </Typography>
             </NavLink>
             <Button onClick={onDropdown} type="button" className={styles.TaskEditButton}>
-                <Icon size="md">
-                    <EditIcon />
-                </Icon>
+                <EditIcon />
             </Button>
             {showDropdown && <TaskDropdown onHide={() => setShowDropdown(false)} position={position} />}
         </ul>
     )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    task: getTask(state, ownProps.taskId)
-});
+const makeMapStateToProps = (initialState, initialProps) => {
+    const { taskId } = initialProps;
+    const mapStateToProps = state => {
+        const { tasks } = state;
+        const task = tasks.byId[taskId];
+        return ({ task });
+    }
+    return mapStateToProps;
+}
+
 
 export default withRouter(
-    connect(mapStateToProps, {
+    connect(makeMapStateToProps, {
         onEdit: () => addUiModal(MODAL_TASK_EDIT),
         onSelect: selectTask,
         onShowModal: () => addUiModal(MODAL_TASK_DROPDOWN)
