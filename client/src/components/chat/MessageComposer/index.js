@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { getSelectedChannelId, getSelectedChannelName } from "../../channel/duck/selectors";
-import { getCurrentMemberId, getMemberIdUser } from "../../members/duck/selectors";
-import { getCurrentGroupName, getSelectedGroupName } from "../../group/duck/selectors";
+import { getMemberIdUser } from "../../members/duck/selectors";
+import { getSelectedGroupName } from "../../group/duck/selectors";
 
 import React, { Component } from "react";
 import TextArea from "../../reuse/TextArea";
@@ -61,10 +61,6 @@ class MessageComposer extends Component {
                 maxRows={5}
                 minRows={1}
                 />
-                {/* <Button onClick={this.handleSubmit} className={styles.SendButton}>
-                    <SendIcon />
-                </Button> */}
-                <div id={styles.HiddenMessage}></div> 
             </div>
         );
     }
