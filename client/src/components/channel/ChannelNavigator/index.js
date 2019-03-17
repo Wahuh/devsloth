@@ -1,23 +1,20 @@
 import { connect } from "react-redux";
 
-import React, { Component } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import { getDefaultChannelId, getSelectedChannelId, getSelectedChannelName, getDefaultChannelName } from "../duck/selectors";
 import { getHasChannels, getSelectedGroupId } from "../../group/duck/selectors";
 
-class ChannelNavigator extends Component {
-    render() {
-        const { selectedChannelId, defaultChannelName, hasChannels, selectedGroupId, selectedChannelName } = this.props;
-        if (selectedGroupId) {
-            if (hasChannels) {
-                return selectedChannelId ?
-                <Redirect to={`/${selectedGroupId}/channels/@${selectedChannelName}/chat`} /> :
-                <Redirect to={`/${selectedGroupId}/channels/@${defaultChannelName}/chat`} />
-            }
-            return <Redirect to={`/${selectedGroupId}`} />
+const ChannelNavigator = ({ selectedChannelId, defaultChannelName, hasChannels, selectedGroupId, selectedChannelName }) => {
+    if (selectedGroupId) {
+        if (hasChannels) {
+            return selectedChannelId ?
+            <Redirect to={`/${selectedGroupId}/channels/@${selectedChannelName}/chat`} /> :
+            <Redirect to={`/${selectedGroupId}/channels/@${defaultChannelName}/chat`} />
         }
-        return <Redirect to="/@me" />;
+        return <Redirect to={`/${selectedGroupId}`} />
     }
+    return <Redirect to="/@me" />;
 }
 
 const mapStateToProps = state => ({
