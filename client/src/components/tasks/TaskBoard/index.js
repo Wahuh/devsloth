@@ -1,101 +1,60 @@
 import { connect } from "react-redux";
-import { createListRequest } from "../../lists/duck/actions";
-import { getSelectedChannelId } from "../../channel/duck/selectors";
-import { getListIds } from "../../lists/duck/selectors";
+import { getChannelListIds } from "../../lists/duck/selectors";
 
-import React, { Component } from "react";
-import AddButton from "../../reuse/buttons/AddButton";
+import React, { useRef } from "react";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import TaskList from "../TaskList";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import Row from "../../reuse/Row";
-import Button from "../../reuse/Button";
-import Input from "../../reuse/Input";
-import PlusIcon from "../../reuse/icons/PlusIcon";
-import Tooltip from "../../reuse/Tooltip";
 import styles from "./TaskBoard.scss";
-import ListAdd from "../../lists/ListAdd";
 import TaskBoardList from "../TaskBoardList";
 import TaskListHeader from "../TaskListHeader";
-import TaskCreateButton from "../TaskCreateButton";
 import TaskCreateForm from "../TaskCreateForm";
 import ListCreateForm from "../../lists/ListCreateForm";
 
-const initialState = {
-    list: {
-        name: ""
-    },
-    validation: {
-        name: {}
-    },        
-}
-
-class TaskBoard extends Component {
-    state = initialState;
-
-    handleChange = ({ currentTarget }) => {
-        const { name, value } = currentTarget;
-        const validation = { ...this.state.validation };
-        // const field = this.schema[name];
-        // validation[name] = validateField(value, field);
-
-        const list = { ...this.state.list };
-        list[name] = value;
-        this.setState({ list, validation });
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const { onAddList, channelId } = this.props;
-
-        onAddList({ 
-            ...this.state.list,
-            _id: channelId
-        });
-
-        this.setState(initialState)
-    }
-
-    componentDidUpdate(prevProps) {
-        const { listIds } = this.props;
-        if (listIds.length !== prevProps.listIds.length) {
-            document.getElementById(styles.ScrollTo).scrollIntoView({ behavior: "smooth" });
-        }
-    }
-
-    addTask = () => {
-
-    }
-
-    handleDragEnd = () => {
-
-    }
-
-    render() {
-        const { list } = this.state;
-        const { listIds } = this.props;
+const TaskBoard = ({ listIds }) => {
+    const listRef = useRef(null);
+    const Column = ({ index, style }) => {
         return (
-            <div className={styles.TaskBoard}>
-                {/* <DragDropContext onDragEnd={this.handleDragEnd}> */}
-                    {listIds.map(id => 
+            <div style={style}>
+                {index == listIds.length ?
+                    (
+                        <ListCreateForm />
+                    ) : (
                         <TaskBoardList>
-                            <TaskListHeader listId={id} />
-                            <TaskList key={id} listId={id} />
-                            <TaskCreateForm _id={id} />
+                            <TaskListHeader listId={listIds[index]} />
+                            <TaskList listId={listIds[index]} />
+                            <TaskCreateForm listId={listIds[index]} />
                         </TaskBoardList>
-                    )}
-                {/* </DragDropContext> */}
-                <ListCreateForm />
-                <div id={styles.ScrollTo}></div>
+                    )
+                }
             </div>
         );
     }
+    return (
+        <div className={styles.TaskBoard}>
+            <span className={styles.Lists}>
+                <AutoSizer>
+                    {({ height, width }) => (
+                        <List
+                            ref={listRef}
+                            width={width}
+                            itemCount={listIds.length + 1}
+                            height={height}
+                            itemSize={312}
+                            layout="horizontal"
+                            className={styles.List}
+                        >
+                            {Column}
+                        </List>
+                    )}
+                </AutoSizer>
+            </span>
+        </div>
+    );
 }
 
 const mapStateToProps = state => ({
-    channelId: getSelectedChannelId(state),
-    listIds: getListIds(state)
+    listIds: getChannelListIds(state)
 });
 
-export default connect(mapStateToProps, {
-    onAddList: createListRequest,
-})(TaskBoard);
+export default connect(mapStateToProps)(TaskBoard);
