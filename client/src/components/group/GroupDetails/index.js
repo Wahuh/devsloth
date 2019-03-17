@@ -1,7 +1,5 @@
 import { connect } from "react-redux";
 import { 
-    getCurrentGroupName, 
-    getCurrentGroupMemberCount,
     getSelectedGroup
 } from "../duck/selectors";
 import { addUiModal } from "../../ui/duck/actions";

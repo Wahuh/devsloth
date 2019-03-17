@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getCurrentGroupName, getCurrentGroupId, getSelectedGroupName, getSelectedGroupId } from "../duck/selectors";
+import { getSelectedGroupName, getSelectedGroupId } from "../duck/selectors";
 import { updateGroupRequest } from "../duck/actions";
 
 import React, { Component, Fragment } from "react";
