@@ -1,89 +1,62 @@
 import { connect } from "react-redux";
 
-import React, { Component } from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
-import Icon from "../../reuse/Icon";
 import PlusIcon from "../../reuse/icons/PlusIcon";
 import styles from "./TaskCreateForm.scss";
 import Input from "../../reuse/Input";
 import { createTaskRequest } from "../duck/actions";
 import { getLastTaskId } from "../../lists/duck/selectors";
 
-class TaskCreateForm extends Component {
-    state = {
-        isFocused: false,
-        task: {
-            name: ""
-        }
-    };
+const TaskCreateForm = ({ lastTaskId, onCreate, listId }) => {
+    const [ name, setName ] = useState("");
+    const [ isFocused, setIsFocused ] = useState(false);
+    const handleFocus = () => {
+        setIsFocused(!isFocused);
+    }
 
-    handleSubmit = event => {
-        const { task } = this.state;
-        const { _id, onCreate, lastTaskId } = this.props;
-        if (task.name) {
+    const handleSubmit = event => {
+        if (name) {
             onCreate({
-                name: task.name,
-                list: _id,
-                prev: lastTaskId ? lastTaskId : null
+                name: name,
+                list: listId,
+                prev: lastTaskId || null
             });
-            console.log({
-                name: task.name,
-                list: _id,
-                prev: lastTaskId ? lastTaskId : null
-            })
-            this.setState({
-                task: {
-                    name: ""
-                }
-            });
+            setName("");
         }
     }
 
-    handleChange = ({ currentTarget }) => {
-        const { name, value } = currentTarget;
-        const task = { ...this.state.task };
-        task[name] = value;
-        this.setState({ task });
+    const handleChange = ({ currentTarget }) => {
+        const { value } = currentTarget;
+        setName(value);
     }
 
-    handleFocus = () => {
-        this.setState(prevProps => ({ isFocused: !prevProps.isFocused }));
-    }
+    return (
+        <form
+            autoComplete="off"
+            className={classNames(
+            styles.TaskCreateForm,
+            { [styles.isFocused]: isFocused }
+        )}>
+            <PlusIcon />
 
-    render() {
-        const { isFocused, task } = this.state;
-        const { lastTaskId } = this.props;
-        console.log("Lasttask", lastTaskId);
-        return (
-            <form
-                autoComplete="off"
-                onSubmit={this.handleSubmit}
-                className={classNames(
-                styles.TaskCreateForm,
-                { [styles.isFocused]: isFocused }
-            )}>
-                <Icon size="md">
-                    <PlusIcon />
-                </Icon>
-
-                <Input
-                    onEnter={this.handleSubmit}
-                    className={styles.TaskCreateInput}
-                    onChange={this.handleChange}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleFocus}
-                    value={task.name}
-                    name="name"
-                    type="text"
-                    placeholder="add task"
-                />
-            </form>
-        );
-    }
+            <Input
+                onEnter={handleSubmit}
+                className={styles.TaskCreateInput}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleFocus}
+                value={name}
+                name="name"
+                type="text"
+                placeholder="add task"
+            />
+        </form>
+    );
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    lastTaskId: getLastTaskId(state, ownProps._id)
+    lastTaskId: getLastTaskId(state, ownProps)
 })
 
 export default connect(mapStateToProps, {
