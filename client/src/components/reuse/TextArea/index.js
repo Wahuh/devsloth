@@ -1,22 +1,23 @@
-import React, { Component } from "react";
+import React, { useRef, useEffect } from "react";
 import classNames from "classnames";
 import styles from "./TextArea.scss";
-import { isThisISOWeek } from "date-fns";
 import Button from "../Button";
 import Icon from "../Icon";
 import EditIcon from "../icons/EditIcon";
 
-class TextArea extends Component {
-    maxRows = this.props.maxRows
-    textArea = React.createRef();
-    prevScrollHeight = 0;
-    rowHeight;
-    initialHeight = 0;
-    prevHeight = 0;
+const TextArea = ({ autoFocus, onClick, className, name, readOnly, onChange, onBlur, placeholder, minRows, maxRows, type, value, onKeyUp, onKeyPress, onEnter  }) => {
+    let maxRowLimit = maxRows;
+    const textArea = useRef(null);
+    let prevScrollHeight = 0;
+    let rowHeight;
+    let initialHeight = 0;
+    let prevHeight = 0;
 
-    handleEnterPress = event => {
-        const { onKeyPress, onEnter } = this.props;
+    useEffect(() => {
+        initialHeight = textArea.current.scrollHeight;
+    }, [])
 
+    const handleEnterPress = event => {
         if (event.defaultPrevented) {
             return; // Should do nothing if the default action has been cancelled
         }
@@ -41,78 +42,70 @@ class TextArea extends Component {
             event.preventDefault();
         }
     }
-
-    componentDidMount() {
-        this.initialHeight = this.textArea.current.scrollHeight;
-    }
-
-    autoExpand = () => {
-        const scrollHeight = this.textArea.current.scrollHeight; 
+    const autoExpand = () => {
+        const scrollHeight = textArea.current.scrollHeight; 
 
         //calculate row height only once
-        if (this.prevScrollHeight && scrollHeight > this.prevScrollHeight && !this.rowHeight) {
-            this.rowHeight = scrollHeight - this.prevScrollHeight;
+        if (prevScrollHeight && scrollHeight > prevScrollHeight && !rowHeight) {
+            rowHeight = scrollHeight - prevScrollHeight;
         }
 
         //calculate the number of rows needed for content
-        const rows = ((scrollHeight - this.initialHeight) / this.rowHeight) + 1;
+        const rows = ((scrollHeight - initialHeight) / rowHeight) + 1;
 
         //if it exceeds the row limit use the previous height
-        if (rows > this.maxRows) {
-            this.textArea.current.style.height = this.prevHeight;
+        if (rows > maxRowLimit) {
+            textArea.current.style.height = prevHeight;
         } else {
             //calculate a new textArea height
-            this.textArea.current.style.height = 'inherit';
-            const computed = window.getComputedStyle(this.textArea.current);
+            textArea.current.style.height = 'inherit';
+            const computed = window.getComputedStyle(textArea.current);
             const height = parseInt(computed.getPropertyValue('border-top-width'), 10)
-                         + this.textArea.current.scrollHeight
+                         + textArea.current.scrollHeight
                          + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
-            this.textArea.current.style.height = height + 'px';
-            this.prevHeight = height;
+            textArea.current.style.height = height + 'px';
+            prevHeight = height;
         }
-        this.prevScrollHeight = scrollHeight;
+        prevScrollHeight = scrollHeight;
     }
 
-    render() {
-        const { autoFocus, onClick, className, name, readOnly, onChange, onBlur, placeholder, minRows, type, value, onKeyUp } = this.props;
-        return (
-            <span className={styles.Editable}>
-                <textarea 
-                    onClick={onClick}
-                    autoFocus={autoFocus}
-                    ref={this.textArea}
-                    id={name}
-                    name={name}
-                    rows={minRows}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    onInput={this.autoExpand}
-                    value={value}
-                    type={type} 
-                    readOnly={readOnly}
-                    onKeyPress={this.handleEnterPress}
-                    onKeyUp={onKeyUp}
-                    className={
-                        classNames(
-                            styles.TextArea,
-                            className,
-                            { [styles.ReadOnly]: readOnly }
-                        )
-                    }
-                >
-                </textarea>
-                {readOnly && 
-                    <Button onClick={onClick} className={styles.EditButton} theme="icon">
-                        <Icon size="md">
-                            <EditIcon />
-                        </Icon>
-                    </Button>
+
+    return (
+        <span className={styles.Editable}>
+            <textarea 
+                onClick={onClick}
+                autoFocus={autoFocus}
+                ref={textArea}
+                id={name}
+                name={name}
+                rows={minRows}
+                placeholder={placeholder}
+                onChange={onChange}
+                onBlur={onBlur}
+                onInput={autoExpand}
+                value={value}
+                type={type} 
+                readOnly={readOnly}
+                onKeyPress={handleEnterPress}
+                onKeyUp={onKeyUp}
+                className={
+                    classNames(
+                        styles.TextArea,
+                        className,
+                        { [styles.ReadOnly]: readOnly }
+                    )
                 }
-            </span>
-
-        );
-    }
+            >
+            </textarea>
+            {readOnly && 
+                <Button onClick={onClick} className={styles.EditButton} theme="icon">
+                    <Icon size="md">
+                        <EditIcon />
+                    </Icon>
+                </Button>
+            }
+        </span>
+    );
 }
 
 export default TextArea;
