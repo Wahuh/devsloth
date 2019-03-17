@@ -8,8 +8,7 @@ import styles from "./TaskList.scss";
 import { moveTaskRequest } from "../duck/actions";
 import { makeGetListTaskIdsOrdered } from "../../lists/duck/selectors";
 
-
-const TaskList = ({ tasks, taskIds, onMove }) => {
+const TaskList = ({ taskIds, onMove }) => {
     const handleSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex === newIndex) {
             return;
@@ -28,6 +27,7 @@ const TaskList = ({ tasks, taskIds, onMove }) => {
             });
         }
     }
+
     return taskIds ? (
         <div className={styles.ListWrapper}>
             <AutoSizer>
@@ -46,9 +46,11 @@ const TaskList = ({ tasks, taskIds, onMove }) => {
 
 const makeMapStateToProps = () => {
     const getListTaskIdsOrdered = makeGetListTaskIdsOrdered();
-    const mapStateToProps = (state, ownProps) => ({
-        taskIds: getListTaskIdsOrdered(state, ownProps),
-    });
+    const mapStateToProps = (state, ownProps) => {
+        return ({
+            taskIds: getListTaskIdsOrdered(state, ownProps),
+        })
+    };
     return mapStateToProps
 }
 
