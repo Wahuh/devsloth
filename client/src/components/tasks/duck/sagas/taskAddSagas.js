@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { TASK_CREATE_SUCCESS } from "../types";
-import { addTask, updateTaskSuccess, editPrevTask } from "../actions";
+import { addTask} from "../actions";
 
 export function* watchTaskAdd() {
     yield takeEvery([
@@ -9,6 +9,5 @@ export function* watchTaskAdd() {
 }
 
 function* handleTaskAdd({ payload }) {
-
     yield put(addTask(payload));
 }
