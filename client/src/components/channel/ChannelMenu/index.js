@@ -3,7 +3,7 @@ import React, { useState, Fragment } from "react";
 import styles from "./ChannelMenu.scss";
 import Icon from "../../reuse/Icon";
 import TaskIcon from "../../reuse/icons/TaskIcon";
-import { getListIds } from "../../lists/duck/selectors";
+import { getChannelListIds } from "../../lists/duck/selectors";
 import TaskListHeader from "../../tasks/TaskListHeader";
 import TaskList from "../../tasks/TaskList";
 import TaskCreateForm from "../../tasks/TaskCreateForm";
@@ -12,7 +12,7 @@ import ChannelMenuList from "../ChannelMenuList";
 import MemberIcon from "../../reuse/icons/MemberIcon";
 
 const ChannelMenu = ({ listIds }) => {
-    const [ listId, setListId ] = useState("");    
+    const [ listId, setListId ] = useState("");
     return (
         <section className={styles.ChannelMenu}>
             <ul className={styles.MenuBar}>
@@ -44,7 +44,7 @@ const ChannelMenu = ({ listIds }) => {
 }
 
 const mapStateToProps = state => ({
-    listIds: getListIds(state)
+    listIds: getChannelListIds(state)
 });
 
 export default connect(mapStateToProps)(ChannelMenu);
