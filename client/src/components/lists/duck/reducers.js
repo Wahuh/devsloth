@@ -53,12 +53,13 @@ const updateListTasks = (state, { entities, result: taskId }) => {
     const { tasks } = entities;
     const task = tasks[taskId]
     const { list: listId } = task;
-    const list = { ...state[listId] };
-    if (!list.tasks) {
-        list.tasks = [];
-    }
-    list.tasks.push(taskId)
-    return { ...state, [listId]: list };
+    return { 
+        ...state, 
+        [listId]: {
+            ...state[listId],
+            tasks: state[listId].tasks ? [...state[listId].tasks, taskId]: []
+        }
+    };
 }
 
 const removeList = (state, { result: listId }) => {
