@@ -44,7 +44,7 @@ class Modal extends Component {
         return ReactDOM.createPortal(
             <ModalOverlay>
                 {isCustom ? children :
-                    <div className={classNames({ [styles.ModalContent]: !isCustom }, sizes[size], className, aligns[align])}>
+                    <div className={classNames(styles.ModalContent, sizes[size], className, aligns[align])}>
                         {children}
                     </div>
                 }
