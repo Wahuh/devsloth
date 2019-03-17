@@ -14,7 +14,7 @@ const ListSelect = ({ listIds, onSelect, value }) => {
     return (
         <section className={styles.ListSelectBar}>
             <Select onChange={handleChange} value={value}>
-                {listIds.map(id => <ListOption listId={id} />)}
+                {listIds.map(id => <ListOption key={id} listId={id} />)}
             </Select>
         </section>
     );
