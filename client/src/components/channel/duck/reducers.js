@@ -11,6 +11,7 @@ import {
     removeChannel
 } from "./actions";
 import { loadUserData } from "../../user/duck/actions";
+import { addList } from "../../lists/duck/actions";
 
 export const byId = handleActions(
     {
@@ -20,6 +21,7 @@ export const byId = handleActions(
         [removeChannels]: (state, { payload }) => deleteChannels(state, payload),
         [editChannel]: (state, { payload }) => updateChannel(state, payload),
         [removeChannel]: (state, { payload }) => deleteChannel(state, payload),
+        [addList]: (state, { payload }) => updateChannelLists(state, payload),
     }, {}
 );
 
@@ -44,6 +46,18 @@ export const selectedIds = handleActions(
     }, {}
 );
 
+const updateChannelLists = (state, { entities, result: listId }) => {
+    const { lists } = entities;
+    const list = lists[listId]
+    const { channel: channelId } = list;
+    return { 
+        ...state, 
+        [channelId]: { 
+            ...state[channelId],
+            lists: state[channelId].lists ? [...state[channelId].lists, listId] : []
+        }
+    };
+}
 
 //group delete action, deletes all channels of the same group
 const addChannelToMap = (state, payload) => {
@@ -110,12 +124,11 @@ const deleteChannelId = (state, { result: channelId }) => {
 }
 
 const deleteChannels = (state, { result: channelIds }) => {
-    console.log(channelIds);
+
     const result = channelIds.reduce((total, key) => {
         const { [key]: dummy, ...remainder } = total;
         return remainder;
     }, state);
-    console.log(result, "DELETED CHANNELS", state);
     return result;
 }
 
