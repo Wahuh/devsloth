@@ -5,10 +5,11 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import styles from "./VirtualList.scss";
 import taskStyles from "../../Task/Task.scss";
 import Task from "../../Task";
-import isEqual from "lodash.isequal";
-import { makeGetListTaskIdsOrdered, makeGetListTaskNames, makeGetListTaskNamesOrdered } from "../../../lists/duck/selectors";
+import { makeGetListTaskNamesOrdered } from "../../../lists/duck/selectors";
 
 const measure = document.getElementById("measure");
+measure.classList.add(taskStyles.TextMock);
+const text = document.getElementById("text");
 
 const SortableItem = SortableElement(({ style, taskId }) => {
     return (
@@ -20,17 +21,19 @@ const SortableItem = SortableElement(({ style, taskId }) => {
 
 const VirtualList = ({ taskIds, taskNames, height }) => {
     const listRef = useRef(null);
+    const isInitialMount = useRef(true);
     useEffect(() => {
-        listRef.current.scrollToItem(taskIds.length - 1);
-    });
+        if (isInitialMount.current) {
+            isInitialMount.current = false
+        } else {
+            listRef.current.scrollToItem(taskIds.length - 1);
+        }
+    }, [taskIds]);
 
     const getItemSize = index => {
-        const text = document.createElement("p");
-        text.classList.add(taskStyles.TextMock);
         text.innerHTML = taskNames[index];
-        measure.appendChild(text);
         const height = text.clientHeight;
-        measure.innerHTML = "";
+        text.innerHTML = "";
         return height + 18;
     }
     const Row = ({ index, style }) => (
@@ -58,13 +61,6 @@ const makeMapStateToProps = () => {
     });
     return mapStateToProps
 }
-
-// if (!isEqual(tasks, prevProps.tasks)) {
-//     this.listRef.current.resetAfterIndex(0, true);
-//     if (tasks.length != prevProps.tasks.length) {
-//         this.listRef.current.scrollToItem(tasks.length - 1);
-//     }
-// }
 
 export default SortableContainer(
     connect(makeMapStateToProps)(VirtualList)
