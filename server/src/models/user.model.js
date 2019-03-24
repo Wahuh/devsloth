@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Member } = require("../models/member.model");
 const { Channel } = require("../models/channel.model");
 const { Group } = require("../models/group.model");
+const { List } = require("../models/list.model");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
@@ -34,6 +35,13 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Group"
     }],
+}, {
+    toObject: {
+        virtuals: true
+    },
+    toJSON: {
+        virtuals: true 
+    }
 });
 
 function validateUser(user) {
@@ -44,6 +52,12 @@ function validateUser(user) {
     };
     return Joi.validate(user, schema);
 }
+
+userSchema.virtual("lists", {
+    ref: "List",
+    localField: "_id",
+    foreignField: "user"
+});
 
 userSchema.pre("save", async function(next) {
     const user = this;
