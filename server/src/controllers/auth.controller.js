@@ -103,23 +103,30 @@ const authenticateUser = async (req, res) => {
     .send({ _id, email, username, groups });
 }
 
-const populate = {
-    path: "groups",
-    populate: [
-        { 
-            path: "channels", 
-            populate: [
-                { path: "members" },
-                { 
-                    path: "lists",
-                    populate: { path: "tasks" }
-                }
-            ] 
-        },
-        { path: "members" },
-        // { path: "roles" }
-    ]
-}
+const populate = [
+    {
+        path: "groups",
+        populate: [
+            { 
+                path: "channels", 
+                populate: [
+                    { path: "members" },
+                    { 
+                        path: "lists",
+                        populate: { path: "tasks" }
+                    }
+                ] 
+            },
+            { path: "members" },
+            // { path: "roles" }
+        ]
+    }, 
+    
+    { 
+        path: "lists",
+        populate: { path: "tasks" }
+    }
+]
 
 exports.authenticateUser = authenticateUser;
 exports.registerUser = registerUser;

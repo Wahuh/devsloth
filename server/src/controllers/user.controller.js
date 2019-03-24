@@ -5,23 +5,30 @@ const { Group } = require("../models/group.model");
 require("../models/task.model");
 const bcrypt = require('bcrypt');
 
-const populate = {
-    path: "groups",
-    populate: [
-        { 
-            path: "channels", 
-            populate: [
-                { path: "members" },
-                { 
-                    path: "lists",
-                    populate: { path: "tasks" }
-                }
-            ] 
-        },
-        { path: "members" },
-        // { path: "roles" }
-    ]
-}
+const populate = [
+    {
+        path: "groups",
+        populate: [
+            { 
+                path: "channels", 
+                populate: [
+                    { path: "members" },
+                    { 
+                        path: "lists",
+                        populate: { path: "tasks" }
+                    }
+                ] 
+            },
+            { path: "members" },
+            // { path: "roles" }
+        ]
+    }, 
+    
+    { 
+        path: "lists",
+        populate: { path: "tasks" }
+    }
+]
 
 const getCurrentUser = async (req, res) => {
     const user = await User
