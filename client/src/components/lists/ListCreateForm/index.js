@@ -46,7 +46,7 @@ class ListCreateForm extends Component {
         if (this.state.list.name) {
             onCreateList({ 
                 ...this.state.list,
-                _id: channelId
+                _id: channelId || null
             });
             this.setState(initialState)
         }
@@ -54,7 +54,6 @@ class ListCreateForm extends Component {
 
     render() {
         const { list, isFocused } = this.state;
-        const { onCancel } = this.props;
         return (
             <form
                 autoComplete="off"
@@ -77,20 +76,12 @@ class ListCreateForm extends Component {
                     name="name"
                     placeholder="Add List"
                 />
-{/* 
-                <Row justifyContent="flex-end">
-                    <Button onClick={onCancel} text="Cancel" type="button" theme="outlined" size="sm" />
-                    <Button text="Add List" theme="action" size="sm" />
-                </Row> */}
             </form>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    channelId: getSelectedChannelId(state)
-});
 
-export default connect(mapStateToProps, {
+export default connect(null, {
     onCreateList: createListRequest
 })(ListCreateForm);
