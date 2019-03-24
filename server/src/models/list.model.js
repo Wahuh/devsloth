@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { Channel } = require("../models/channel.model");
 const { Task } = require("../models/task.model");
+const { User } = require("./user.model");
 
 const listSchema = new Schema({
     name: {
@@ -13,6 +14,11 @@ const listSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Channel"
     },
+
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
 }, {
     toObject: {
         virtuals: true
@@ -22,6 +28,7 @@ const listSchema = new Schema({
     },
     id: false
 });
+
 
 listSchema.virtual("tasks", {
     ref: "Task",
