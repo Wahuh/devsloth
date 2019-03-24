@@ -8,7 +8,7 @@ import Input from "../../reuse/Input";
 import { createTaskRequest } from "../duck/actions";
 import { getLastTaskId } from "../../lists/duck/selectors";
 
-const TaskCreateForm = ({ lastTaskId, onCreate, listId }) => {
+const TaskCreateForm = ({ lastTaskId, onCreate, listId, channelId }) => {
     const [ name, setName ] = useState("");
     const [ isFocused, setIsFocused ] = useState(false);
     const handleFocus = () => {
@@ -20,7 +20,8 @@ const TaskCreateForm = ({ lastTaskId, onCreate, listId }) => {
             onCreate({
                 name: name,
                 list: listId,
-                prev: lastTaskId || null
+                prev: lastTaskId || null,
+                channel: channelId || null
             });
             setName("");
         }
