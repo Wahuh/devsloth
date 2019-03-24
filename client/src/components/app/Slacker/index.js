@@ -30,6 +30,7 @@ import HeaderPrimary from "../../layout/HeaderPrimary";
 import HomeMenu from "../../home/HomeMenu";
 import Column from "../../reuse/Column";
 import UserDetails from "../../user/UserDetails";
+import TaskBoardUsername from "../../tasks/TaskBoardUsername";
 
 const Slacker = ({ hasGroups, onHideModal }) => {
     useEffect(() => {
@@ -65,6 +66,7 @@ const Slacker = ({ hasGroups, onHideModal }) => {
                         <Column justifyContent="center">
                             <Route path="/:groupId/channels/:channelId" component={ChannelName} />
                             <Route path="/:groupId/channels/:channelId" component={ChannelBar} />
+                            <Route path="/@me/tasks" component={TaskBoardUsername} />
                         </Column>
                     </HeaderPrimary>
 
