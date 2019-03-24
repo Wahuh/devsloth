@@ -7,6 +7,7 @@ import Row from "../../reuse/Row";
 import MessageList from "../../messages/MessageList";
 import MessageComposer from "../../chat/MessageComposer";
 import ChannelMenu from "../ChannelMenu";
+import ChannelTaskBoard from "../ChannelTaskBoard";
 
 const ChannelView = ({ match }) => (
     <Row maxHeight maxWidth>
@@ -24,7 +25,7 @@ const ChannelView = ({ match }) => (
         )} />
         <Route path={`${match.url}/tasks`} render={() => (
             <MainPanel>
-                <TaskBoard />
+                <ChannelTaskBoard />
             </MainPanel>
         )} />
     </Row>
