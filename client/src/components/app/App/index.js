@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { jwtAuthRequest } from "../../auth/duck/actions";
 import { joinGroupQueuedInvite } from "../../group/duck/actions";
 
-import { clearAppError } from "../duck/actions";
+
 import authApi from "../../../api/authApi";
 
 import React, { Fragment, useEffect } from 'react';
@@ -17,6 +17,7 @@ import ModalRoot from "../../ui/ModalRoot";
 import { addInvite } from "../../invites/duck/actions";
 import LoadingScreen from "../../ui/LoadingScreen";
 import { getIsFetching } from "../../ui/duck/selectors";
+import DropdownRoot from "../../ui/DropdownRoot";
 
 //disable focus on App element when there is a modal active
 const App = ({ onInvite, isFetching, onLoad }) => {
@@ -56,7 +57,8 @@ const App = ({ onInvite, isFetching, onLoad }) => {
                     <Route exact path="/login" component={Authentication} />
                     <PrivateRoute path="/" component={Slacker} />
                 </Switch>
-
+                
+                <DropdownRoot />
                 <ToastRoot />
                 <ModalRoot />
             </Fragment>
@@ -70,7 +72,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     onLoad: jwtAuthRequest,
-    onClear: clearAppError,
     onQueue: joinGroupQueuedInvite,
     onInvite: addInvite
 })(App);
