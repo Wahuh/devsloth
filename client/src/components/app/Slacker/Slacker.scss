@@ -2,3 +2,12 @@
     display: flex;
     flex-direction: row;
 }
+
+.Divider {
+    height: 1.375rem;
+    width: 2px;
+    margin: 0 0.25rem;
+    background-color: var(--color-divider);
+    border-style: solid;
+    border: none;
+}

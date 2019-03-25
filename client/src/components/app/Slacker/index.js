@@ -73,6 +73,7 @@ const Slacker = ({ hasGroups, onHideModal }) => {
                     <HeaderSecondary>
                         <IconContainer>
                             <Route path="/:groupId/channels/:channelId" component={ChannelViewSwitcher}  />
+                            <hr className={styles.Divider}></hr>
                             <ThemeSwitcher />
                         </IconContainer>
                     </HeaderSecondary>
