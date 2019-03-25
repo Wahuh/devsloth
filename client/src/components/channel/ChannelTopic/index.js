@@ -20,12 +20,13 @@ const ChannelTopic = ({ topic, onShowModal }) => (
                 </Typography>
                 ) : (
                     <Fragment>
-                        <Icon size="xs">
-                            <EditIcon />
-                        </Icon>
                         <Typography type="description" color="primary">
                             Add a topic
                         </Typography>
+
+                        <Icon size="xs">
+                            <EditIcon />
+                        </Icon>
                     </Fragment>
                 )
             }
