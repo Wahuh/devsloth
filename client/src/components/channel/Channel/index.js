@@ -52,7 +52,7 @@ const Channel = ({ channel, onSelect, isSelected, isOwner, onShowModal, isUserIn
                 <span className={styles.ChannelButtons}>
                     {isSelected && 
                         <div className={styles.ButtonContainer} data-tip data-for="ChannelInviteIcon">
-                            <Button onClick={onShowInviteModal} className={styles.IconButton} theme="icon">
+                            <Button onClick={onShowInviteModal} className={classNames(styles.IconButton, { [styles.Hidden]: !isSelected })} theme="icon">
                                 <Icon size="md">
                                     <InviteIcon />
                                 </Icon>
