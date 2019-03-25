@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 4px;
+    margin-bottom: 0.125rem;
     padding: 0.2rem 1rem;
     cursor: pointer;
     flex-shrink: 0;
@@ -18,9 +18,7 @@
     }
 
     .ButtonContainer {
-        button {
-            margin-left: 0.25rem;
-        }
+        margin-left: 0.25rem;
     }
 
     .ChannelName {
@@ -55,12 +53,12 @@
 }
 
 .Channel:not(.Selected):hover {
-    background-color: var(--color-600);
+    background-color: var(--color-channel-hover);
 }
 
 .Selected {
     background-color: var(--color-channel-selected);
-    p {
+    > p {
         color: var(--color-channel-selected-font);
     }
     .ChannelName {
@@ -70,7 +68,7 @@
     }
 
     svg {
-        fill: var(--color-icon-selected);
+        fill: var(--color-channel-icon-selected);
     }
 
 }
@@ -87,4 +85,10 @@
     }
 }
 
+.IconButton:hover {
+    svg {
+        fill: var(--color-channel-icon-hover);
+    }
+
+}
 
