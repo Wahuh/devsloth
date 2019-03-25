@@ -20,18 +20,38 @@
         text-decoration: none;
         border-radius: 50%;
         cursor: pointer;
+        transition-timing-function: ease-out;
+        transition-duration: 200ms;
+        transition-property: background-color, border-radius;
+    }
+    .GroupIcon::after {
+        transition: all 200ms ease-out;
+        content: "";
+        position: absolute;
+        left: 0;
+        height: 2.75rem;
+        width: 5px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
     }
 }
 
+// .Active {
+//     border-radius: 25% !important;
+//     background-color: var(--color-group-selected);
+// }
+
 .Active::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    height: 2.75rem;
-    width: 5px;
+
     background-color: var(--color-group-selected);
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+}
+
+.GroupIcon:hover:not(.Active), .Active {
+    border-radius: 25% !important;
+    background-color: var(--color-group-selected) !important;
+    p {
+        color: white;
+    }
 }
 
 // .Active::after {
