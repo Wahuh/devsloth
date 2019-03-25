@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { string, func } from "prop-types";
 import { Field, validateField, validate } from "../../../validation";
 
-import RegistrationMessage from "../RegistrationMessage";
 import Button from "../../reuse/Button";
 import FloatInput from "../../reuse/FloatInput";
 import Form from "../../reuse/Form";

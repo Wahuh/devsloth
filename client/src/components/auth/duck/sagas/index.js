@@ -21,7 +21,7 @@ import {
     AUTH_REGISTRATION_SUCCESS,
 } from "../types";
 
-import { clearAppError } from "../../../app/duck/actions";
+
 
 import authApi from "../../../../api/authApi";
 import userApi from "../../../../api/userApi";
@@ -57,6 +57,7 @@ export function* authFlow() {
             AUTH_LOGIN_SUCCESS,
             AUTH_REGISTRATION_SUCCESS
         ]);
+        console.log("payload", payload);
         yield put(loadUserData(payload));
         console.log(loadUserData(payload));
         yield take(AUTH_LOGOUT);
@@ -99,7 +100,6 @@ export function* watchLoginRequest() {
     while(true) {
         const { payload } = yield take(AUTH_LOGIN_REQUEST);
         yield put(addUiFetching("login"));
-        yield put(clearAppError("auth"));
         yield call(handleLogin, payload);
     }
 }
@@ -138,7 +138,6 @@ export function* watchRegistrationRequest() {
     while(true) {
         const { payload } = yield take(AUTH_REGISTRATION_REQUEST);
         yield put(addUiFetching("registration"));
-        yield put(clearAppError("auth"));
         yield call(handleRegistration, payload);
     }
 }

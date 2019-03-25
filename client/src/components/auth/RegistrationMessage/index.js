@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getAuthError, getIsFetching } from "../duck/selectors";
+import { getAuthError } from "../duck/selectors";
 
 import React from "react";
 import FetchingMessage from "../../reuse/FetchingMessage";
@@ -19,7 +19,6 @@ const RegistrationMessage = ({ error, isFetching }) => {
 }
 
 const mapStateToProps = state => ({
-    isFetching: getIsFetching(state),
     error: getAuthError(state)
 });
 
