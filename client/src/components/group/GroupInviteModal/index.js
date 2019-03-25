@@ -17,7 +17,7 @@ import Column from "../../reuse/Column";
 const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName }) => {
     let input = React.createRef();
     return (
-        <Modal id="GROUP_INVITE" onHide={onHide}>
+        <Modal size="md" onHide={onHide}>
             <Column maxHeight justifyContent="space-between">
                 <Column paddingTop="xl" paddingX="xl">
                     <Typography margin="md" type="heading" color="secondary">
