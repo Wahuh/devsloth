@@ -89,6 +89,7 @@ class ChannelEditForm extends Component {
                             onFocus={this.handleFocus}
                             name="topic"
                             type="text"
+                            placeholder="Enter a channel topic"
                             value={edit.topic ? this.props.channel.topic : topic}
                         />
                     </FormGroup>
