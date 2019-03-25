@@ -50,13 +50,13 @@ const updateChannelLists = (state, { entities, result: listId }) => {
     const { lists } = entities;
     const list = lists[listId]
     const { channel: channelId } = list;
-    return { 
+    return channelId ? { 
         ...state, 
         [channelId]: { 
             ...state[channelId],
             lists: state[channelId].lists ? [...state[channelId].lists, listId] : []
         }
-    };
+    } : state;
 }
 
 //group delete action, deletes all channels of the same group
