@@ -1,18 +1,17 @@
 import { connect } from "react-redux";
-import { selectGroup } from "../duck/actions";
-
-import React, { Component, Fragment } from "react";
-import { Route, Redirect } from "react-router-dom";
-
-import ChannelListHeader from "../../channel/ChannelListHeader";
-import ChannelList from "../../channel/ChannelList";
-import GroupDetails from "../GroupDetails";
-import MemberListHeader from "../../members/MemberListHeader";
-import MemberList from "../../members/MemberList";
-import UserDetails from "../../user/UserDetails";
 import { getIsGroupSelected } from "../duck/selectors";
-import SideMenuList from "../../layout/SideMenuList";
+
+import React, { Fragment } from "react";
+import { Route } from "react-router-dom";
+
+import ChannelList from "../../channel/ChannelList";
+import ChannelListHeader from "../../channel/ChannelListHeader";
+import GroupDetails from "../GroupDetails";
+import MemberList from "../../members/MemberList";
+import MemberListHeader from "../../members/MemberListHeader";
+
 import Column from "../../reuse/Column";
+import SideMenuList from "../../layout/SideMenuList";
 
 const Group = ({ isGroupSelected, match }) => (
     isGroupSelected ? (
