@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { createGroupRequest } from "../duck/actions";
 
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import ActionBar from "../../reuse/ActionBar";
 import Button from "../../reuse/Button";
 import FloatInput from "../../reuse/FloatInput";
@@ -12,83 +12,64 @@ import Form from "../../reuse/Form";
 import { getIsFetching } from "../../ui/duck/selectors";
 import LoadingButton from "../../reuse/buttons/LoadingButton";
 
-class GroupCreateForm extends Component {
-    state = {
-        group: {
-            name: "",
-        },
+const schema = {
+    name: new Field("Group Name").string().required().min(2).max(50).success("looks good.")
+}
 
-        validation: {
-            name: {}
-        }
+const GroupCreateForm = ({ onBack, isFetching, onCreate }) => {
+    const [ name, setName ] = useState("");
+    const [ nameValidation, setNameValidation ] = useState("");
+
+    const handleChange = ({ currentTarget }) => {
+        const { name, value } = currentTarget;
+        const field = schema[name];
+        const nameValidation = validateField(value, field);
+        setName(value)
+        setNameValidation(nameValidation)
     }
 
-    schema = {
-        name: new Field("Group Name").string().required().min(2).max(50).success("looks good.")
-    }
-
-    handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        const validation = validate(this.state.group, this.schema);
+        const validation = validate({ name }, schema);
         if (validation) {
-            this.setState({ 
-                ...this.state, 
-                validation: { 
-                    ...this.state.validation, 
-                    ...validation 
-                } 
-            });
+            setNameValidation(validation.name)
             return;
         }
-        this.props.onCreate(this.state.group);
+        onCreate({ name });
     }
 
-    handleChange = ({ currentTarget }) => {
-        const { name, value } = currentTarget;
-        const validation = { ...this.state.validation };
-        const field = this.schema[name];
-        validation[name] = validateField(value, field);
+    return (
+        <Column maxHeight maxWidth>
+            <Form onSubmit={handleSubmit}>
+                <Column paddingTop="xl" paddingX="xl">
+                    <Typography margin="sm" bold color="secondary" type="heading">
+                        Create a group
+                    </Typography>
 
-        const group = { ...this.state.group };
-        group[name] = value;
-        this.setState({ group, validation });
-    }
+                    <Typography margin="md" color="tertiary" type="description">
+                        Invite your friends, colleagues, random people or go solo!
+                    </Typography>
 
-    render() {
-        const { group, validation } = this.state;
-        const { onBack, isFetching } = this.props;
-        return (
-            <Column maxHeight maxWidth>
-                <Form onSubmit={this.handleSubmit}>
-                    <Column paddingTop="xl" paddingX="xl">
-                        <Typography margin="sm" bold color="secondary" type="heading">
-                            Create a group
-                        </Typography>
-
-                        <Typography margin="md" color="tertiary" type="description">
-                            Invite your friends, colleagues, random people or go solo!
-                        </Typography>
-
-                        <FloatInput 
-                            autoFocus 
-                            placeholder="Enter a group name" 
-                            onChange={this.handleChange}
-                            value={group.name}
-                            label= "Group Name"
-                            name="name"
-                            type="text"
-                            validation={validation.name}
-                        />
-                    </Column>
-                        
-                    <ActionBar>
-                        <Button size="md" onClick={onBack} theme="outlined" text="Back" />
-                        <LoadingButton theme="action" isLoading={isFetching} text="Create Group" />
-                    </ActionBar>
-                </Form>
-            </Column>
-        );
-    }
+                    <FloatInput 
+                        autoComplete="off"
+                        autoFocus 
+                        placeholder="Enter a group name" 
+                        onChange={handleChange}
+                        value={name}
+                        label= "Group Name"
+                        name="name"
+                        type="text"
+                        validation={nameValidation}
+                    />
+                </Column>
+                    
+                <ActionBar>
+                    <Button type="button" size="md" onClick={() => onBack("createOrJoin")} theme="outlined" text="Back" />
+                    <LoadingButton theme="action" isLoading={isFetching} text="Create Group" />
+                </ActionBar>
+            </Form>
+        </Column>
+    );
 }
 
 const mapStateToProps = state => ({
