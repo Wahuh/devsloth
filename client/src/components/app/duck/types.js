@@ -1,6 +1,0 @@
-export const APP_DATA_LOAD_SUCCESS = "app/APP_DATA_LOAD_SUCCESS";
-
-export const APP_LOADING_SUCCESS = "APP_LOADING";
-export const APP_LOADING_FAILURE = "APP_LOADING_FAILURE";
-
-export const APP_ERROR_RESET = "app/duck/types/APP_ERROR_RESET";
