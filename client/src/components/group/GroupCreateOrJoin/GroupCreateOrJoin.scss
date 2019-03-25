@@ -1,0 +1,29 @@
+@import '../../../styles/layout';
+
+@media #{$Tablet}  {
+    .GroupCreateOrJoin {
+        flex-direction: row;
+    }
+}
+
+@media #{$Desktop} {
+    .GroupCreateOrJoin {
+        flex-direction: row;
+    }
+}
+
+@media #{$Mobile} {
+    .GroupCreateOrJoin {
+        flex-direction: column;
+    }
+}
+
+.GroupCreateOrJoin {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    transition: background-color 200ms ease-out;
+    > *:hover {
+        background-color: var(--color-header);
+    }
+}
