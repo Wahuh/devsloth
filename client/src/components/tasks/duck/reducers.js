@@ -4,7 +4,8 @@ import {
     selectTask,
     addTask,
     editTask,
-    reorderTasks
+    reorderTasks,
+    removeTask
 } from "./actions";
 import { removeChannel } from "../../channel/duck/actions";
 import { loadUserData } from "../../user/duck/actions";
@@ -18,35 +19,52 @@ export const byId = handleActions(
         [removeChannel]: (state, { payload }) => removeTasksByChannel(state, payload),
         [reorderTasks]: (state,  { payload }) => reorder(state, payload),
         [removeGroup]: (state,  { payload }) => removeTasksByChannels(state, payload),
+        [removeTask]: (state,  { payload }) => deleteTask(state, payload),
     }, {}
 );
 
 export const selectedId = handleActions(
     {
+        [removeTask]: (state,  { payload }) => state === payload.result && null,
         [selectTask]: (state, { payload }) => updateSelectedTaskId(state, payload),
     }, null
 )
 
-const reorder = (state, payload) => {
-    const { beforeOldIndex, newIndex, beforeNewIndex } = payload;
-    if (beforeOldIndex) {
-        return {
-            ...state,
-            [beforeOldIndex._id]: { ...state[beforeOldIndex._id], next: beforeOldIndex.next },
-            [newIndex._id]: { ...state[newIndex._id], next: newIndex.next },
-            [beforeNewIndex._id]: { ...state[beforeNewIndex._id], next: beforeNewIndex.next }
-        }
-    } else {
-        console.log("first item moved", {
-            [newIndex._id]: { ...state[newIndex._id], next: newIndex.next },
-            [beforeNewIndex._id]: { ...state[beforeNewIndex._id], next: beforeNewIndex.next }
-        })
-        return {
-            ...state,
-            [newIndex._id]: { ...state[newIndex._id], next: newIndex.next },
-            [beforeNewIndex._id]: { ...state[beforeNewIndex._id], next: beforeNewIndex.next }
-        }
+const deleteTask = (state, { entities, result: taskId }) => {
+    const { tasks } = entities;
+    const task = tasks[taskId];
+    const { prev, next, isHead } = task;
+    const updatedTasks = {};
+    let updatedPrev;
+    let updatedNext;
+    //update head
+    if (prev) {
+        const prevTask = state[prev];
+        updatedTasks[prev] = { ...prevTask, next: next || null };
     }
+
+    if (isHead && next) {
+        //the next task becomes head
+        const nextTask = state[next];
+        updatedTasks[next] = { ...nextTask, isHead: true };
+    }
+
+    console.log("tasky", updatedTasks, taskId, next);
+    const { [taskId]: removedTask, ...rest } = state;
+    console.log({ ...updatedTasks, ...rest });
+    return { ...rest, ...updatedTasks };
+}
+
+const reorder = (state, { entities, result: taskIds }) => {
+    const { tasks } = entities;
+    const reorderedTasks = taskIds.reduce(
+        (obj, taskId) => ({ 
+            ...obj, 
+            [taskId]: { ...state[taskId], ...tasks[taskId] }
+        }), {}
+    )
+    console.log("reordered", reorderedTasks);
+    return { ...state, ...reorderedTasks };
 }
 
 
@@ -79,10 +97,7 @@ const updateTask = (state, { entities, result: taskId }) => {
     return { ...state, [taskId]: task };
 }
 
-const removeTask = (state, { result: taskId }) => {
-    const { [taskId]: removedTask, ...rest } = state;
-    return rest;
-}
+
 
 const removeTasksByChannel = (state, { result: channelId }) => {
     const taskIds = Object.keys(state);
