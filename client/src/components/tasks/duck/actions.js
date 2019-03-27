@@ -7,13 +7,12 @@ import schemas from "../../../schemas";
 
 const payloadCreator = (data) => normalize(data, schemas.task)
 const metaCreator = () => ({ errorType: "task" });
-const meta = (event = null, toast = null, errorType = "task") => () => ({ event, toast, errorType })
 
 export const createTaskRequest = createAction(TASK_CREATE_REQUEST);
 export const createTaskSuccess = createAction(TASK_CREATE_SUCCESS, payloadCreator);
 export const createTaskFailure = createAction(TASK_CREATE_FAILURE);
 
-export const deleteTaskRequest = createAction(TASK_DELETE_REQUEST);
+export const deleteTaskRequest = createAction(TASK_DELETE_REQUEST, taskId => ({ taskId }));
 export const deleteTaskSuccess = createAction(TASK_DELETE_SUCCESS, payloadCreator);
 export const deleteTaskFailure = createAction(TASK_DELETE_FAILURE, null, metaCreator);
 
@@ -26,7 +25,7 @@ export const receiveTaskUpdate = createAction(TASK_UPDATE_RECEIVE, payloadCreato
 export const receiveTaskDelete = createAction(TASK_DELETE_RECEIVE, payloadCreator);
 
 export const moveTaskRequest = createAction(TASK_MOVE_REQUEST);
-export const moveTaskSuccess = createAction(TASK_MOVE_SUCCESS);
+export const moveTaskSuccess = createAction(TASK_MOVE_SUCCESS, (data) => normalize(data, [schemas.task]));
 export const moveTaskFailure = createAction(TASK_MOVE_FAILURE);
 
 
