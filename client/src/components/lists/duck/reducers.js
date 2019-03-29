@@ -10,7 +10,7 @@ import {
 } from "./actions";
 
 import { loadUserData } from "../../user/duck/actions";
-import { addTask } from "../../tasks/duck/actions";
+import { addTask, removeTask } from "../../tasks/duck/actions";
 
 export const byId = handleActions(
     {
@@ -18,7 +18,8 @@ export const byId = handleActions(
         [addList]: (state, { payload }) => addLists(state, payload),
         [addTask]: (state, { payload }) => updateListTasks(state, payload),
         [editList]: (state, { payload }) => updateList(state, payload),
-        [deleteListSuccess]: (state, { payload }) => removeList(state, payload)
+        [deleteListSuccess]: (state, { payload }) => removeList(state, payload),
+        [removeTask]: (state, { payload }) => deleteListTask(state, payload),
     }, {}
 );
 
@@ -49,7 +50,7 @@ const updateList = (state, { entities, result: listId }) => {
     return { ...state, [listId]: list };
 }
 
-const updateListTasks = (state, { entities, result: taskId }) => {
+const deleteListTask = (state, { entities, result: taskId }) => {
     const { tasks } = entities;
     const task = tasks[taskId]
     const { list: listId } = task;
@@ -57,7 +58,21 @@ const updateListTasks = (state, { entities, result: taskId }) => {
         ...state, 
         [listId]: {
             ...state[listId],
-            tasks: state[listId].tasks ? [...state[listId].tasks, taskId]: []
+            tasks: state[listId].tasks.filter(id => id !== taskId)
+        }
+    };
+}
+
+const updateListTasks = (state, { entities, result: taskId }) => {
+    const { tasks } = entities;
+    const task = tasks[taskId]
+    const { list: listId } = task;
+
+    return { 
+        ...state, 
+        [listId]: {
+            ...state[listId],
+            tasks: state[listId].tasks ? [...state[listId].tasks, taskId]: [ taskId ]
         }
     };
 }
