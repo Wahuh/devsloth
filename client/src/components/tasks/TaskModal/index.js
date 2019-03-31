@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 
-import { removeUiModal } from "../../ui/duck/actions";
 
 import React from "react";
 import TaskEditForm from "../TaskEditForm";
@@ -19,5 +18,4 @@ const TaskModal = ({ onHide }) => (
 );
 
 export default connect(null, {
-    onHide: () => removeUiModal(MODAL_TASK_EDIT)
 })(TaskModal);

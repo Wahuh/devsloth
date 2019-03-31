@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { removeUiModal } from "../../ui/duck/actions";
 
 import React from "react";
 import Modal from "../../reuse/Modal";
@@ -42,5 +41,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onHide: () => removeUiModal(MODAL_CONNECTION),
 })(ConnectionModal);

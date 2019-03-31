@@ -28,7 +28,7 @@ const FloatInput = props => {
     } = props;
 
     const [ isFocused, setIsFocused ] = useState(false);
-    const [ inputType, setInputType ] = useState("");
+    const [ inputType, setInputType ] = useState("text");
     const ref = useRef(null);
 
     const handleEnterPress = event => {

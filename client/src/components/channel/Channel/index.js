@@ -11,7 +11,7 @@ import styles from "./Channel.scss";
 import { getOwnerId } from "../../group/duck/selectors";
 import { getChannel, getSelectedChannelId } from "../duck/selectors";
 import { getUserId } from "../../user/duck/selectors";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 import { MODAL_CHANNEL_SETTINGS, MODAL_CHANNEL_INVITE } from "../../ui/constants";
 import SettingsIcon from "../../reuse/icons/SettingsIcon";
 import Tooltip from "../../reuse/Tooltip";
@@ -98,8 +98,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onSelect: () => dispatch(selectChannel({ [ownProps.groupId]: ownProps._id })),
-        onShowModal: () => dispatch(addUiModal(MODAL_CHANNEL_SETTINGS)),
-        onShowInviteModal: () => dispatch(addUiModal(MODAL_CHANNEL_INVITE)) 
+        onShowModal: () => dispatch(addUiPortal({ portalType: MODAL_CHANNEL_SETTINGS })),
+        onShowInviteModal: () => dispatch(addUiPortal({ portalType: MODAL_CHANNEL_INVITE })) 
     }
 }
 

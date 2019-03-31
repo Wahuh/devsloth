@@ -17,7 +17,7 @@ import ChannelName from "../../channel/ChannelName";
 import styles from "./Slacker.scss";
 import HamburgerButton from "../../ui/HamburgerButton";
 import IconContainer from "../../reuse/IconContainer";
-import { removeUiModalEscape } from "../../ui/duck/actions";
+import { removeUiPortalEscape } from "../../ui/duck/actions";
 import Group from "../../group/Group";
 import ChannelView from "../../channel/ChannelView";
 import ChannelBar from "../../channel/ChannelBar";
@@ -100,6 +100,6 @@ const mapStateToProps = state => ({
 export default withRouter(
 connect(mapStateToProps, {
     onJoin: joinGroupRequest,
-    onHideModal: removeUiModalEscape,
+    onHideModal: removeUiPortalEscape,
     onSelect: selectGroup
 })(Slacker));

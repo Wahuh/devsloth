@@ -2,7 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import groupsApi from "../../../../api/groupsApi";
 import { deleteGroupFailure, deleteGroupSuccess } from "../actions";
-import { addUiFetching, removeUiFetching, removeUiModal } from "../../../ui/duck/actions";
+import { addUiFetching, removeUiFetching, removeUiPortal } from "../../../ui/duck/actions";
 import { MODAL_GROUP_SETTINGS } from "../../../ui/constants";
 import { GROUP_DELETE_REQUEST } from "../types";
 import { toastify } from "../../../ui/duck/sagas";
@@ -16,7 +16,7 @@ function* handleDeleteGroup({ payload }) {
 
     try {
         const { data } = yield call(groupsApi.deleteGroup, payload);
-        yield put(removeUiModal(MODAL_GROUP_SETTINGS));
+        yield put(removeUiPortal(MODAL_GROUP_SETTINGS));
         yield put(deleteGroupSuccess(data));
 
         yield call(toastify, {

@@ -11,9 +11,6 @@ import styles from "./ChannelDeleteForm.scss";
 import Form from "../../reuse/Form";
 import Column from "../../reuse/Column";
 import ActionBar from "../../reuse/ActionBar";
-import CancelButton from "../../reuse/buttons/CancelButton";
-import { removeUiModal } from "../../ui/duck/actions";
-import { MODAL_CHANNEL_SETTINGS } from "../../ui/constants";
 
 class ChannelDeleteForm extends Component {
     handleSubmit = (event) => {
@@ -49,5 +46,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     onDelete: deleteChannelRequest,
-    onHide: () => removeUiModal(MODAL_CHANNEL_SETTINGS)
 })(ChannelDeleteForm);

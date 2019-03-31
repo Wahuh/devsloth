@@ -19,11 +19,6 @@ body {
 }
 
 
-#ModalRoot {
-    position: relative;
-    z-index: 10;
-}
-
 :focus {
     outline: 1px solid $focus;
     outline-offset: -1px;

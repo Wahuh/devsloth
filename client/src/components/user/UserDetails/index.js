@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { getUsername } from "../duck/selectors";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 import { MODAL_USER_SETTINGS } from "../../ui/constants";
 
 import React from "react";
@@ -45,5 +45,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: () => addUiModal(MODAL_USER_SETTINGS)
+    onShowModal: () => addUiPortal({ portalType: MODAL_USER_SETTINGS })
 })(UserDetails);

@@ -10,7 +10,6 @@ import FloatInput from "../../reuse/FloatInput";
 import Column from "../../reuse/Column";
 import Typography from "../../reuse/Typography";
 import Form from "../../reuse/Form";
-import { removeUiModal } from "../../ui/duck/actions";
 import { MODAL_GROUP_SETTINGS } from "../../ui/constants";
 import FormGroup from "../../reuse/FormGroup";
 import WarningMessage from "../../reuse/WarningMessage";
@@ -112,5 +111,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     onDelete: deleteGroupRequest,
-    onHide: () => removeUiModal(MODAL_GROUP_SETTINGS)
 })(GroupDeleteForm);

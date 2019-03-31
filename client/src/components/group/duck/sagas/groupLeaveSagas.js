@@ -1,6 +1,6 @@
 import { call, put, take, select } from "redux-saga/effects";
 import { GROUP_LEAVE_REQUEST, GROUP_LEAVE_SUCCESS } from "../types";
-import { addUiFetching, removeUiModal, removeUiFetching } from "../../../ui/duck/actions";
+import { addUiFetching, removeUiPortal, removeUiFetching } from "../../../ui/duck/actions";
 import { leaveGroupFailure, leaveGroupSuccess, selectGroup } from "../actions";
 import { MODAL_GROUP_SETTINGS } from "../../../ui/constants";
 import groupsApi from "../../../../api/groupsApi";
@@ -17,7 +17,7 @@ function* handleLeaveGroup(payload) {
     try {
         const { data } = yield call(leaveGroup, payload);
         yield put(leaveGroupSuccess(data));
-        yield put(removeUiModal(MODAL_GROUP_SETTINGS));
+        yield put(removeUiPortal(MODAL_GROUP_SETTINGS));
         yield call(toastify, { 
             message: "You have left the group",
             duration: 3000,
@@ -26,7 +26,7 @@ function* handleLeaveGroup(payload) {
         yield put(removeUiFetching("groupLeave"));
     } catch(error) {
         yield put(leaveGroupFailure(error));
-        yield put(removeUiModal(MODAL_GROUP_SETTINGS));
+        yield put(removeUiPortal(MODAL_GROUP_SETTINGS));
         yield put(removeUiFetching("groupLeave"));
     }
 }

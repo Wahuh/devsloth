@@ -15,7 +15,8 @@ export const TaskBoard = ({ listIds, channelId }) => {
     const Column = ({ index, style }) => {
         return (
             <div style={style}>
-                {index == listIds.length ?
+            {listIds ? (
+                index == listIds.length ?
                     (
                         <ListCreateForm channelId={channelId} />
                     ) : (
@@ -25,31 +26,34 @@ export const TaskBoard = ({ listIds, channelId }) => {
                             <TaskCreateForm channelId={channelId} listId={listIds[index]} />
                         </TaskBoardList>
                     )
-                }
+            ) : (
+                <ListCreateForm channelId={channelId} />
+            )}
+
             </div>
         );
     }
     return (
         <div className={styles.TaskBoard}>
-            <DragDropProvider>
-                <span className={styles.Lists}>
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <List
-                                ref={listRef}
-                                width={width}
-                                itemCount={listIds.length + 1}
-                                height={height}
-                                itemSize={312}
-                                layout="horizontal"
-                                className={styles.List}
-                            >
-                                {Column}
-                            </List>
-                        )}
-                    </AutoSizer>
-                </span>
-            </DragDropProvider>
+            <span className={styles.Lists}>
+                <AutoSizer>
+                    {({ height, width }) => (
+                        <List
+                            ref={listRef}
+                            width={width}
+                            itemCount={listIds ? listIds.length + 1 : 1}
+                            height={height}
+                            itemSize={312}
+                            layout="horizontal"
+                            className={styles.List}
+                        >
+                            {Column}
+                        </List>
+                    )}
+                </AutoSizer>
+            </span>
         </div>
     );
 }
+
+//            <DragDropProvider>

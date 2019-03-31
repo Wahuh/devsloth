@@ -5,15 +5,12 @@ import { updateChannelRequest } from "../duck/actions";
 import React, { Component } from "react";
 import LoadingButton from "../../reuse/buttons/LoadingButton";
 import Button from "../../reuse/Button";
-import CancelButton from "../../reuse/buttons/CancelButton";
 import FloatInput from "../../reuse/FloatInput";
 import Column from "../../reuse/Column";
 import Typography from "../../reuse/Typography";
 import TextArea from "../../reuse/TextArea";
 import Form from "../../reuse/Form";
 import ActionBar from "../../reuse/ActionBar";
-import { removeUiModal } from "../../ui/duck/actions";
-import { MODAL_CHANNEL_SETTINGS } from "../../ui/constants";
 import FormGroup from "../../reuse/FormGroup";
 import { getIsFetching } from "../../ui/duck/selectors";
 
@@ -58,7 +55,7 @@ class ChannelEditForm extends Component {
 
 
     render() {
-        const { channel, isChanged, isFetching, edit } = this.state;
+        const { channel, isFetching, edit } = this.state;
         const { name, topic } = channel;
         const { channelName, onHide } = this.props;
         return (
@@ -116,5 +113,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     onSave: updateChannelRequest,
-    onHide: () => removeUiModal(MODAL_CHANNEL_SETTINGS)
 })(ChannelEditForm);

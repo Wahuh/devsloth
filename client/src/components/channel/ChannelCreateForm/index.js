@@ -16,9 +16,6 @@ import FormGroup from "../../reuse/FormGroup";
 import { getIsFetching } from "../../ui/duck/selectors";
 
 import { Field, validate, validateField } from "../../../validation";
-import { removeUiModal } from "../../ui/duck/actions";
-import { MODAL_CHANNEL_CREATE } from "../../ui/constants";
-
 
 class ChannelCreateForm extends Component {
     state = {
@@ -135,5 +132,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     onCreate: createChannelRequest,
-    onHide: () => removeUiModal(MODAL_CHANNEL_CREATE)
 })(ChannelCreateForm);

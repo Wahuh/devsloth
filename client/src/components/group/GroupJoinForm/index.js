@@ -60,7 +60,7 @@ class GroupJoinForm extends Component {
                 </Column>
     
                 <ActionBar>
-                    <Button onClick={onBack} theme="link" text="Back" />
+                    <Button type="button" onClick={onBack} theme="outlined" text="Back" />
                     <LoadingButton theme="action" isLoading={isFetching} text="Join Group" />
                 </ActionBar>
             </Form>
