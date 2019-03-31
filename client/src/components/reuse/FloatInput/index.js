@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useRef, useState } from "react";
 import classNames from "classnames";
 import Button from "../Button";
 import HideIcon from "../icons/HideIcon";
@@ -9,15 +9,29 @@ import { bool, func, string } from "prop-types";
 import Row from "../Row";
 import EditIcon from "../icons/EditIcon";
 
-class FloatInput extends Component {
-    state = { 
-        focused: false, 
-        inputType: this.props.type,
-        canEdit: false,
-    }
-    input = React.createRef();
+const FloatInput = props => {
+    const {
+        autoFocus,
+        className,
+        label,
+        name,
+        onBlur,
+        onFocus,
+        onChange,
+        placeholder,
+        type,
+        readOnly,
+        value,
+        validation,
+        innerRef,
+        isEditable
+    } = props;
 
-    onEnterPress = (event) => {
+    const [ isFocused, setIsFocused ] = useState(false);
+    const [ inputType, setInputType ] = useState("");
+    const ref = useRef(null);
+
+    const handleEnterPress = event => {
         if (event.defaultPrevented) {
             return; // Should do nothing if the default action has been cancelled
         }
@@ -38,82 +52,50 @@ class FloatInput extends Component {
         }
     }
 
-    onEdit = () => {
-        this.setState({ canEdit: true });
-    }
+    return (
+        <span className={classNames(
+            styles.FloatInput, {
+                [styles.isError]: validation && validation.error,
+                [styles.isFocused]: isFocused
+            }
+        )}>
+            <div className={styles.LabelContainer}>
+                <FloatLabel className={styles.Label}>{label}</FloatLabel>
+                {validation && <FloatLabel className={validation.error ? styles.ErrorMessage : styles.SuccessMessage}>{validation.message}</FloatLabel>} 
+            </div>
 
-    render() {
-        const {
-            autoFocus,
-            className,
-            label,
-            name,
-            onBlur,
-            onFocus,
-            onChange,
-            placeholder,
-            type,
-            readOnly,
-            value,
-            validation,
-            innerRef,
-            isEditable
-        } = this.props;
-
-        const { focused, inputType } = this.state;
-
-        let statusClassName;
-        if (validation && validation.error) {
-            statusClassName = styles.FloatInputError; 
-        } else if (focused) {
-            statusClassName = styles.FloatInputFocused;
-        }
-
-        return (
-            <span className={classNames(
-                styles.FloatInput, {
-                    [styles.isError]: validation && validation.error,
-                    [styles.isFocused]: focused
-                }
-            )}>
-                <div className={styles.LabelContainer}>
-                    <FloatLabel className={styles.Label}>{label}</FloatLabel>
-                    {validation && <FloatLabel className={validation.error ? styles.ErrorMessage : styles.SuccessMessage}>{validation.message}</FloatLabel>} 
-                </div>
-
-                <Row>
-                    <input 
-                        ref={innerRef}
-                        className={classNames(styles.Input, className)} 
-                        type={this.state.inputType} 
-                        autoFocus={autoFocus} 
-                        onFocus={() => { this.setState({ focused: true }); onFocus && onFocus(); }}
-                        onBlur={(event) => { this.setState({ focused: false }); onBlur && onBlur(event); }}
-                        placeholder={placeholder}
-                        value={value}
-                        id={name}
-                        readOnly={readOnly || isEditable}
-                        name={name}
-                        onChange={onChange}
-                        onKeyPress={this.onEnterPress}
-                        />
-                    {type === "password" && (
-                        <Button type="button" theme="icon" onClick={() => {
-                            if (inputType === "password") {
-                                this.setState({ ...this.state, inputType: "text" });
-                            } else if (inputType === "text") {
-                                this.setState({ ...this.state, inputType: "password" });
-                            }
-                        }}>
-                            {inputType === "password" && <HideIcon />}
-                            {inputType === "text" && <ShowIcon />}
-                        </Button>
-                    )}
-                    {isEditable && <EditIcon />}
-                </Row>
-            </span>
-        );
-    }
+            <Row>
+                <input 
+                    ref={innerRef}
+                    className={classNames(styles.Input, className)} 
+                    type={inputType} 
+                    autoFocus={autoFocus} 
+                    onFocus={() => { setIsFocused(true); onFocus && onFocus(); }}
+                    onBlur={(event) => { setIsFocused(false); onBlur && onBlur(event); }}
+                    placeholder={placeholder}
+                    value={value}
+                    id={name}
+                    readOnly={readOnly || isEditable}
+                    name={name}
+                    onChange={onChange}
+                    onKeyPress={handleEnterPress}
+                    />
+                {type === "password" && (
+                    <Button type="button" theme="icon" onClick={() => {
+                        if (inputType === "password") {
+                            setInputType("text");
+                        } else if (inputType === "text") {
+                            setInputType("password")
+                        }
+                    }}>
+                        {inputType === "password" && <HideIcon />}
+                        {inputType === "text" && <ShowIcon />}
+                    </Button>
+                )}
+                {isEditable && <EditIcon />}
+            </Row>
+        </span>
+    );
 }
 
 FloatInput.propTypes = {
