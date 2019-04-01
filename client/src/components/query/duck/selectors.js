@@ -1,0 +1,1 @@
+export const getListQuery = (state, props) => state.query.lists[props.listId];

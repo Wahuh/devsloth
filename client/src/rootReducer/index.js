@@ -14,6 +14,7 @@ import user from "../components/user/duck/reducers";
 import lists from "../components/lists/duck/reducers";
 import connection from "../components/socket/duck/reducers";
 import invites from "../components/invites/duck/reducers";
+import query from "../components/query/duck/reducers";
 import { AUTH_LOGOUT_SUCCESS } from "../components/auth/duck/types";
 
 const appReducer = combineReducers({
@@ -24,6 +25,7 @@ const appReducer = combineReducers({
     connection,
     groups,
     lists,
+    query,
     tasks,
     members,
     messages,
