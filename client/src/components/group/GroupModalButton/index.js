@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 
 import React from "react";
 import Button from "../../reuse/Button";
@@ -18,5 +18,5 @@ const GroupModalButton = ({ onShowModal }) => (
 )
 
 export default connect(null, {
-    onShowModal: () => addUiModal(MODAL_GROUP_CREATE_OR_JOIN)
+    onShowModal: () => addUiPortal({ portalType: MODAL_GROUP_CREATE_OR_JOIN })
 })(GroupModalButton);
