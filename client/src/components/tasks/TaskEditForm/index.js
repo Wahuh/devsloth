@@ -88,7 +88,6 @@ class TaskEditForm extends Component {
         const { name, value } = input;
         if (this.props.task[name]) {
             if (value !== this.props.task[name]) {
-                console.log(value, this.props.task[name]);
                 this.handleSubmit();
             }
         } else if (value) {
@@ -98,7 +97,6 @@ class TaskEditForm extends Component {
 
     render() {
         const { task, channelName } = this.props; 
-        console.log(task);
         const { name, description, checklists } = task;
 
         // const checklistItems = checklists.map(
