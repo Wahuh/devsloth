@@ -16,7 +16,9 @@
         align-items: center;
         justify-content: center;
         border: 2px solid var(--color-home-icon-border);
-    
+        transition-timing-function: ease-out;
+        transition-duration: 200ms;
+        transition-property: background-color, border-radius, border-color;
         svg {
             fill: var(--color-home-icon);
             height: 24px;
@@ -28,10 +30,16 @@
 
 
 .Active {
+    border-radius: 25% !important;
     svg {
         fill: var(--color-home-icon-active) !important;
     }
     background-color: var(--color-home-button-active) !important;
+    border-color: var(--color-home-icon-border-active) !important;
+}
+
+.HomeButton:hover:not(.Active) {
+    border-radius: 25%;
 }
 
 // .Active::after {
@@ -52,7 +60,7 @@
     left: 0;
     height: 2.75rem;
     width: 5px;
-    background-color: var(--color-200);
+    background-color: var(--color-group-selected);
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
