@@ -25,7 +25,13 @@ export const receiveTaskUpdate = createAction(TASK_UPDATE_RECEIVE, payloadCreato
 export const receiveTaskDelete = createAction(TASK_DELETE_RECEIVE, payloadCreator);
 
 export const moveTaskRequest = createAction(TASK_MOVE_REQUEST);
-export const moveTaskSuccess = createAction(TASK_MOVE_SUCCESS, (data) => normalize(data, [schemas.task]));
+export const moveTaskSuccess = createAction(
+    TASK_MOVE_SUCCESS, 
+    (tasks, listData) => {
+        const payload = normalize(tasks, [ schemas.task ]);
+        return { ...payload, extra: listData };
+    }
+);
 export const moveTaskFailure = createAction(TASK_MOVE_FAILURE);
 
 
@@ -34,4 +40,10 @@ export const addTask = createAction(TASK_ADD);
 export const removeTask = createAction(TASK_REMOVE);
 export const editTask = createAction(TASK_EDIT);
 export const editPrevTask = createAction(TASK_PREV_EDIT);
-export const reorderTasks = createAction(TASKS_REORDER);
+export const reorderTasks = createAction(
+    TASKS_REORDER, 
+    (tasks, listData) => {
+        const payload = normalize(tasks, [ schemas.task ]);
+        return { ...payload, extra: listData };
+    }
+);
