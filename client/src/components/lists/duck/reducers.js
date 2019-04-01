@@ -10,7 +10,7 @@ import {
 } from "./actions";
 
 import { loadUserData } from "../../user/duck/actions";
-import { addTask, removeTask } from "../../tasks/duck/actions";
+import { addTask, removeTask, reorderTasks } from "../../tasks/duck/actions";
 
 export const byId = handleActions(
     {
@@ -20,8 +20,34 @@ export const byId = handleActions(
         [editList]: (state, { payload }) => updateList(state, payload),
         [deleteListSuccess]: (state, { payload }) => removeList(state, payload),
         [removeTask]: (state, { payload }) => deleteListTask(state, payload),
+        [reorderTasks]: (state, { payload }) => addMovedTaskId(state, payload),
     }, {}
 );
+
+const addMovedTaskId = (state, { extra }) => {
+    const { 
+        taskId,
+        oldListId,
+        newListId,
+    } = extra;
+    if (oldListId !== newListId) {
+        return {
+            ...state,
+            [oldListId]: {
+                ...state[oldListId],
+                tasks: state[oldListId].tasks.filter(id => id !== taskId)
+            },
+            [newListId]: {
+                ...state[newListId],
+                tasks: [ ...state[newListId].tasks, taskId ]
+            }
+        };
+    }
+    return state;
+    //old list id, remove from old
+    //new list id add to new
+}
+
 
 export const allIds = handleActions(
     {
@@ -59,6 +85,20 @@ const deleteListTask = (state, { entities, result: taskId }) => {
         [listId]: {
             ...state[listId],
             tasks: state[listId].tasks.filter(id => id !== taskId)
+        }
+    };
+}
+
+const reorderListTasks = (state, { entities, result: taskId }) => {
+    const { tasks } = entities;
+    const task = tasks[taskId]
+    const { list: listId } = task;
+
+    return { 
+        ...state, 
+        [listId]: {
+            ...state[listId],
+            tasks: state[listId].tasks ? [...state[listId].tasks, taskId]: [ taskId ]
         }
     };
 }
