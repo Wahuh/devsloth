@@ -1,58 +1,35 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import styles from "./Modal.scss";
-import ModalOverlay from "./ModalOverlay";
+import Overlay from "../Overlay";
 import classNames from "classnames";
+import Portal from "../../reuse/Portal";
+import { useComponentVisible } from "../../ui/duck/hooks";
+import ModalContent from "../ModalContent";
 
-const modalRoot = document.getElementById("ModalRoot");
+const Modal = ({ children, onHide, size, in: inProp }) => {
+    const { ref } = useComponentVisible(true, onHide);
+
+    return (
+        <Portal>
+            <Overlay isVisible center duration={300} in={inProp}>
+                <ModalContent
+                    in={inProp}
+                    className={classNames(sizes[size])}
+                    duration={300} 
+                    ref={ref} 
+                >
+                    {children}
+                </ModalContent>
+            </Overlay>
+        </Portal>
+    );
+}
 
 const sizes = {
     "sm": styles.small,
     "md": styles.medium,
     "lg": styles.large
-}
-
-const aligns = {
-    "flex-start": styles.flexStart,
-    "center": styles.center
-}
-
-class Modal extends Component {
-    constructor(props) {
-        super(props);
-        this.element = document.createElement('div');
-        this.element.onclick = this.hide;
-    }
-
-    hide = (event) => {
-        const { onHide } = this.props;
-        if (event.target === this.element.children[0]) {
-            onHide();
-        }
-    }
-
-    componentDidMount() {
-        modalRoot.appendChild(this.element);
-    }
-
-    componentWillUnmount() {
-        modalRoot.removeChild(this.element)
-    }
-
-    render() {
-        const { children, size, align, className, isCustom } = this.props;
-        return ReactDOM.createPortal(
-            <ModalOverlay>
-                {isCustom ? children :
-                    <div className={classNames(styles.ModalContent, sizes[size], className, aligns[align])}>
-                        {children}
-                    </div>
-                }
-
-            </ModalOverlay>,
-            this.element
-        )
-    }
 }
 
 export default Modal;
