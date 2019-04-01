@@ -10,12 +10,10 @@ export function* watchGroupUpdateRequest() {
 }
 
 function* handleGroupUpdate({ payload }) {
-    console.log("updating", payload);
     yield put(addUiFetching("groupEdit"));
     
     try {
         yield call(groupsApi.updateGroup, payload);
-        console.log("toasting");
         yield call(toastify, { 
             message: "Group updated successfully!",
             duration: 3000,
