@@ -8,6 +8,13 @@ export const getMember = (state, id) => {
     return state.members.byId[id]
 }
 
+export const getChannelMembersByAlias = (state, props) => {
+    return getAllMembers(state)
+    .filter(member => member.channels.includes(props.channelId))
+    .sort((a, b) => a.alias.localeCompare(b.alias))
+    .map( ({ _id }) => _id )
+}
+
 export const getMemberUser = (state, channelId) => {
     const userId = getUserId(state);
     if (channelId) {
@@ -80,6 +87,16 @@ export const getMemberAlias = (state, id) => {
 
 export const getAllTypingIds = state => {
     return state.members.allTypingIds;
+}
+
+export const getMembersTypingAliases = state => {
+    const channelId = getSelectedChannelId(state);
+    if (channelId) {
+        return state.members.typingIds
+            .filter(id => state.members.byId[id].channels.includes(channelId))
+            .map(id => state.members.byId[id].alias);
+    }
+    return null;
 }
 
 export const getAllTypingAliases = (state) => {

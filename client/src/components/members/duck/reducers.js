@@ -12,7 +12,7 @@ import {
     joinGroupSuccess
 } from "../../group/duck/actions";
 
-import { receiveMemberGroupJoin } from "../duck/actions";
+import { receiveMemberGroupJoin, receiveMemberStartTyping, receiveMemberStopTyping } from "../duck/actions";
 import { receiveMessageTypingStart, receiveMessageTypingStop } from "../../messages/duck/actions";
 
 export const byId = handleActions(
@@ -35,12 +35,22 @@ export const allIds = handleActions(
     }, []
 );
 
-export const allTypingIds = handleActions(
+export const typingIds = handleActions(
     {
-        [receiveMessageTypingStart]: (state, { payload }) => addMemberIds(state, payload),
-        [receiveMessageTypingStop]: (state, { payload }) => removeMemberId(state, payload),
+        [receiveMemberStartTyping]: (state, { payload }) => addMemberTyping(state, payload),
+        [receiveMemberStopTyping]: (state, { payload }) => removeMemberTyping(state, payload),
     }, []
 );
+
+const addMemberTyping = (state, { memberId }) => {
+    if (state.includes(memberId)) {
+        return state;
+    } else {
+        return [ ...state, memberId ];
+    }
+};
+
+const removeMemberTyping = (state, { memberId }) => state.filter(id => id !== memberId);
 
 const addMembers = (state, { entities }) => {
     const { members } = entities;
@@ -81,5 +91,5 @@ const updateMemberChannels = (state, { entities }) => {
 export default combineReducers({
     byId,
     allIds,
-    allTypingIds
+    typingIds
 });
