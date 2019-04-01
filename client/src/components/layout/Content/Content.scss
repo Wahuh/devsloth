@@ -10,7 +10,7 @@
 
 @media #{$Desktop} {
     .Content {
-        width: calc(100% - 20rem);
+        flex: 1 1 auto;
     }
 }
 
