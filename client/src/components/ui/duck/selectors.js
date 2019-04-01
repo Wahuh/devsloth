@@ -14,6 +14,8 @@ export const getAllToasts = state => {
     return [];
 }
 
-export const getAllModals = state => state.ui.modals;
+export const getAllDropdowns = state => state.ui.dropdowns;
 
 export const getIsFetching = (state, key) => state.ui.isFetching.hasOwnProperty(key) ? state.ui.isFetching[key] : null;
+export const getIsSideMenuVisible = state => state.ui.isSideMenuVisible
+export const getPortals = state => state.ui.portals;
