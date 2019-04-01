@@ -1,10 +1,8 @@
 import { connect } from "react-redux";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 
 import React from "react";
 import AddButton from "../../reuse/buttons/AddButton";
-import MemberIcon from "../../reuse/icons/MemberIcon";
-import Icon from "../../reuse/Icon";
 import styles from "./MemberListHeader.scss";
 import Typography from "../../reuse/Typography";
 import Tooltip from "../../reuse/Tooltip";
@@ -29,5 +27,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: () => addUiModal(MODAL_GROUP_INVITE),
+    onShowModal: () => addUiPortal({ portalType: MODAL_GROUP_INVITE }),
 })(MemberListHeader);
