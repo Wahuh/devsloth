@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 
-import { addUiToast, removeUiToast, addUiModal, removeUiModal, removeUiModalEscape, addUiFetching, removeUiFetching } from "./actions";
+import { addUiToast, removeUiToast, addUiFetching, removeUiFetching, toggleSideMenu, addUiDropdown, removeUiDropdown, addUiPortal, removeUiPortal, removeUiPortalEscape } from "./actions";
 import { auth } from "../../auth/duck/uiReducers";
 
 
@@ -19,11 +19,10 @@ const allToastIds = handleActions(
     }, []
 );
 
-const modals = handleActions(
+const dropdowns = handleActions(
     {
-        [addUiModal]: (state, { payload }) => addModal(state, payload),
-        [removeUiModal]: (state, { payload }) => removeModal(state, payload),
-        [removeUiModalEscape]: (state, { payload }) => removeTopModal(state, payload),
+        [addUiDropdown]: (state, { payload }) => addDropdown(state, payload),
+        [removeUiDropdown]: (state, { payload }) => removeDropdown(state, payload),
     }, []
 );
 
@@ -33,6 +32,29 @@ const isFetching = handleActions(
         [removeUiFetching]: (state, { payload }) => removeFetching(state, payload),
     }, []
 );
+
+const isSideMenuVisible = handleActions(
+    {
+        [toggleSideMenu]: (state, { payload }) => payload
+    }, false    
+);
+
+const portals = handleActions(
+    {
+        [addUiPortal]: (state, { payload }) => addPortal(state, payload),
+        [removeUiPortal]: (state, { payload }) => removePortal(state, payload),
+        [removeUiPortalEscape]: (state, { payload }) => removeTopPortal(state, payload),
+    }, []
+);
+
+const addPortal = (state, payload) => {
+    return [ ...state, payload ];
+}
+
+const removePortal = (state, payload) => {
+    console.log("pay",state.filter(({ portalType }) => portalType !== payload))
+    return state.filter(({ portalType }) => portalType !== payload);
+}
 
 const addFetching = (state, key) => {
     return { ...state, [key]: true };
@@ -51,11 +73,14 @@ const addModal = (state, modal) => {
     return [ ...state, modal ];
 }
 
+const addDropdown = (state, dropdown) => [ ...state, dropdown ]
+const removeDropdown = (state, dropdownId) => state.filter(({ id }) => id !== dropdownId) 
+
 const removeModal = (state, modal) => {
     return state.filter(id => id !== modal);
 }
 
-const removeTopModal = state => {
+const removeTopPortal = state => {
     return state.slice(0, -1);
 }
 
@@ -82,8 +107,10 @@ const removeToastId = (state, { result: toastId }) => {
 const uiReducer = combineReducers({
     auth,
     toasts,
-    modals,
-    isFetching
+    dropdowns,
+    isFetching,
+    isSideMenuVisible,
+    portals
 });
 
 
