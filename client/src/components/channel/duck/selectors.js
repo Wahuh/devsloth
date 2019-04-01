@@ -12,6 +12,14 @@ export const getAllChannels = state => {
     return [];
 }
 
+export const getAllChannelsWithLists = state => {
+    const groupId = getSelectedGroupId(state);
+    if (groupId) return state.channels.allIds
+    .map(id => state.channels.byId[id])
+    .filter(channel => channel.group === groupId && channel.lists && channel.lists.length > 0)
+    return [];
+}
+
 export const getChannelsById = state => state.channels.byId;
 const getSelectedIds = state => state.channels.selectedIds;
 
