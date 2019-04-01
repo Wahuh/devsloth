@@ -27,13 +27,17 @@ const TextArea = ({ autoFocus, onClick, className, name, readOnly, onChange, onB
                 onEnter && onEnter();
                 handled = true;
             } else {
+                console.log("pressed here")
                 onKeyPress && onKeyPress();
             }
         } else if (event.keyCode !== undefined) {
             if (event.keyCode == 13) {
-                onEnter && onEnter();
+                if (onEnter) {
+                    onEnter();
+                }
                 handled = true;
             } else {
+                console.log("pressed there")
                 onKeyPress && onKeyPress();
             }
         }
