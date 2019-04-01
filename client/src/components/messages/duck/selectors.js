@@ -5,7 +5,8 @@ export const getChannelMessages = (state) => {
     if (channelId) {
         return state.messages.allIds
         .map(id => state.messages.byId[id])
-        .filter(message => message.channel === channelId);
+        .filter(message => message.channel === channelId)
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     }
     return [];
 }
