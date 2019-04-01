@@ -1,0 +1,14 @@
+.ListSelect {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ListSelect > :first-child {
+    margin-right: 0.5rem;
+    flex: 1;
+}
+
+.ListSelect > :nth-child(2) {
+    flex: 0 0 27.5%;
+}

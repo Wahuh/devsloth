@@ -1,0 +1,13 @@
+.TaskMoveForm {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-500);
+    padding: 1rem;
+    border-radius: 5px;
+    width: 19rem;
+    box-shadow: 1px 1px 4px rgba(0,0,0,.4);
+    border-radius: 5px;
+    button {
+        align-self: flex-end;
+    }
+}
