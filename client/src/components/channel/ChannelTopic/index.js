@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 import { MODAL_CHANNEL_SETTINGS } from "../../ui/constants";
 
 import React, { Fragment } from "react";
@@ -46,5 +46,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: () => addUiModal(MODAL_CHANNEL_SETTINGS)
+    onShowModal: () => addUiPortal({ portalType: MODAL_CHANNEL_SETTINGS })
 })(ChannelTopic);

@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { toastify } from "../../../ui/duck/sagas";
 import { GROUP_INVITE_COPY } from "../types";
-import { removeUiModal } from "../../../ui/duck/actions";
+import { removeUiPortal } from "../../../ui/duck/actions";
 import { MODAL_GROUP_INVITE } from "../../../ui/constants";
 
 export function* watchGroupInviteCopy() {
@@ -9,7 +9,7 @@ export function* watchGroupInviteCopy() {
 }
 
 function* handleCopyInvite() {
-    yield put(removeUiModal(MODAL_GROUP_INVITE));
+    yield put(removeUiPortal(MODAL_GROUP_INVITE));
     yield call(toastify, {
         message: "Copied to clipboard!",
         duration: 3000,

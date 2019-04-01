@@ -32,11 +32,11 @@ import Column from "../../reuse/Column";
 import UserDetails from "../../user/UserDetails";
 import TaskBoardUsername from "../../tasks/TaskBoardUsername";
 
-const Slacker = ({ hasGroups, onHideModal }) => {
+const Slacker = ({ hasGroups, onHidePortal }) => {
     useEffect(() => {
         function handleEscape(event) {
             if (event.keyCode == 27) {
-                onHideModal();
+                onHidePortal();
             }
         }
         document.addEventListener("keydown", handleEscape, false);
@@ -100,6 +100,6 @@ const mapStateToProps = state => ({
 export default withRouter(
 connect(mapStateToProps, {
     onJoin: joinGroupRequest,
-    onHideModal: removeUiPortalEscape,
+    onHidePortal: removeUiPortalEscape,
     onSelect: selectGroup
 })(Slacker));

@@ -3,7 +3,7 @@ import groupsApi from "../../../../api/groupsApi";
 import { GROUP_JOIN_REQUEST } from "../types";
 import { MODAL_GROUP_CREATE_OR_JOIN } from "../../../ui/constants";
 import { joinGroupSuccess, joinGroupFailure } from "../actions";
-import { removeUiModal, addUiFetching, removeUiFetching } from "../../../ui/duck/actions";
+import { addUiFetching, removeUiFetching, removeUiPortal } from "../../../ui/duck/actions";
 import { toastify } from "../../../ui/duck/sagas";
 
 export function* watchJoinGroupRequest() {
@@ -18,7 +18,7 @@ function* handleJoinGroup(payload) {
     try {
         const { data } = yield call(joinGroup, payload);
         yield put(joinGroupSuccess(data));
-        yield put(removeUiModal(MODAL_GROUP_CREATE_OR_JOIN));
+        yield put(removeUiPortal(MODAL_GROUP_CREATE_OR_JOIN));
         yield call(toastify, { 
             message: "You have joined the group",
             duration: 3000,

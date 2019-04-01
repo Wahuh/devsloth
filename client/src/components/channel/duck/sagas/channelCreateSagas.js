@@ -3,7 +3,7 @@ import { call, takeEvery, put } from "redux-saga/effects";
 import { CHANNEL_CREATE_REQUEST } from "../types";
 import { createChannelSuccess, createChannelFailure } from "../actions";
 import { MODAL_CHANNEL_CREATE } from "../../../ui/constants";
-import { removeUiModal, addUiFetching, removeUiFetching } from "../../../ui/duck/actions";
+import { addUiFetching, removeUiFetching, removeUiPortal } from "../../../ui/duck/actions";
 import { toastify } from "../../../ui/duck/sagas";
 
 export function* watchChannelCreateRequest() {
@@ -15,7 +15,7 @@ function* handleChannelCreate({ payload }) {
     try {
         const { data } = yield call(channelApi.createChannel, payload);
         yield put(createChannelSuccess(data));
-        yield put(removeUiModal(MODAL_CHANNEL_CREATE));
+        yield put(removeUiPortal(MODAL_CHANNEL_CREATE));
         yield call(toastify, { 
             message: "Channel created successfully!",
             duration: 3000,

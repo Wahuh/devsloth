@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 import { getOwnerId } from "../../group/duck/selectors";
 import { getUserId } from "../../user/duck/selectors";
 
@@ -25,5 +25,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: () => addUiModal(MODAL_CHANNEL_CREATE),
+    onShowModal: () => addUiPortal({ portalType: MODAL_CHANNEL_CREATE }),
 })(ChannelListHeader);
