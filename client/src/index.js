@@ -15,3 +15,5 @@ ReactDOM.render(
     </Provider>, 
     document.getElementById("index")
 );
+
+export default store;
