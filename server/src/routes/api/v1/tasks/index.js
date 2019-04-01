@@ -10,7 +10,7 @@ const {
 } = require("../../../../controllers/task.controller");
 
 tasks.post("/", auth, wrapAsync(createTask));
-tasks.delete("/:id", auth, wrapAsync(deleteTask));
+tasks.delete("/:taskId", auth, wrapAsync(deleteTask));
 tasks.put("/:taskId", auth, wrapAsync(updateTask));
 
 module.exports = tasks;
