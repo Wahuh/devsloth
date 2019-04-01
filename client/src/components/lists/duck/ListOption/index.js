@@ -5,7 +5,7 @@ import Typography from "../../../reuse/Typography";
 import Option from "../../../reuse/Option";
 
 const ListOption = ({ listId, name }) => {
-    console.log(name);
+
     return (
     <Option value={listId}>
         {name}
