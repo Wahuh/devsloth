@@ -1,5 +1,6 @@
 @import "../../../styles/fonts";
 
+
 .Task {
     background-color: var(--color-task);
     width: 16rem;
@@ -11,14 +12,14 @@
     margin-bottom: 0.5rem;
     display: flex;
     position: relative;
-
-    a {
+    
+    span {
         text-decoration: none;
         padding: 0.25rem 0.75rem;
         height: 100%;
         width: 100%;
     }
-    a:focus, a:hover {
+    span:focus, span:hover {
         background-color: var(--color-task-hover);
         + .TaskEditButton {
             opacity: 1;
@@ -33,6 +34,7 @@
         background-color: transparent;
         padding: 0.2rem;
         opacity: 0;
+        transition: opacity 100ms ease-in;
         position: absolute;
         top: 0.25rem;
         right: 0.25rem;
@@ -40,7 +42,7 @@
         svg {
             width: 18px;
             height: 18px;
-            fill: var(--color-font-quaternary);
+            fill: var(--color-action);
         }
     }
 
@@ -49,10 +51,10 @@
     }
 
     .TaskEditButton:hover {
-        + a {
+        + span {
             background-color: var(--color-task-hover);
         }
-        background-color: var(--color-secondary);
+        background-color: var(--color-icon-button-active);
     }
 }
 .Task:hover {
@@ -60,13 +62,6 @@
         opacity: 1;
     }
 }
-
-// .Task:hover {
-//     .TaskEditButton {
-//         visibility: visible;
-//     }
-//     background-color: var(--color-task-hover);
-// }
 
 .Task:last-child {
     margin-bottom: 0;
