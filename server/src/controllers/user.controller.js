@@ -16,7 +16,14 @@ const populate = [
                     { 
                         path: "lists",
                         populate: { path: "tasks" }
-                    }
+                    },
+                    { 
+                        path: "messages", 
+                        options: { 
+                            sort: { timestamp: -1 },
+                            limit: 10
+                        } 
+                    },
                 ] 
             },
             { path: "members" },
