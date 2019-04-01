@@ -4,18 +4,11 @@
 @media #{$Tablet}  {
     #SideMenu {
         z-index: 11;
-        transition: transform .3s cubic-bezier(0, .52, 0, 1);
+        transition: transform .4s cubic-bezier(0, .52, 0, 1);
         position: fixed;
         width: 80vw;
         transform: translate3d(-80vw, 0, 0);
     }
-
-    #SideMenuContainer {
-        z-index: 10;
-        position: fixed;
-        visibility: hidden;
-    }
-
 }
 
 @media #{$Desktop} {
@@ -24,23 +17,18 @@
     }
 
     #SideMenu {
-        width: 20rem;
+        flex: 0 0 20rem;
+        position: relative;
     }
 }
 
 @media #{$Mobile} {
     #SideMenu {
-        transition: transform .3s cubic-bezier(0, .52, 0, 1);
+        transition: transform .4s cubic-bezier(0, .52, 0, 1);
         position: fixed;
         width: 80vw;
         transform: translate3d(-80vw, 0, 0);
         z-index: 3;
-    }
-
-    #SideMenuContainer {
-        z-index: 2;
-        position: fixed;
-        visibility: hidden;
     }
 }
 
@@ -51,7 +39,6 @@
     display: flex;
     flex-direction: row;
     overflow-x: hidden;
-    position: relative;
 }
 
 #SideMenuOverlay {
@@ -64,4 +51,34 @@
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     z-index: 2;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in;
+}
+
+.Appear {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.AppearActive {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.Leave {
+    opacity: 1;
+}
+
+.LeaveActive {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+.SlideIn {
+    transform: translate3d(0, 0, 0);
+}
+
+.SlideOut {
+    transform: translate3d(-80vw, 0, 0);
 }
