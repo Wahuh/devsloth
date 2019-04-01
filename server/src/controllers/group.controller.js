@@ -60,6 +60,7 @@ const createGroup = async (req, res) => {
     const socket = io.sockets.connected[clients.getClientId(user._id)]
     socket.join(group._id);
     socket.join(channel._id);
+    return;
 }
 
 const deleteGroup = async (req, res) => {
@@ -123,7 +124,8 @@ const joinGroup = async (req, res) => {
         text: `${member.alias} has joined the group.`,
         member: member._id,
         channel: channel._id,
-        isNotification: true
+        isNotification: true,
+        timestamp: Date.now()
     });
 
     await message.save();
