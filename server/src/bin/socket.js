@@ -1,4 +1,4 @@
-
+const { Message } = require("../models/message.model");
 const shortid = require("shortid");
 const clients = require("../clients");
 let groups = {
@@ -16,16 +16,29 @@ module.exports = function(io) {
             //remove clientId
         });
 
-        socket.on("sendMessage", ({ text, channel, member }) => {
-            const message = {
-                _id: shortid.generate(),
+        socket.on("channel message", async ({ text, channel, member }) => {
+            const message = new Message({
                 text,
                 channel,
                 member,
                 timestamp: Date.now()
-            };
-            io.to(channel).emit("receiveMessage", message);
+            });
+
+            await message.save();
+            io.to(channel).emit("channel message", message);
         });
+
+        socket.on("channel member typing start", payload => {
+            console.log("rec", payload);
+            const { channelId, memberId } = payload;
+            socket.to(channelId).emit("channel member typing start", payload);
+        });
+
+        socket.on("channel member typing stop", payload => {
+            const { channelId, memberId } = payload;
+            socket.to(channelId).emit("channel member typing stop", payload);
+        });
+
         socket.on("sendMessageTypingStart", memberId => socket.broadcast.emit("receiveMessageTypingStart", memberId));
         socket.on("sendMessageTypingStop", memberId => socket.broadcast.emit("receiveMessageTypingStop", memberId));
 
