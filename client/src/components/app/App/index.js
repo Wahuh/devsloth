@@ -13,11 +13,10 @@ import Slacker from "../Slacker";
 import styles from "./App.scss";
 import ToastRoot from "../../ui/ToastRoot";
 import PrivateRoute from "../PrivateRoute";
-import ModalRoot from "../../ui/ModalRoot";
 import { addInvite } from "../../invites/duck/actions";
 import LoadingScreen from "../../ui/LoadingScreen";
 import { getIsFetching } from "../../ui/duck/selectors";
-import DropdownRoot from "../../ui/DropdownRoot";
+import PortalRoot from "../../reuse/PortalRoot";
 
 //disable focus on App element when there is a modal active
 const App = ({ onInvite, isFetching, onLoad }) => {
@@ -58,9 +57,8 @@ const App = ({ onInvite, isFetching, onLoad }) => {
                     <PrivateRoute path="/" component={Slacker} />
                 </Switch>
                 
-                <DropdownRoot />
+                <PortalRoot />
                 <ToastRoot />
-                <ModalRoot />
             </Fragment>
         </Router>
     );
