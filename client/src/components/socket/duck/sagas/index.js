@@ -13,7 +13,7 @@ import { receiveChannelCreate, receiveChannelDelete, receiveChannelUpdate, recei
 import { receiveGroupDelete, receiveGroupUpdate, receiveGroupConnect, updateGroupSuccess } from "../../../group/duck/actions";
 import { receiveListCreate, receiveListDelete, receiveListUpdate, createListSuccess, updateListSuccess } from "../../../lists/duck/actions";
 import { receiveTaskCreate, receiveTaskUpdate, receiveTaskDelete, createTaskSuccess, updateTaskSuccess } from "../../../tasks/duck/actions";
-
+import { receiveMemberStartTyping, receiveMemberStopTyping } from "../../../members/duck/actions";
 const connect = userId => {
     const socket = io.connect(process.env.API_URL, { query: { userId } });
     return new Promise(
@@ -68,6 +68,20 @@ const createSocketChannel = socket =>
             socket.on("channel list create", list => {
                 emit(createListSuccess(list));
             });
+
+            socket.on("user list create", list => {
+                emit(createListSuccess(list));
+            });
+
+            socket.on("channel member typing stop", payload => {
+                emit(receiveMemberStopTyping(payload));
+            })
+
+            socket.on("channel member typing start", payload => {
+                console.log("received this", payload);
+                emit(receiveMemberStartTyping(payload));
+            })
+
             socket.on("channel list update", list => {
                 emit(updateListSuccess(list));
             });
@@ -77,15 +91,21 @@ const createSocketChannel = socket =>
                 emit(createTaskSuccess(task));
             })
 
+            socket.on("user task create", task => {
+                console.log("create, user", task._id, task.prev) 
+                emit(createTaskSuccess(task));
+            })
+
             socket.on("channel task update", task => {
                 emit(updateTaskSuccess(task));
             })
 
+  
             socket.on("list delete", payload => {
 
             });
 
-            socket.on("receiveMessage", message => emit(receiveMessage(message)));
+            socket.on("channel message", message => emit(receiveMessage(message)));
             socket.on("receiveMessageTypingStart", memberId => emit(receiveMessageTypingStart(memberId)));
             socket.on("receiveMessageTypingStop", memberId => emit(receiveMessageTypingStop(memberId)));
 
@@ -157,6 +177,7 @@ export function* watchEmitActions(socket) {
         const action = yield take(SOCKET_ACTION_EMIT);
         const { payload } = action;
         const { event } = payload;
+        console.log("action", action);
         yield apply(socket, socket.emit, [event, payload]);
     }
 }
