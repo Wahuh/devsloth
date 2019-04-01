@@ -114,7 +114,14 @@ const populate = [
                     { 
                         path: "lists",
                         populate: { path: "tasks" }
-                    }
+                    },
+                    { 
+                        path: "messages", 
+                        options: { 
+                            sort: { timestamp: -1 },
+                            limit: 10
+                        } 
+                    },
                 ] 
             },
             { path: "members" },
@@ -126,7 +133,7 @@ const populate = [
         path: "lists",
         populate: { path: "tasks" }
     }
-]
+];
 
 exports.authenticateUser = authenticateUser;
 exports.registerUser = registerUser;
