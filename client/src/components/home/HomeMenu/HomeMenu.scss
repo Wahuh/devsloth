@@ -19,20 +19,20 @@
         flex-direction: row;
         align-items: center;
         margin: 0;
-        padding: 0.5rem 1rem;
+        padding: 0.375rem 1rem;
         margin-bottom: 0.25rem;
     }
     .HomeLink:hover:not(.Active) {
-        background-color: var(--color-500);
+        background-color: var(--color-channel-hover);
     }
 }
 
 .Active {
-    background-color: var(--color-400);
+    background-color: var(--color-channel-selected);
     p {
-        color: var(--color-secondary-font);
+        color: var(--color-channel-selected-font);
     }
     svg {
-        fill: var(--color-secondary-font);
+        fill: var(--color-channel-icon-selected);
     }
 }
