@@ -31,12 +31,11 @@ export const selectedId = handleActions(
 )
 
 const deleteTask = (state, { entities, result: taskId }) => {
+    const t0 = performance.now();
     const { tasks } = entities;
     const task = tasks[taskId];
     const { prev, next, isHead } = task;
     const updatedTasks = {};
-    let updatedPrev;
-    let updatedNext;
     //update head
     if (prev) {
         const prevTask = state[prev];
@@ -52,6 +51,8 @@ const deleteTask = (state, { entities, result: taskId }) => {
     console.log("tasky", updatedTasks, taskId, next);
     const { [taskId]: removedTask, ...rest } = state;
     console.log({ ...updatedTasks, ...rest });
+    const t1 = performance.now();
+    console.log("reduc", t1 - t0);
     return { ...rest, ...updatedTasks };
 }
 
@@ -94,7 +95,13 @@ const addTasks = (state, { entities }) => {
 const updateTask = (state, { entities, result: taskId }) => {
     const { tasks } = entities;
     const task = tasks[taskId];
-    return { ...state, [taskId]: task };
+    return { 
+        ...state, 
+        [taskId]: { 
+            ...state[taskId], 
+            ...task 
+        }
+    };
 }
 
 
