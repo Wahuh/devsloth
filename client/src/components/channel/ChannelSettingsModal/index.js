@@ -1,6 +1,3 @@
-import { connect } from "react-redux";
-import { removeUiModal } from "../../ui/duck/actions";
-
 import React, { Component } from "react";
 import ChannelDeleteForm from "../ChannelDeleteForm";
 import ChannelEditForm from "../ChannelEditForm";
@@ -9,7 +6,7 @@ import MenuItem from "../../reuse/MenuItem";
 import Modal from "../../reuse/Modal";
 import Typography from "../../reuse/Typography";
 import CloseButton from "../../reuse/buttons/CloseButton";
-import { MODAL_CHANNEL_SETTINGS } from "../../ui/constants";
+
 import Column from "../../reuse/Column";
 
 const screens = {
@@ -36,9 +33,9 @@ class ChannelSettingsModal extends Component {
     render() {
         const { active, screen } = this.state;
         const { channelEdit, channelDelete } = active;
-        const { onHide } = this.props;
+        const { onHide, in: inProp } = this.props;
         return (
-            <Modal size="lg" onHide={onHide}>
+            <Modal size="lg" in={inProp} onHide={onHide}>
                 <CloseButton onClick={onHide} />
                 <Column maxHeight maxWidth>
                     <Menu>
@@ -64,6 +61,4 @@ class ChannelSettingsModal extends Component {
     }
 }
 
-export default connect(null, {
-    onHide: () => removeUiModal(MODAL_CHANNEL_SETTINGS)
-})(ChannelSettingsModal);
+export default ChannelSettingsModal;
