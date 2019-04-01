@@ -105,16 +105,21 @@
 
 .Icon {
     background-color: transparent;
-    fill: var(--color-primary-icon);
+
     border-radius: 3px;
+    padding: 0.375rem;
     svg {
         height: 20px;
         width: 20px;
+        fill: var(--color-icon);
     }
 }
 
 .Icon:hover {
-    fill: var(--color-primary-icon-hover);
+    svg {
+        fill: var(--color-icon-hover);
+    }
+    background-color: var(--color-icon-button-hover);
 }
 
 .Link {
@@ -125,7 +130,7 @@
 }
 
 .small {
-    padding: 0.25rem 0.5rem;
+    padding: 0.375rem 0.75rem;
     p {
         font-size: 0.875rem;
         line-height: 1rem;

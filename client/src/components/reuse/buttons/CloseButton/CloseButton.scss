@@ -7,5 +7,14 @@
     .CloseButton {
         padding: 0.375rem;
         padding-bottom: 0;
+        background-color: transparent;
+    }
+    .CloseButton:hover {
+        svg {
+            fill: var(--color-icon-hover);
+        }
+        p {
+            color: var(--color-font-primary);
+        }
     }
 }
