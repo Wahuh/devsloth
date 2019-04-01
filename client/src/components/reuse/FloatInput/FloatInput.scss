@@ -23,17 +23,16 @@
         width: 100%;
         background-color: var(--color-input);
         padding: 0;
-
     }
     
     .Input::placeholder {
         opacity: 1;
-        color: var(--color-placeholder);
+        color: var(--color-font-placeholder);
     }
     
     .Input:placeholder-shown {
         opacity: 1;
-        color: var(--color-placeholder);
+        color: var(--color-font-placeholder);
     }
     
     .Input:invalid {
@@ -82,9 +81,6 @@
     margin-right: 0.25rem;
 }
 
-.Delete {
-    
-}
 
 .isFocused {
     outline: none;
