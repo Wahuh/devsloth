@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { handleActions } from "redux-actions";
 import { loadUserData, updateUserSuccess } from "./actions";
+import { addList } from "../../lists/duck/actions";
 
 export const id = handleActions(
     {
@@ -23,11 +24,27 @@ export const username = handleActions(
     }, null
 );
 
+export const lists = handleActions(
+    {
+        [loadUserData]: (state, { payload }) => updateUserLists(state, payload),
+        [addList]: (state, { payload }) => updateUserListIds(state, payload),
+    }, []
+)
+
 const updateId = (state, { result: userId }) => userId;
 const updateEmail = (state, { entities, result: userId }) => {
     const { user } = entities;
     return user[userId].email;
 }
+const updateUserLists = (state, { entities, result: userId }) => {
+    const { user } = entities;
+    return user[userId].lists || [];
+}
+
+const updateUserListIds = (state, { result: listId }) => {
+    return [ ...state, listId ];
+}
+
 
 const updateUsername = (state, { entities, result: userId }) => {
     const { user } = entities;
@@ -37,5 +54,6 @@ const updateUsername = (state, { entities, result: userId }) => {
 export default combineReducers({
     id,
     email,
-    username
+    username,
+    lists,
 });
