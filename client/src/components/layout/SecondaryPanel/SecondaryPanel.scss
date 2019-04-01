@@ -21,10 +21,12 @@
         transform: translate3d(150vw, 0, 0);
         width: 50vw;
         height: calc(100vh - 3rem);
+        display: none;
     }
 }
 
 .SecondaryPanel { 
+
     background-color: var(--color-600);
     border-left: 1px solid var(--color-border-secondary);
     overflow-x: hidden;
