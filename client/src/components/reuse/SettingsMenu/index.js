@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./SettingsMenu.scss";
 
-const SettingsMenu = () => {
-    <ul className={styles.SettingsMenu}>
-
-    </ul>
-}
+const SettingsMenu = ({ children }) => (
+    <section className={styles.SettingsMenu}>
+        {children}
+    </section>
+)
 
 export default SettingsMenu;
