@@ -4,15 +4,15 @@ import { createTaskFailure } from "../actions";
 import { TASK_CREATE_REQUEST, TASK_CREATE_SUCCESS } from "../types";
 import { toastify } from "../../../ui/duck/sagas";
 
-export function* watchCreateTaskRequest() {
+export function* watchTaskCreateRequest() {
     while(true) {
         const { payload } = yield take(TASK_CREATE_REQUEST);
-        yield call(handleCreateTask, payload);
+        yield call(handleTaskCreate, payload);
     }
     // yield takeEvery(TASK_CREATE_REQUEST, handleCreateTask);
 }
 
-function* handleCreateTask(payload) {
+function* handleTaskCreate(payload) {
     try {
         console.log("request", payload);
         yield call(tasksApi.createTask, payload);
