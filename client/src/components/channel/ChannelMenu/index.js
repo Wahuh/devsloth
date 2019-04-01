@@ -1,60 +1,64 @@
 import { connect } from "react-redux";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./ChannelMenu.scss";
 import Icon from "../../reuse/Icon";
 import TaskIcon from "../../reuse/icons/TaskIcon";
-import { getChannelListIds } from "../../lists/duck/selectors";
-import TaskListHeader from "../../tasks/TaskListHeader";
-import TaskList from "../../tasks/TaskList";
-import TaskCreateForm from "../../tasks/TaskCreateForm";
-import ListSelect from "../../lists/ListSelect";
-import ChannelMenuList from "../ChannelMenuList";
 import MemberIcon from "../../reuse/icons/MemberIcon";
+import classNames from "classnames";
 import DragDropProvider from "../../dnd/DragDropProvider";
 import { getSelectedChannelId } from "../duck/selectors";
+import ChannelMenuTasks from "../ChannelMenuTasks";
+import ChannelMemberList from "../ChannelMemberList";
+import Typography from "../../reuse/Typography";
+import Button from "../../reuse/Button";
 
-const ChannelMenu = ({ listIds, channelId }) => {
-    const [ listId, setListId ] = useState("");
-    useEffect(() => {
-        if (listIds && listIds.length > 0) {
-            setListId(listIds[0]);
-        } else {
-            setListId("");
-        }
-    }, [ listIds ]);
+const viewComponents = {
+    "tasks": ChannelMenuTasks,
+    "members": ChannelMemberList
+}
+
+const ChannelMenu = ({ channelId }) => {
+    const [ view, setView ] = useState("tasks");
+
+    const View = viewComponents[view]
+
     return (
         <section className={styles.ChannelMenu}>
             <ul className={styles.MenuBar}>
-                <li className={styles.MenuItem}>
-                    <Icon size="md">
-                        <TaskIcon />
-                    </Icon>
+                <li onClick={() => setView("members")} className={classNames(
+                    styles.MenuItem,
+                    { [styles.Selected]: view === "members" }
+                )}>
+                    <Button theme="icon">
+                        <Icon size="md">
+                            <MemberIcon />
+                        </Icon>
+                    </Button>
+                </li>
+                <li onClick={() => setView("tasks")} className={
+                    classNames(
+                        styles.MenuItem, 
+                        { [styles.Selected]: view === "tasks" }
+                    )
+                }>
+                    <Button theme="icon">
+                        <Icon size="md">
+                            <TaskIcon />
+                        </Icon>
+                    </Button>
                 </li>
 
-                <li className={styles.MenuItem}>
-                    <Icon size="md">
-                        <MemberIcon />
-                    </Icon>
-                </li>
+
             </ul>
-            
-
-                <section className={styles.ChannelMenuView}>
-                    {listIds && <ListSelect onSelect={setListId} value={listId} listIds={listIds} />}
-                    {listId && 
-                        <ChannelMenuList>
-                            <TaskListHeader listId={listId} />
-                            <TaskList listId={listId} />
-                            <TaskCreateForm channelId={channelId} listId={listId} /> 
-                        </ChannelMenuList>
-                    }
-                </section>
+        
+            <section className={styles.ChannelMenuView}>
+                <View channelId={channelId} />
+            </section>
         </section>  
     );
 }
-//            <DragDropProvider>
+
 const mapStateToProps = state => ({
-    listIds: getChannelListIds(state),
     channelId: getSelectedChannelId(state)
 });
 
