@@ -1,6 +1,4 @@
 import { connect } from "react-redux";
-import { removeUiModal } from "../../ui/duck/actions";
-
 import React, { Component } from "react";
 import GroupEditForm from "../GroupEditForm";
 import GroupRolesEdit from "../GroupRolesEdit";
@@ -17,6 +15,7 @@ import { error } from "util";
 import { MODAL_GROUP_SETTINGS } from "../../ui/constants";
 import { getMemberIsOwner, getMemberIdUser } from "../../members/duck/selectors";
 import Column from "../../reuse/Column";
+import SettingsMenu from "../../reuse/SettingsMenu";
 
 const screens = {
     groupEdit: <GroupEditForm />,
@@ -45,31 +44,20 @@ class GroupSettingsModal extends Component {
     }
 
     render() {
-        const { onHide, isOwner } = this.props;
+        const { onHide, in: inProp, isOwner } = this.props;
         const { screen, active } = this.state;
-        const { groupEdit, rolesEdit, rolesAssign, groupDelete, groupLeave } = active;
-
+        const { groupEdit, groupDelete, groupLeave } = active;
+        
         return (
-            <Modal size="lg" onHide={onHide}>
+            <Modal in={inProp} size="lg" onHide={onHide}>
                 <Column maxHeight maxWidth>
-                    <Menu>
+                    <SettingsMenu>
                         <MenuItem active={groupEdit} onClick={() => this.changeScreen("groupEdit")}>
                             <Typography type="description" color={groupEdit ? "secondary" : "primary"}>
                                 Overview
                             </Typography>
                         </MenuItem>
 
-                        {/* <MenuItem active={rolesEdit} onClick={() => this.changeScreen("rolesEdit")}>
-                            <Typography type="button" color={rolesEdit ? "secondary" : "primary"}>
-                                Edit Roles
-                            </Typography>
-                        </MenuItem>
-
-                        <MenuItem>
-                            <Typography type="button" color={rolesAssign ? "secondary" : "primary"}>
-                                Assign Roles
-                            </Typography>
-                        </MenuItem> */}
                         {!isOwner && 
                             <MenuItem active={groupLeave} onClick={() => this.changeScreen("groupLeave")}>
                                 <Typography type="description" color="error">
@@ -84,8 +72,8 @@ class GroupSettingsModal extends Component {
                                 Delete Group
                             </Typography>
                         </MenuItem>
-                    }
-                    </Menu>
+                        }
+                    </SettingsMenu>
                     <Column maxHeight maxWidth>
                         {screens[screen]}
                     </Column>
@@ -101,5 +89,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onHide: () => removeUiModal(MODAL_GROUP_SETTINGS),
 })(GroupSettingsModal);
