@@ -10,6 +10,6 @@ export function* watchListAdd() {
 }
 
 function* handleListAdd({ payload }) {
-    console.log(payload, "rec");
+
     yield put(addList(payload));
 }
