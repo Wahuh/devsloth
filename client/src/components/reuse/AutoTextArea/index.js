@@ -7,7 +7,7 @@ import EditIcon from "../icons/EditIcon";
 
 const TextArea = ({ autoFocus, onClick, className, name, readOnly, onChange, onBlur, placeholder, minRows, maxRows, type, value, onKeyUp, onKeyPress, onEnter  }) => {
     const textArea = useRef(null);
-    const [ height, setHeight ] = useState(null);
+    const [ height, setHeight ] = useState(1);
     let once = false;
     useEffect(() => {
         // console.log(textArea.current.scrollHeight, "sh")
@@ -46,7 +46,7 @@ const TextArea = ({ autoFocus, onClick, className, name, readOnly, onChange, onB
         }
     }
     const autoExpand = () => {
-        console.log(textArea.current.scrollHeight);
+        //shrink when deleting text
         setHeight(textArea.current.scrollHeight);
     }
 
