@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import React from "react";
 import styles from "./ConnectionIndicator.scss";
 import Typography from "../../reuse/Typography";
-import { addUiModal } from "../../ui/duck/actions";
+import { addUiPortal } from "../../ui/duck/actions";
 import { MODAL_CONNECTION } from "../../ui/constants";
 import Tooltip from "../../reuse/Tooltip";
 import { getConnectionStatus } from "../duck/selectors";
@@ -34,5 +34,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onShowModal: () => addUiModal(MODAL_CONNECTION)
+    onShowModal: () => addUiPortal({ portalType: MODAL_CONNECTION })
 })(ConnectionIndicator);
