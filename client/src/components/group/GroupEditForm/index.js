@@ -14,8 +14,6 @@ import { getAllChannels } from "../../channel/duck/selectors";
 import { validate, Field, validateField } from "../../../validation";
 import Form from "../../reuse/Form";
 import ActionBar from "../../reuse/ActionBar";
-import { removeUiModal } from "../../ui/duck/actions";
-import { MODAL_GROUP_SETTINGS } from "../../ui/constants";
 import FormGroup from "../../reuse/FormGroup";
 import LoadingButton from "../../reuse/buttons/LoadingButton";
 import { getIsFetching } from "../../ui/duck/selectors";
@@ -52,7 +50,6 @@ class GroupEditForm extends Component {
             });
             return;
         }
-
         onSave({ name, _id: groupId });
     }
 
@@ -160,5 +157,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     onSave: updateGroupRequest,
-    onHide: () => removeUiModal(MODAL_GROUP_SETTINGS)
 })(GroupEditForm);
