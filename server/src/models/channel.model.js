@@ -67,6 +67,12 @@ channelSchema.virtual("lists", {
     foreignField: "channel"
 });
 
+channelSchema.virtual("messages", {
+    ref: "Message",
+    localField: "_id",
+    foreignField: "channel"
+});
+
 function validateChannel(channel) {
     const schema = {
         name: Joi.string().min(1).required(),
