@@ -1,0 +1,35 @@
+.Overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+}
+
+.Appear {
+    opacity: 0;
+}
+
+.AppearActive {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.Leave {
+    opacity: 1;
+}
+
+.LeaveActive {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+.Center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.isVisible {
+    background-color: rgba(0, 0, 0, 0.6);
+}
