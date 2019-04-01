@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { removeUiModal } from "../../ui/duck/actions";
 import { getSelectedGroupName } from "../../group/duck/selectors";
 
 import React from "react";
@@ -11,13 +10,12 @@ import Typography from "../../reuse/Typography";
 import ActionBar from "../../reuse/ActionBar";
 import Button from "../../reuse/Button";
 import { copyGroupInvite } from "../duck/actions";
-import { MODAL_GROUP_INVITE } from "../../ui/constants";
 import Column from "../../reuse/Column";
 
-const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName }) => {
+const GroupInviteModal = ({ onHide, onCopy, inviteId, channelName, groupName, in: inProp }) => {
     let input = React.createRef();
     return (
-        <Modal size="md" onHide={onHide}>
+        <Modal size="md" in={inProp} onHide={onHide}>
             <Column maxHeight justifyContent="space-between">
                 <Column paddingTop="xl" paddingX="xl">
                     <Typography margin="md" type="heading" color="secondary">
@@ -64,6 +62,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    onHide: () => removeUiModal(MODAL_GROUP_INVITE),
     onCopy: copyGroupInvite
 })(GroupInviteModal);
