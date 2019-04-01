@@ -7,5 +7,5 @@ export function* watchSendMessage() {
 }
 
 export function* handleEmitMessage({ payload }) {
-    yield put(emitSocketAction(payload, "sendMessage"));
+    yield put(emitSocketAction(payload, "channel message"));
 }
