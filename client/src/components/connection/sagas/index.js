@@ -113,6 +113,7 @@ export function* watchEmitActions(socket) {
         const action = yield take(SOCKET_ACTION_EMIT);
         const { payload } = action;
         const { event } = payload;
+
         yield apply(socket, socket.emit, [event, payload]);
     }
 }
