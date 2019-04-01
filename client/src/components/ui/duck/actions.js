@@ -4,10 +4,6 @@ import schemas from "../../../schemas";
 
 import * as types from "./types"
 
-export const addUiModal = createAction(types.UI_MODAL_ADD);
-export const removeUiModal = createAction(types.UI_MODAL_REMOVE);
-export const removeUiModalEscape = createAction(types.UI_MODAL_REMOVE_ESCAPE);
-
 export const createUiToast = createAction(types.UI_TOAST_CREATE);
 export const addUiToast = createAction(types.UI_TOAST_ADD, 
     toast => normalize(toast, schemas.toast) 
@@ -18,3 +14,10 @@ export const removeUiToast = createAction(types.UI_TOAST_REMOVE,
 
 export const addUiFetching = createAction(types.UI_FETCHING_ADD);
 export const removeUiFetching = createAction(types.UI_FETCHING_REMOVE);
+export const toggleSideMenu = createAction(types.UI_SIDE_MENU_TOGGLE);
+export const addUiDropdown = createAction(types.UI_DROPDOWN_ADD);
+export const removeUiDropdown = createAction(types.UI_DROPDOWN_REMOVE);
+
+export const addUiPortal = createAction(types.UI_PORTAL_ADD);
+export const removeUiPortal = createAction(types.UI_PORTAL_REMOVE);
+export const removeUiPortalEscape = createAction(types.UI_PORTAL_REMOVE_ESCAPE);
