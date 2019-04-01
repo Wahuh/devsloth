@@ -92,7 +92,24 @@ const createUserTask = async (req, res) => {
 }
 
 const deleteTask = async (req, res) => {
-
+    const task = await Task.findById(req.params.taskId);
+    if (task) {
+        const prevTask = await Task.find({ next: req.params.taskId });
+        if (prevTask) {
+            if (task.next) {
+                //the deleted task's next id replaces the previous task's next id
+                prevTask.next = task.next;
+                await prevTask.save();
+            } else {
+                //the deleted task is the last in the order
+                prevTask.next = null;
+            }
+        }
+        await task.remove();
+        const io = req.app.get("io");
+        io.to(task.channel).emit("channel task delete", task._id);
+    }
+    return res.status(404).send("Task not found");
 }
 
 const updateTask = async (req, res) => {
