@@ -7,14 +7,15 @@ import styles from "./ListDropdown.scss";
 import Dropdown from "../../reuse/Dropdown";
 import DropdownItem from "../../reuse/DropdownItem";
 
-const ListDropdown = ({ onRename, onClose }) => (
-    <Dropdown onClose={onClose}>
+const ListDropdown = ({ onRename, onHide, position }) => (
+    <Dropdown onHide={onHide} position={position}>
         <DropdownItem onClick={onRename} text="Rename" />
+        {/* <DropdownItem text="Delete List" /> */}
     </Dropdown>
 )
 
 const mapStateToProps = state => ({
-    lists: getSelectedChannelLists(state)
+
 });
 
 export default connect(mapStateToProps)(ListDropdown);
