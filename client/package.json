@@ -38,7 +38,9 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.4",
     "jest": "^23.6.0",
+    "lint-staged": "^9.2.3",
     "mini-css-extract-plugin": "^0.4.3",
     "mock-socket": "^8.0.5",
     "node-sass": "^4.9.3",
@@ -80,5 +82,17 @@
     "reselect": "^4.0.0",
     "shortid": "^2.2.14",
     "socket.io-client": "^2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   }
 }
