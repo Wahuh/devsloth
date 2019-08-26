@@ -16,14 +16,14 @@ const CSSModuleLoader = {
   },
 };
 
-// const CSSLoader = {
-//   loader: 'css-loader',
-//   options: {
-//     modules: false,
-//     sourceMap: true,
-//     minimize: true,
-//   },
-// };
+const CSSLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: false,
+    sourceMap: true,
+    minimize: true,
+  },
+};
 
 const postCSSLoader = {
   loader: 'postcss-loader',
@@ -69,6 +69,17 @@ module.exports = () => {
         {
           test: /\.scss$/,
           exclude: /\.module\.scss$/,
+          use: [
+            // fallback to style-loader in development
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            CSSLoader,
+            postCSSLoader,
+            'sass-loader',
+          ],
+        },
+
+        {
+          test: /\.module\.scss$/,
           use: [
             // fallback to style-loader in development
             devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
