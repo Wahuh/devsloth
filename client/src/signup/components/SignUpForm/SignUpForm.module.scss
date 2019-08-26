@@ -1,0 +1,12 @@
+.SignUpForm {
+  width: 17.5rem;
+
+  .LoginLink {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    :first-child {
+     margin-right: 0.25rem; 
+    }
+  }
+}
