@@ -7,6 +7,7 @@ const colors = {
   secondary: styles.secondary,
   tertiary: styles.tertiary,
   accent: styles.accent,
+  complement: styles.complement,
 };
 
 const fontScale = {
