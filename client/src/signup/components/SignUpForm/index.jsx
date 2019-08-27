@@ -8,15 +8,15 @@ import styles from './SignUpForm.module.scss';
 
 const schema = object().shape({
   email: string()
-    .email()
-    .required(),
+    .email('Please enter a valid email')
+    .required('Email address is required'),
   username: string()
     .max(30)
-    .required(),
+    .required('Hey, you need a cool name for yourself!'),
   password: string()
-    .min(5)
+    .min(5, 'must be greater than 5 chars')
     .max(50)
-    .required(),
+    .required('Password is required'),
 });
 
 const SignUpForm = () => {
@@ -47,7 +47,7 @@ const SignUpForm = () => {
             isFormValid: true,
           });
         })
-        .catch(err => {
+        .catch(() => {
           setState({
             user: {...user, [name]: value},
             error: {...error, [name]: ''},
