@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Input from '../Input';
 import styles from './TextInput.module.scss';
 import TickIcon from '../icons/TickIcon';
+import CrossIcon from '../icons/CrossIcon';
 
 const TextInput = ({onChange, label, name, type, value, error}) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -19,11 +20,14 @@ const TextInput = ({onChange, label, name, type, value, error}) => {
       className={classNames(styles.TextInput, {
         [styles.focused]: isFocused,
         [styles.valid]: value && !error,
+        [styles.invalid]: error,
       })}
     >
       <label className={styles.Label} htmlFor={name}>
         {label}
-        <span className={styles.Indicator}>{<TickIcon />}</span>
+        <span className={styles.Indicator}>
+          {error ? <CrossIcon /> : <TickIcon />}
+        </span>
       </label>
       <Input
         name={name}
