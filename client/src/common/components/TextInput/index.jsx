@@ -5,6 +5,7 @@ import Input from '../Input';
 import styles from './TextInput.module.scss';
 import TickIcon from '../icons/TickIcon';
 import CrossIcon from '../icons/CrossIcon';
+import Typography from '../Typography';
 
 const TextInput = ({onChange, label, name, type, value, error}) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -38,6 +39,11 @@ const TextInput = ({onChange, label, name, type, value, error}) => {
         value={value}
         className={styles.Input}
       />
+      <div className={styles.ErrorMessage}>
+        <Typography color="primary" fontSize={14}>
+          {error}
+        </Typography>
+      </div>
     </div>
   );
 };
