@@ -47,6 +47,7 @@ module.exports = () => {
   }, {});
 
   return {
+    entry: './src/index.jsx',
     output: {
       publicPath: '/',
     },
