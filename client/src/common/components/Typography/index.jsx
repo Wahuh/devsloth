@@ -10,6 +10,11 @@ const colors = {
   complement: styles.complement,
 };
 
+const fontWeights = {
+  400: styles.fontWeight400,
+  700: styles.fontWeight700,
+};
+
 const fontScale = {
   12: '0.75rem',
   14: '0.875rem',
@@ -35,7 +40,15 @@ const spacingScale = {
   48: '3rem',
 };
 
-const Typography = ({as, children, fontSize, color, textAlign, mb}) => {
+const Typography = ({
+  as,
+  children,
+  fontSize,
+  color,
+  textAlign,
+  mb,
+  fontWeight,
+}) => {
   return createElement(
     as || 'p',
     {
@@ -44,7 +57,11 @@ const Typography = ({as, children, fontSize, color, textAlign, mb}) => {
         textAlign: textAlign || 'center',
         marginBottom: spacingScale[mb],
       },
-      className: classNames(styles.Typography, colors[color]),
+      className: classNames(
+        styles.Typography,
+        colors[color],
+        fontWeights[fontWeight] || fontWeights[400],
+      ),
     },
     children,
   );
