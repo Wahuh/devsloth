@@ -6,7 +6,7 @@ import SignUpForm from '../../../signup/components/SignUpForm';
 const Slothy = () => {
   return (
     <Router>
-      <Route exact path="/signup" component={SignUpForm} />
+      <Route path="/signup" component={SignUpForm} />
     </Router>
   );
 };
