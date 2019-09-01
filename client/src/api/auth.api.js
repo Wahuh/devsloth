@@ -18,14 +18,9 @@ const saveJwt = jwt => {
   localStorage.setItem('jwt', jwt);
 };
 
-// const setJwt = jwt => {
-//   const token = jwt.replace('Bearer ', '');
-//   localStorage.setItem('jwt', token);
-// };
-
-// const setJwtHeader = jwt => {
-//   http.setAuthHeader(jwt);
-// };
+const setAuthorizationHeader = jwt => {
+  http.setDefaultHeader('Authorization', `Bearer ${jwt}`);
+};
 
 const signup = ({email, password, username}) => {
   return http.post(`${process.env.API_URL}/signup`, {
@@ -35,7 +30,7 @@ const signup = ({email, password, username}) => {
   });
 };
 
-export default {signup, getJwt, saveJwt, extractJwt};
+export default {signup, getJwt, saveJwt, extractJwt, setAuthorizationHeader};
 // export const login = ({email, password}) => {
 //   return http.post(LOGIN_ENDPOINT, {
 //     email,
