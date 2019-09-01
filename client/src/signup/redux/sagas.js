@@ -5,8 +5,11 @@ import {signupSuccess, signupFailure} from './actions';
 
 function* handleSignup(payload) {
   try {
-    const {data} = yield call(authApi.signup, payload);
-    yield put(signupSuccess(data));
+    const {headers} = yield call(authApi.signup, payload);
+    const jwt = yield call(authApi.extractJwt, headers);
+    yield call(authApi.saveJwt, jwt);
+    yield call(authApi.setAuthorizationHeader, jwt);
+    yield put(signupSuccess());
   } catch (err) {
     yield put(signupFailure(err));
   }
