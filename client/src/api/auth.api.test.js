@@ -37,3 +37,28 @@ describe('extractJwt', () => {
     });
   });
 });
+
+describe('saveJwt', () => {
+  let spy;
+  beforeEach(() => {
+    spy = jest.spyOn(Object.getPrototypeOf(window.localStorage), 'setItem');
+  });
+
+  afterEach(() => {
+    spy.mockRestore();
+  });
+  it('saves the jwt to localStorage', () => {
+    const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+    authApi.saveJwt(jwt);
+    expect(spy).toHaveBeenCalledWith('jwt', jwt);
+  });
+
+  it('throws an error when passed an empty string', () => {
+    const jwt = '';
+    const error = new Error('Invalid jwt cannot be saved');
+    expect(() => {
+      authApi.saveJwt(jwt);
+    }).toThrow(error);
+    expect(spy).not.toHaveBeenCalled();
+  });
+});

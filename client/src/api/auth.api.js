@@ -13,6 +13,11 @@ const extractJwt = headers => {
   throw new Error('Bearer does not precede the token');
 };
 
+const saveJwt = jwt => {
+  if (!jwt) throw new Error('Invalid jwt cannot be saved');
+  localStorage.setItem('jwt', jwt);
+};
+
 // const setJwt = jwt => {
 //   const token = jwt.replace('Bearer ', '');
 //   localStorage.setItem('jwt', token);
@@ -30,7 +35,7 @@ const signup = ({email, password, username}) => {
   });
 };
 
-export default {signup, getJwt, extractJwt};
+export default {signup, getJwt, saveJwt, extractJwt};
 // export const login = ({email, password}) => {
 //   return http.post(LOGIN_ENDPOINT, {
 //     email,
