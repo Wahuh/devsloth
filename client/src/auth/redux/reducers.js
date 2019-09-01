@@ -4,7 +4,7 @@ import {signupSuccess} from '../../signup/redux/actions';
 
 export const isAuthenticated = handleActions(
   {
-    [signupSuccess]: () => false,
+    [signupSuccess]: () => true,
   },
   false,
 );
