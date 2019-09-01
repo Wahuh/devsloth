@@ -1,4 +1,5 @@
 import http from './http.api';
+import config from '../config';
 
 const getJwt = () => localStorage.getItem('jwt');
 
@@ -23,14 +24,28 @@ const setAuthorizationHeader = jwt => {
 };
 
 const signup = ({email, password, username}) => {
-  return http.post(`${process.env.API_URL}/signup`, {
+  return http.post(`${config.apiUrl}/signup`, {
     email,
     password,
     username,
   });
 };
 
-export default {signup, getJwt, saveJwt, extractJwt, setAuthorizationHeader};
+const login = ({email, password}) => {
+  return http.post(`${config.apiUrl}/login`, {
+    email,
+    password,
+  });
+};
+
+export default {
+  signup,
+  login,
+  getJwt,
+  saveJwt,
+  extractJwt,
+  setAuthorizationHeader,
+};
 // export const login = ({email, password}) => {
 //   return http.post(LOGIN_ENDPOINT, {
 //     email,
