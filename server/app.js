@@ -1,8 +1,11 @@
 const Koa = require('koa');
-
-const app = new Koa();
+const mount = require('koa-mount');
 const bodyParser = require('koa-bodyparser');
 
-app.use(bodyParser);
+const app = new Koa();
+const signup = require('./lib/signup');
+
+app.use(bodyParser());
+app.use(mount('/signup', signup));
 
 module.exports = app;
