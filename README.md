@@ -18,14 +18,15 @@ A web app inspired by Slack, Discord and Trello which features chat, task manage
 
 ### Environment Variables
 
-In the server folder, create two files: `.dev.env` and `.test.env`. They will both look the same except for `POSTGRES_DB` and `POSTGRES_PORT`.
+In the server folder, create two files: `.dev.env` and `.test.env`. They will both look the same except for `POSTGRES_DB`, `POSTGRES_PORT` and `POSTGRES HOST` because there are separate server and database services for development and testing.
 
 ```
 POSTGRES_PASSWORD=postgres_password
-POSTGRES_DATABASE=your_dev_or_test_database_name
-POSTGRES_HOST=postgres
+POSTGRES_DB=name_of_the_database_created_by_default
+POSTGRES_HOST=name_of_the_database_service
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
+JWT_SECRET=super_secret_key_for_jwt_auth
 ```
 
 
