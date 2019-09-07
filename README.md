@@ -33,7 +33,7 @@ POSTGRES_USER=postgres
 
 ```
 docker-compose up
-docker exec -it server_tests npm run test
+docker exec -it server_test npm run test
 #use this regularly
 docker system prune
 ```
