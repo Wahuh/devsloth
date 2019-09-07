@@ -22,7 +22,7 @@ In the server folder, create two files: `.dev.env` and `.test.env`. They will bo
 
 ```
 POSTGRES_PASSWORD=postgres_password
-POSTGRES_DB=your_dev_or_test_database_name
+POSTGRES_DATABASE=your_dev_or_test_database_name
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
