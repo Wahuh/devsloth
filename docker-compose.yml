@@ -1,18 +1,35 @@
 version: "3"
 services:
-  postgres:
+  database_dev:
     image: postgres:latest
     restart: always
     env_file:
-      - ./server/.env
-
-  server:
-    container_name: server
+      - ./server/.dev.env
+  
+  database_test:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - ./server/.test.env
+  
+  server_dev:
+    container_name: server_dev
     build:
       context: ./server
     volumes:
       - /app/node_modules
       - ./server:/app
     env_file:
-      - ./server/.env
-      
+      - ./server/.dev.env
+    command: ["npm", "run", "dev"]
+  
+  server_test:
+    container_name: server_test
+    build:
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    env_file:
+      - ./server/.test.env
+    command: ["npm", "run", "test"]
