@@ -5,6 +5,7 @@ services:
     restart: always
     env_file:
       - ./server/.env
+
   server:
     container_name: server
     build:
@@ -15,6 +16,7 @@ services:
       - ./server:/app
     env_file:
       - ./server/.env
+      
   server_tests:
     container_name: server_tests
     build:
