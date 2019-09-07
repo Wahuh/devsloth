@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node listen.js",
     "dev": "nodemon listen.js",
-    "test": "jest --runInBand --watchAll --verbose"
+    "test": "jest --runInBand --watchAll --verbose",
+    "migration-make": "knex migrate:make"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
