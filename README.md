@@ -1,3 +1,20 @@
+# Slothy.io
+
+A web app inspired by Slack, Discord and Trello which features chat, task management and social groups.
+
+## Features
+
+## Getting Started
+
+### Prerequisites
+
+* Docker installed
+* Linux
+
+### Installation
+
+
+
 ## Running tests
 
 ```
