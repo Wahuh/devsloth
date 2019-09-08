@@ -4,7 +4,7 @@
   "description": "A task managing app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development --hot --host 0.0.0.0",
     "build": "webpack --mode production",
     "test": "jest --watchAll --verbose"
   },
