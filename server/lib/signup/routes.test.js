@@ -16,6 +16,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await teardown();
+  server.close();
 });
 
 describe('POST /signup', () => {
