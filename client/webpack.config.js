@@ -93,7 +93,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(
-        process.env.API_URL || 'server_dev',
+        process.env.API_URL || 'http://localhost:3000',
       ),
     }),
   ],
