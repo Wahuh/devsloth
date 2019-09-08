@@ -1,5 +1,15 @@
 version: "3"
 services:
+  client:
+    build:
+      context: ./client
+    ports:
+      - "8080:8080"
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    command: ["npm", "start"]
+
   database_dev:
     image: postgres:latest
     restart: always
