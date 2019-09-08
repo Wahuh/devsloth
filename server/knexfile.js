@@ -1,14 +1,32 @@
-const {pgHost, pgDatabase, pgUser, pgPassword} = require('./config');
+const {pgHost, pgDatabase, pgUser, pgPassword, env} = require('./config');
 
-module.exports = {
-  client: 'pg',
-  migrations: {
-    directory: './database/migrations',
-  },
-  connection: {
-    host: pgHost,
-    database: pgDatabase,
-    user: pgUser,
-    password: pgPassword,
-  },
-};
+if (env === 'development') {
+  module.exports = {
+    client: 'pg',
+    migrations: {
+      directory: './database/migrations',
+    },
+    seeds: {
+      directory: './database/seeds',
+    },
+    connection: {
+      host: pgHost,
+      database: pgDatabase,
+      user: pgUser,
+      password: pgPassword,
+    },
+  };
+} else {
+  module.exports = {
+    client: 'pg',
+    migrations: {
+      directory: './database/migrations',
+    },
+    connection: {
+      host: pgHost,
+      database: pgDatabase,
+      user: pgUser,
+      password: pgPassword,
+    },
+  };
+}
