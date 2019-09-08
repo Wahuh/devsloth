@@ -13,10 +13,20 @@ class User extends Model {
     return {username, email, id};
   }
 
-  static addOne(user) {
-    return this.query()
-      .insert(user)
-      .returning(['email', 'username', 'id']);
+  static async addOne(user) {
+    try {
+      const insertedUser = await this.query()
+        .insert(user)
+        .returning('*');
+      return insertedUser;
+    } catch (err) {
+      if (err.code === '23505') {
+        const emailError = new Error('Email has already been registered');
+        emailError.name = 'E1';
+        return Promise.reject(emailError);
+      }
+      return Promise.reject(err);
+    }
   }
 
   generateAuthToken() {
