@@ -1,4 +1,5 @@
 const connection = require('../../database/connection');
+const User = require('../models/User');
 
 const setup = () => {
   return connection.migrate.latest();
@@ -17,4 +18,8 @@ const destroy = () => {
   return connection.destroy();
 };
 
-module.exports = {connect, setup, teardown, destroy};
+const addTestUser = async user => {
+  await User.addOne(user);
+};
+
+module.exports = {connect, setup, teardown, destroy, addTestUser};
