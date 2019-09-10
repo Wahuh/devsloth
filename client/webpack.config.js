@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
+const dotenv = require('dotenv');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -37,64 +38,69 @@ const postCSSLoader = {
   },
 };
 
-module.exports = {
-  entry: './src/index.jsx',
-  output: {
-    publicPath: '/',
-  },
-  devServer: {
-    historyApiFallback: true,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        resolve: {
-          extensions: ['.js', '.jsx'],
-        },
-        use: {
-          loader: 'babel-loader',
-        },
-      },
+module.exports = () => {
+  const env = dotenv.config().parsed;
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    const prevObj = prev;
+    prevObj[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prevObj;
+  }, {});
 
-      {
-        test: /\.scss$/,
-        exclude: /\.module\.scss$/,
-        use: [
-          // fallback to style-loader in development
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          CSSLoader,
-          postCSSLoader,
-          'sass-loader',
-        ],
-      },
+  return {
+    entry: './src/index.jsx',
+    output: {
+      publicPath: '/',
+    },
+    devServer: {
+      historyApiFallback: true,
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          resolve: {
+            extensions: ['.js', '.jsx'],
+          },
+          use: {
+            loader: 'babel-loader',
+          },
+        },
 
-      {
-        test: /\.module\.scss$/,
-        use: [
-          // fallback to style-loader in development
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          CSSModuleLoader,
-          postCSSLoader,
-          'sass-loader',
-        ],
-      },
+        {
+          test: /\.scss$/,
+          exclude: /\.module\.scss$/,
+          use: [
+            // fallback to style-loader in development
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            CSSLoader,
+            postCSSLoader,
+            'sass-loader',
+          ],
+        },
+
+        {
+          test: /\.module\.scss$/,
+          use: [
+            // fallback to style-loader in development
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            CSSModuleLoader,
+            postCSSLoader,
+            'sass-loader',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      new HtmlWebPackPlugin({
+        template: './src/index.html',
+        filename: './index.html',
+      }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+      new webpack.DefinePlugin(envKeys),
     ],
-  },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: './src/index.html',
-      filename: './index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
-    new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify(
-        process.env.API_URL || 'server_dev',
-      ),
-    }),
-  ],
+  };
 };
