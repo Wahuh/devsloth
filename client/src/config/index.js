@@ -1,3 +1,3 @@
-const apiUrl = `${process.env.API_URL}/api`;
+const apiUrl = process.env.API_URL;
 
 export default {apiUrl};
