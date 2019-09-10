@@ -3,11 +3,12 @@ import classNames from 'classnames';
 import Proptypes from 'prop-types';
 import styles from './Button.module.scss';
 
-const Button = ({children, className, onClick, disabled}) => {
+const Button = ({children, type, className, onClick, disabled}) => {
   return (
+    // eslint-disable-next-line react/button-has-type
     <button
       onClick={onClick}
-      type="button"
+      type={type}
       disabled={disabled}
       className={classNames(styles.Button, className)}
     >
@@ -20,6 +21,7 @@ Button.defaultProps = {
   children: null,
   className: null,
   disabled: false,
+  type: 'button',
 };
 
 Button.propTypes = {
@@ -27,6 +29,7 @@ Button.propTypes = {
   className: Proptypes.string,
   onClick: Proptypes.func.isRequired,
   disabled: Proptypes.bool,
+  type: Proptypes.string,
 };
 
 export default Button;
