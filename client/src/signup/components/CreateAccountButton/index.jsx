@@ -5,11 +5,7 @@ import Typography from '../../../common/components/Typography';
 import styles from './CreateAccountButton.module.scss';
 
 const CreateAccountButton = ({isFormValid}) => (
-  <Button
-    type="submit"
-    disabled={!isFormValid}
-    className={styles.CreateAccountButton}
-  >
+  <Button disabled={!isFormValid} className={styles.CreateAccountButton}>
     <Typography color="complement" as="span">
       Create Account
     </Typography>
