@@ -1,8 +1,9 @@
 const Router = require('@koa/router');
-const {postUser} = require('./controllers');
 
 const signupRouter = new Router();
 
-signupRouter.post('/', postUser);
+signupRouter.post('/', ctx => {
+  ctx.response.status = 201;
+});
 
 module.exports = signupRouter;
