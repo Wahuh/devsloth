@@ -5,13 +5,13 @@ services:
     restart: always
     env_file:
       - ./server/.dev.env
-
+  
   database_test:
     image: postgres:latest
     restart: always
     env_file:
       - ./server/.test.env
-
+  
   server_dev:
     container_name: server_dev
     build:
@@ -22,7 +22,7 @@ services:
     env_file:
       - ./server/.dev.env
     command: ["npm", "run", "dev"]
-
+  
   server_test:
     container_name: server_test
     build:
@@ -32,4 +32,4 @@ services:
       - ./server:/app
     env_file:
       - ./server/.test.env
-    command: ["tail", "-f", "/dev/null"]
+    command: ["npm", "run", "test"]
