@@ -6,12 +6,12 @@ beforeAll(() => {
   connect();
 });
 
-afterAll(async () => {
-  await destroy();
-});
-
 beforeEach(async () => {
   await setup();
+});
+
+afterAll(async () => {
+  await destroy();
 });
 
 afterEach(async () => {
@@ -85,6 +85,31 @@ describe('POST /signup', () => {
       }),
     );
   });
+  it('POST 400: responds with an error message when email is missing', async () => {
+    const response = await request(server)
+      .post('/signup')
+      .send({
+        username: 'Wahuh',
+        password: 'thebestpassword123',
+      });
 
-  // it('POST 400: responds with an error message ')
+    const {statusCode, body} = response;
+    expect(statusCode).toBe(400);
+    expect(body).toEqual(
+      expect.objectContaining({
+        message: 'hello',
+      }),
+    );
+  });
+
+  // const testCases = [
+  //   {user: {}, situation: 'email is missing'},
+  //   {user: {}, situation: 'username is missing'},
+  //   {user: {}, situation: 'password is missing'},
+  //   {user: {}, situation: ''},
+  // ];
+
+  // it('POST 400: ', async () => {
+
+  // });
 });
