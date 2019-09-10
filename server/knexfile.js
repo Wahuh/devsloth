@@ -5,6 +5,9 @@ module.exports = {
   migrations: {
     directory: './database/migrations',
   },
+  seeds: {
+    directory: './database/seeds',
+  },
   connection: {
     host: pgHost,
     database: pgDatabase,
