@@ -4,5 +4,4 @@ module.exports = {
   pgUser: process.env.POSTGRES_USER,
   pgPort: process.env.POSTGRES_PORT,
   pgHost: process.env.POSTGRES_HOST,
-  secret: process.env.JWT_SECRET,
 };
