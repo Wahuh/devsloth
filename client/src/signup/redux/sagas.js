@@ -23,5 +23,5 @@ export function* watchSignupRequest() {
 }
 
 export default function* signupSaga() {
-  yield all([watchSignupRequest()]);
+  yield all([watchSignupRequest]);
 }
