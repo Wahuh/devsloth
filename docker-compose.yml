@@ -26,8 +26,6 @@ services:
     container_name: server_dev
     build:
       context: ./server
-    ports:
-      - "3000:3000"
     volumes:
       - /app/node_modules
       - ./server:/app
