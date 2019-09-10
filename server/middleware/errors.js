@@ -3,8 +3,8 @@ const httpMap = {
 };
 
 const handleErrors = (err, ctx) => {
-  const {name, message} = err;
-  ctx.status = httpMap[name];
+  const {code, message} = err;
+  ctx.status = httpMap[code];
   ctx.body = {message};
 };
 
