@@ -2,7 +2,7 @@ FROM node:12
 
 EXPOSE 3000
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY . .
 
