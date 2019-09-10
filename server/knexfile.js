@@ -3,10 +3,10 @@ const {pgHost, pgDatabase, pgUser, pgPassword} = require('./config');
 module.exports = {
   client: 'pg',
   migrations: {
-    directory: './database/migrations',
+    directory: './db/migrations',
   },
   seeds: {
-    directory: './database/seeds',
+    directory: './db/seeds',
   },
   connection: {
     host: pgHost,
