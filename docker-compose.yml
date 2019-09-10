@@ -9,6 +9,7 @@ services:
   server:
     container_name: server
     build:
+      dockerfile: dev.Dockerfile
       context: ./server
     volumes:
       - /app/node_modules
@@ -16,3 +17,13 @@ services:
     env_file:
       - ./server/.env
       
+  server_tests:
+    container_name: server_tests
+    build:
+      dockerfile: test.Dockerfile
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    env_file:
+      - ./server/.test.env
