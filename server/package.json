@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node listen.js",
-    "dev": "nodemon listen.js",
-    "test": "set NODE_ENV=test && jest --watchAll --verbose"
+    "dev": "npm run migrate-latest && npm run seed-dev && nodemon listen.js",
+    "seed-dev": "knex seed:run",
+    "migrate-latest": "knex migrate:latest",
+    "test": "jest --runInBand --watchAll --verbose",
+    "migration-make": "knex migrate:make"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
@@ -19,6 +22,8 @@
     "koa": "^2.8.1",
     "koa-bodyparser": "^4.2.1",
     "koa-mount": "^4.0.0",
+    "koa2-cors": "^2.0.6",
+    "objection": "^1.6.9",
     "pg": "^7.12.1",
     "socket.io": "^2.2.0"
   },

@@ -1,11 +1,15 @@
 const Koa = require('koa');
 const mount = require('koa-mount');
+const cors = require('koa2-cors');
 const bodyParser = require('koa-bodyparser');
-
+const handleErrors = require('./middleware/errors');
+const connection = require('./database/connection');
 const app = new Koa();
-const signup = require('./lib/signup');
+const api = require('./lib/api');
 
+app.use(cors());
 app.use(bodyParser());
-app.use(mount('/signup', signup));
+app.use(mount('/api', api));
+app.on('error', handleErrors);
 
 module.exports = app;
