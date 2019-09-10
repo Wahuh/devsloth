@@ -18,7 +18,7 @@ services:
   server_tests:
     container_name: server_tests
     build:
-      dockerfile: test.Dockerfile
+      dockerfile: dev.Dockerfile
       context: ./server
     volumes:
       - /app/node_modules
