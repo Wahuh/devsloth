@@ -3,8 +3,6 @@ services:
   postgres:
     image: postgres:latest
     restart: always
-    env_file:
-      - ./server/.env
   server:
     container_name: server
     build:
