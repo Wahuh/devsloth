@@ -1,14 +1,30 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import './Slothy.scss';
 import SignUpForm from '../../../signup/components/SignUpForm';
+import PrivateRoute from '../PrivateRoute';
+import {getIsAuthenticated} from '../../../auth/redux/selectors';
 
-const Slothy = () => {
+const Slothy = ({isAuthenticated}) => {
   return (
     <Router>
-      <Route path="/signup" component={SignUpForm} />
+      <Route
+        path="/signup"
+        render={() => {
+          return isAuthenticated ? <Redirect to="/@me" /> : <SignUpForm />;
+        }}
+      />
+      <PrivateRoute path="/@me" render={() => <div>hello</div>} />
     </Router>
   );
 };
 
-export default Slothy;
+const mapStateToProps = state => ({
+  isAuthenticated: getIsAuthenticated(state),
+});
+
+Slothy.propTypes = PropTypes.bool.isRequired;
+
+export default connect(mapStateToProps)(Slothy);
