@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node listen.js",
     "dev": "nodemon listen.js",
-    "test": "set NODE_ENV=test && jest --runInBand --watchAll --verbose"
+    "test": "set NODE_ENV=test && jest --maxWorkers=4 --watchAll --verbose"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
