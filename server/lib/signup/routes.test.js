@@ -34,7 +34,7 @@ describe('POST /signup', () => {
     };
 
     const response = await request(server)
-      .post('/signup')
+      .post('/api/signup')
       .send(user);
 
     const {statusCode, body} = response;
@@ -52,7 +52,7 @@ describe('POST /signup', () => {
     };
 
     const response = await request(server)
-      .post('/signup')
+      .post('/api/signup')
       .send(user);
 
     const {statusCode, headers} = response;
@@ -70,7 +70,7 @@ describe('POST /signup', () => {
     };
 
     const response = await request(server)
-      .post('/signup')
+      .post('/api/signup')
       .send(user);
 
     const {statusCode, body} = response;
