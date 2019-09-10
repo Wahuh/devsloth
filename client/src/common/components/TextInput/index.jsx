@@ -40,7 +40,7 @@ const TextInput = ({onChange, label, name, type, value, error}) => {
         className={styles.Input}
       />
       <div className={styles.ErrorMessage}>
-        <Typography color="error" fontSize={14}>
+        <Typography color="primary" fontSize={14}>
           {error}
         </Typography>
       </div>

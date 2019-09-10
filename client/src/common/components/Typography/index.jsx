@@ -8,7 +8,6 @@ const colors = {
   tertiary: styles.tertiary,
   accent: styles.accent,
   complement: styles.complement,
-  error: styles.error
 };
 
 const fontWeights = {
