@@ -23,12 +23,8 @@ const setAuthorizationHeader = jwt => {
   http.setDefaultHeader('Authorization', `Bearer ${jwt}`);
 };
 
-const signup = ({email, password, username}) => {
-  return http.post(`${config.apiUrl}/signup`, {
-    email,
-    password,
-    username,
-  });
+const signup = user => {
+  return http.post(`${config.apiUrl}/signup`, user);
 };
 
 const login = ({email, password}) => {
