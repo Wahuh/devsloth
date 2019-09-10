@@ -2,9 +2,7 @@
 
 ```
 docker-compose up
-docker exec -it server_tests npm run test
-#use this regularly
-docker system prune
+docker exec -it server npm run test
 ```
 
 The container_name specified in the docker-compose file can replace the id.
