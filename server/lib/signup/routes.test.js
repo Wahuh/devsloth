@@ -1,21 +1,17 @@
 const request = require('supertest');
 const server = require('../../io-server');
-const {setup, teardown, destroy, connect, addTestUser} = require('../utils');
+const {setupAll, teardownEach, teardownAll, addTestUser} = require('../utils');
 
-beforeAll(() => {
-  connect();
-});
-
-beforeEach(async () => {
-  await setup();
+beforeAll(async () => {
+  await setupAll();
 });
 
 afterAll(async () => {
-  await destroy();
+  await teardownAll();
 });
 
 afterEach(async () => {
-  await teardown();
+  await teardownEach();
   server.close();
 });
 

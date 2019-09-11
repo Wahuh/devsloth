@@ -1,20 +1,18 @@
+const knexCleaner = require('knex-cleaner');
 const connection = require('../../database/connection');
 const User = require('../models/User');
 
-const setup = () => {
+const setupAll = () => {
+  connection.initialize();
   return connection.migrate.latest();
   // await connection.seed.run();
 };
 
-const teardown = () => {
-  return connection.migrate.rollback();
+const teardownEach = () => {
+  return knexCleaner.clean(connection);
 };
 
-const connect = () => {
-  connection.initialize();
-};
-
-const destroy = () => {
+const teardownAll = () => {
   return connection.destroy();
 };
 
@@ -22,4 +20,4 @@ const addTestUser = async user => {
   await User.addOne(user);
 };
 
-module.exports = {connect, setup, teardown, destroy, addTestUser};
+module.exports = {setupAll, teardownEach, teardownAll, addTestUser};
