@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './Home.module.scss';
 import Typography from '../../../common/components/Typography';
-import Button from '../../../common/components/Button';
 import InternalLink from '../../../common/components/InternalLink';
+import Logo from '../Logo';
 
 const Home = () => (
   <div className={styles.Home}>
     <header className={styles.Header}>
+      <Logo />
       <InternalLink className={styles.LoginLink} to="/login">
         Login
       </InternalLink>
