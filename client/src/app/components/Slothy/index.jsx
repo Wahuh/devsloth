@@ -6,21 +6,26 @@ import './Slothy.scss';
 import SignUpForm from '../../../signup/components/SignUpForm';
 import PrivateRoute from '../PrivateRoute';
 import {getIsAuthenticated} from '../../../auth/redux/selectors';
-import Me from '../../../me/components/Me';
 import Home from '../Home';
+import Dashboard from '../Dashboard';
 
 const Slothy = ({isAuthenticated}) => {
   return (
     <Router>
       <Route exact path="/" component={Home} />
-
+      <Route
+        path="/login"
+        render={() => {
+          return isAuthenticated ? <Redirect to="/@me" /> : <div>hello</div>;
+        }}
+      />
       <Route
         path="/signup"
         render={() => {
           return isAuthenticated ? <Redirect to="/@me" /> : <SignUpForm />;
         }}
       />
-      <PrivateRoute path="/@me" component={Me} />
+      <PrivateRoute path={['/@me']} component={Dashboard} />
     </Router>
   );
 };
