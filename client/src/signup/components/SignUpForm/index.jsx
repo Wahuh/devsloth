@@ -89,6 +89,7 @@ const SignUpForm = ({onSignup}) => {
         label="Email Address"
       />
       <TextInput
+        autoComplete={false}
         onChange={handleChange}
         value={user.username}
         error={error.username}
