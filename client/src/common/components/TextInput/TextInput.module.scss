@@ -26,7 +26,8 @@
     transition: 300ms cubic-bezier(0.25, 0.75, 0.5, 1.25) border-color;
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus {
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
       -webkit-box-shadow: 0 0 0 30px var(--color-bg) inset;
       -webkit-text-fill-color: var(--color-primary);
       //override Chrome's font size and font family somehow?
