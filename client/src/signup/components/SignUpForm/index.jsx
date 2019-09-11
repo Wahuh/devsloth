@@ -76,7 +76,14 @@ const SignUpForm = ({onSignup}) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.SignUpForm}>
-      <Typography as="h1" mb={48} color="primary" fontSize={36}>
+      <Typography
+        as="h1"
+        mb={48}
+        fontWeight={700}
+        letterSpacing="0.5px"
+        color="primary"
+        fontSize={36}
+      >
         Slothy.io
       </Typography>
 
