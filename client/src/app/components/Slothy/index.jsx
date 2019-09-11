@@ -7,10 +7,13 @@ import SignUpForm from '../../../signup/components/SignUpForm';
 import PrivateRoute from '../PrivateRoute';
 import {getIsAuthenticated} from '../../../auth/redux/selectors';
 import Me from '../../../me/components/Me';
+import Home from '../Home';
 
 const Slothy = ({isAuthenticated}) => {
   return (
     <Router>
+      <Route exact path="/" component={Home} />
+
       <Route
         path="/signup"
         render={() => {
