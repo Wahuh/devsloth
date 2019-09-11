@@ -27,7 +27,7 @@
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {
-      -webkit-box-shadow: 0 0 0 1000px var(--color-bg) inset;
+      -webkit-box-shadow: 0 0 0 30px var(--color-bg) inset;
       -webkit-text-fill-color: var(--color-primary);
       //override Chrome's font size and font family somehow?
     }
