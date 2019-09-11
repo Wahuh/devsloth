@@ -8,7 +8,7 @@ const colors = {
   tertiary: styles.tertiary,
   accent: styles.accent,
   complement: styles.complement,
-  error: styles.error
+  error: styles.error,
 };
 
 const fontWeights = {
@@ -49,11 +49,13 @@ const Typography = ({
   textAlign,
   mb,
   fontWeight,
+  letterSpacing,
 }) => {
   return createElement(
     as || 'p',
     {
       style: {
+        letterSpacing: letterSpacing || 'normal',
         fontSize: fontScale[fontSize] || fontScale[16],
         textAlign: textAlign || 'center',
         marginBottom: spacingScale[mb],
