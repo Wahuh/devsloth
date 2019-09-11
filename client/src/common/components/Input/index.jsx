@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import styles from './Input.module.scss';
 
 const Input = ({
+  autoComplete,
   className,
   min,
   max,
@@ -18,6 +19,7 @@ const Input = ({
 }) => {
   return (
     <input
+      autoComplete={autoComplete ? 'on' : 'off'}
       className={classNames(styles.Input, className)}
       min={min}
       max={max}
@@ -35,6 +37,7 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  autoComplete: true,
   className: '',
   min: null,
   max: null,
@@ -47,6 +50,7 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
+  autoComplete: PropTypes.bool,
   className: PropTypes.string,
   min: PropTypes.number,
   max: PropTypes.number,
