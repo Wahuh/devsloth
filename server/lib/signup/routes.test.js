@@ -2,16 +2,22 @@ const request = require('supertest');
 const server = require('../../io-server');
 const {setupAll, teardownEach, teardownAll, addTestUser} = require('../utils');
 
-beforeAll(async () => {
+beforeAll(async done => {
   await setupAll();
+  done();
 });
 
-afterAll(async () => {
+afterAll(async done => {
   await teardownAll();
+  done();
 });
 
-afterEach(async () => {
+beforeEach(async done => {
   await teardownEach();
+  done();
+});
+
+afterEach(() => {
   server.close();
 });
 
@@ -81,6 +87,7 @@ describe('POST /signup', () => {
       }),
     );
   });
+
   it('POST 400: responds with an error message when email is missing', async () => {
     const response = await request(server)
       .post('/signup')
