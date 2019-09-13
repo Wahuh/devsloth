@@ -21,6 +21,13 @@ afterEach(() => {
   server.close();
 });
 
+const signupRequest = async user => {
+  const response = await request(server)
+    .post('/api/signup')
+    .send(user);
+  return response;
+};
+
 describe('POST /signup', () => {
   it('200: responds with an error message when the email has already been registered', async () => {
     await addTestUser({
@@ -35,9 +42,7 @@ describe('POST /signup', () => {
       password: 'thebestpassword123',
     };
 
-    const response = await request(server)
-      .post('/api/signup')
-      .send(user);
+    const response = await signupRequest(user);
 
     const {statusCode, body} = response;
     expect(statusCode).toBe(200);
@@ -53,9 +58,7 @@ describe('POST /signup', () => {
       password: 'thebestpassword123',
     };
 
-    const response = await request(server)
-      .post('/api/signup')
-      .send(user);
+    const response = await signupRequest(user);
 
     const {statusCode, headers} = response;
     expect(statusCode).toBe(201);
@@ -71,9 +74,7 @@ describe('POST /signup', () => {
       password: 'thebestpassword123',
     };
 
-    const response = await request(server)
-      .post('/api/signup')
-      .send(user);
+    const response = await signupRequest(user);
 
     const {statusCode, body} = response;
     expect(statusCode).toBe(201);
@@ -88,21 +89,22 @@ describe('POST /signup', () => {
     );
   });
 
-  it('POST 400: responds with an error message when email is missing', async () => {
-    const response = await request(server)
-      .post('/signup')
-      .send({
-        username: 'Wahuh',
-        password: 'thebestpassword123',
-      });
+  it('400: responds with an error message when email is missing', async () => {
+    const user = {
+      username: 'Wahuh',
+      password: 'thebestpassword123',
+    };
+
+    const response = await signupRequest(user);
 
     const {statusCode, body} = response;
     expect(statusCode).toBe(400);
-    expect(body).toEqual(
-      expect.objectContaining({
-        message: 'hello',
-      }),
-    );
+
+    const expected = {
+      errors: [{message: 'email field is missing'}],
+    };
+
+    expect(body).toEqual(expected);
   });
 
   // const testCases = [

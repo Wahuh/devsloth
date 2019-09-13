@@ -1,0 +1,23 @@
+{
+  "title": "POST /signup",
+  "description": "Create a new user account",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "password": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    }
+  },
+  "required": ["email", "password", "username"],
+  "errorMessage": {
+    "required": {
+      "email": "email field is missing"
+    }
+  }
+}
