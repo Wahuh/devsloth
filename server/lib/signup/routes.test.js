@@ -30,25 +30,24 @@ const signupRequest = async user => {
 
 describe('POST /signup', () => {
   it('200: responds with an error message when the email has already been registered', async () => {
-    await addTestUser({
+    const testUser = {
       email: 'test@gmail.com',
       username: 'Tester',
       password: 'testing123',
-    });
-
+    };
+    await addTestUser(testUser);
     const user = {
       email: 'test@gmail.com',
       username: 'Wahuh',
       password: 'thebestpassword123',
     };
+    const expected = expect.objectContaining({
+      message: 'Email has already been registered',
+    });
 
-    const response = await signupRequest(user);
-
-    const {statusCode, body} = response;
-    expect(statusCode).toBe(200);
-    expect(body).toEqual(
-      expect.objectContaining({message: 'Email has already been registered'}),
-    );
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(200);
+    expect(body).toEqual(expected);
   });
 
   it('201: responds with an Authorization header containing Bearer and jwt', async () => {
@@ -58,12 +57,10 @@ describe('POST /signup', () => {
       password: 'thebestpassword123',
     };
 
-    const response = await signupRequest(user);
-
-    const {statusCode, headers} = response;
-    expect(statusCode).toBe(201);
-    expect(headers).toHaveProperty('authorization');
+    const {status, headers} = await signupRequest(user);
     const {authorization} = headers;
+    expect(status).toBe(201);
+    expect(headers).toHaveProperty('authorization');
     expect(/^Bearer\s.+/.test(authorization)).toBe(true);
   });
 
@@ -73,20 +70,17 @@ describe('POST /signup', () => {
       username: 'Wahuh',
       password: 'thebestpassword123',
     };
+    const expected = expect.objectContaining({
+      user: {
+        id: expect.any(Number),
+        email: 'tmd@gmail.com',
+        username: 'Wahuh',
+      },
+    });
 
-    const response = await signupRequest(user);
-
-    const {statusCode, body} = response;
-    expect(statusCode).toBe(201);
-    expect(body).toEqual(
-      expect.objectContaining({
-        user: {
-          id: expect.any(Number),
-          email: 'tmd@gmail.com',
-          username: 'Wahuh',
-        },
-      }),
-    );
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(201);
+    expect(body).toEqual(expected);
   });
 
   it('400: responds with an error message when email is missing', async () => {
@@ -94,18 +88,28 @@ describe('POST /signup', () => {
       username: 'Wahuh',
       password: 'thebestpassword123',
     };
-
-    const response = await signupRequest(user);
-
-    const {statusCode, body} = response;
-    expect(statusCode).toBe(400);
-
     const expected = {
       errors: [{message: 'email field is missing'}],
     };
 
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
     expect(body).toEqual(expected);
   });
+
+  // it('400: responds with an error message when username is missing', async () => {
+  //   const user = {
+  //     email: 'tmd@gmail.com',
+  //     password: 'thebestpassword123',
+  //   };
+  //   const expected = {
+  //     errors: [{message: 'username field is missing'}],
+  //   };
+
+  //   const {status, body} = await signupRequest(user);
+  //   expect(status).toBe(400);
+  //   expect(body).toEqual(expected);
+  // });
 
   // const testCases = [
   //   {user: {}, situation: 'email is missing'},
