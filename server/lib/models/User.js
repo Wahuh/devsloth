@@ -13,6 +13,15 @@ class User extends Model {
     return {username, email, id};
   }
 
+  static async findById(id) {
+    try {
+      const user = await this.query().findById(id);
+      return user;
+    } catch (err) {
+      return Promise.reject(new Error('User not found'));
+    }
+  }
+
   static async addOne(user) {
     try {
       const insertedUser = await this.query()
@@ -22,7 +31,7 @@ class User extends Model {
     } catch (err) {
       if (err.code === '23505') {
         const emailError = new Error('Email has already been registered');
-        emailError.name = 'E1';
+        emailError.name = 'E100';
         return Promise.reject(emailError);
       }
       return Promise.reject(err);
