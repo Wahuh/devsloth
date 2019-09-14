@@ -24,7 +24,9 @@ const teardownAll = async () => {
 };
 
 const addTestUser = async user => {
-  await User.addOne(user);
+  const insertedUser = await User.addOne(user);
+  const token = await insertedUser.generateAuthToken();
+  return token;
 };
 
 module.exports = {setupAll, teardownEach, teardownAll, addTestUser};
