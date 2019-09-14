@@ -30,12 +30,7 @@ const signupRequest = async user => {
 
 describe('POST /api/signup', () => {
   it('200: responds with an error array when the email has already been registered', async () => {
-    const testUser = {
-      email: 'test@gmail.com',
-      username: 'Tester',
-      password: 'testing123',
-    };
-    await addTestUser(testUser);
+    await addTestUser();
     const user = {
       email: 'test@gmail.com',
       username: 'Wahuh',

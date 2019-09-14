@@ -23,14 +23,7 @@ afterEach(() => {
 
 describe('GET /api/me', () => {
   const meRequest = async () => {
-    const testUser = {
-      email: 'test@gmail.com',
-      username: 'Tester',
-      password: 'testing123',
-    };
-
-    const token = await addTestUser(testUser);
-
+    const {token} = await addTestUser();
     const response = await request(server)
       .get('/api/me')
       .set('Authorization', `Bearer ${token}`);
@@ -58,6 +51,26 @@ describe('GET /api/me', () => {
 
     const {status, body} = await request(server).get('/api/me');
     expect(status).toBe(401);
+    expect(body).toEqual(expected);
+  });
+});
+
+describe('GET /api/me/boards', () => {
+  const boardsRequest = async () => {
+    const {token} = await addTestUser();
+    const response = await request(server)
+      .get('/api/me/boards')
+      .set('Authorization', `Bearer ${token}`);
+    return response;
+  };
+
+  it('200: responds with a list of board objects', async () => {
+    const expected = {
+      boards: [{title: 'test_board_1'}],
+    };
+
+    const {status, body} = await boardsRequest();
+    expect(status).toBe(200);
     expect(body).toEqual(expected);
   });
 });
