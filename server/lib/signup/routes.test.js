@@ -28,8 +28,8 @@ const signupRequest = async user => {
   return response;
 };
 
-describe('POST /signup', () => {
-  it('200: responds with an error message when the email has already been registered', async () => {
+describe('POST /api/signup', () => {
+  it('200: responds with an error array when the email has already been registered', async () => {
     const testUser = {
       email: 'test@gmail.com',
       username: 'Tester',
@@ -42,7 +42,7 @@ describe('POST /signup', () => {
       password: 'thebestpassword123',
     };
     const expected = expect.objectContaining({
-      message: 'Email has already been registered',
+      errors: [{status: 200, message: 'Email has already been registered'}],
     });
 
     const {status, body} = await signupRequest(user);
@@ -83,13 +83,13 @@ describe('POST /signup', () => {
     expect(body).toEqual(expected);
   });
 
-  it('400: responds with an error message when email is missing', async () => {
+  it('400: responds with an error array when email is missing', async () => {
     const user = {
       username: 'Wahuh',
       password: 'thebestpassword123',
     };
     const expected = {
-      errors: [{message: 'email field is missing'}],
+      errors: [{status: 400, message: 'email field is missing'}],
     };
 
     const {status, body} = await signupRequest(user);
@@ -97,28 +97,126 @@ describe('POST /signup', () => {
     expect(body).toEqual(expected);
   });
 
-  // it('400: responds with an error message when username is missing', async () => {
-  //   const user = {
-  //     email: 'tmd@gmail.com',
-  //     password: 'thebestpassword123',
-  //   };
-  //   const expected = {
-  //     errors: [{message: 'username field is missing'}],
-  //   };
+  it('400: responds with an error array when username is missing', async () => {
+    const user = {
+      email: 'tmd@gmail.com',
+      password: 'thebestpassword123',
+    };
+    const expected = {
+      errors: [{status: 400, message: 'username field is missing'}],
+    };
 
-  //   const {status, body} = await signupRequest(user);
-  //   expect(status).toBe(400);
-  //   expect(body).toEqual(expected);
-  // });
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
 
-  // const testCases = [
-  //   {user: {}, situation: 'email is missing'},
-  //   {user: {}, situation: 'username is missing'},
-  //   {user: {}, situation: 'password is missing'},
-  //   {user: {}, situation: ''},
-  // ];
+  it('400: responds with an error array when username is longer than 32 characters', async () => {
+    const user = {
+      email: 'tmd@gmail.com',
+      username: 'Wahuhaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      password: 'thebestpassword123',
+    };
+    const expected = {
+      errors: [
+        {
+          status: 400,
+          message: 'username should not be longer than 32 characters',
+        },
+      ],
+    };
 
-  // it('POST 400: ', async () => {
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
 
-  // });
+  it('400: responds with an error array when username is shorter than 2 characters', async () => {
+    const user = {
+      email: 'tmd@gmail.com',
+      username: 'W',
+      password: 'thebestpassword123',
+    };
+    const expected = {
+      errors: [
+        {
+          status: 400,
+          message: 'username should not be shorter than 2 characters',
+        },
+      ],
+    };
+
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
+
+  it('400: responds with an error array when password is missing', async () => {
+    const user = {
+      email: 'tmd@gmail.com',
+      username: 'Wahuh',
+    };
+    const expected = {
+      errors: [{status: 400, message: 'password field is missing'}],
+    };
+
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
+
+  it('400: responds with an error array when the password is shorter than 5 characters', async () => {
+    const user = {
+      email: 'tmd@gmail.com',
+      username: 'Wahuh',
+      password: 'abc',
+    };
+    const expected = {
+      errors: [
+        {
+          message: 'password field should not be shorter than 5 characters',
+          status: 400,
+        },
+      ],
+    };
+
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
+
+  it('400: responds with an error array when the password is longer than 32 characters', async () => {
+    const user = {
+      email: 'tmd@gmail.com',
+      username: 'Wahuh',
+      password: 'abcdefghijklmnopqrstuvwxyzabcdefg',
+    };
+    const expected = {
+      errors: [
+        {
+          status: 400,
+          message: 'password field should not be longer than 32 characters',
+        },
+      ],
+    };
+
+    const {status, body} = await signupRequest(user);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
+});
+
+describe('INVALID METHOD /signup', () => {
+  it('405: responds with an error array when an invalid method is used', () => {
+    const methods = ['get', 'put', 'patch', 'delete'];
+    const promises = methods.map(method => {
+      return request(server)
+        [method]('/api/signup')
+        .then(response => {
+          const {status} = response;
+          expect(status).toBe(405);
+        });
+    });
+    return Promise.all(promises);
+  });
 });
