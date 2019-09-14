@@ -1,4 +1,5 @@
 const Ajv = require('ajv');
+
 const ajv = new Ajv({allErrors: true, jsonPointers: true});
 require('ajv-errors')(ajv);
 
@@ -8,7 +9,9 @@ const createValidator = schema => {
     const {body} = ctx.request;
     if (!validate(body)) {
       ctx.status = 400;
-      ctx.body = {errors: validate.errors};
+      ctx.body = {
+        errors: validate.errors.map(({message}) => ({message, status: 400})),
+      };
     } else {
       await next();
     }
