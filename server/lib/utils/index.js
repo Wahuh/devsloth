@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const knexCleaner = require('knex-cleaner');
 const knexMigrate = require('knex-migrate');
 
@@ -24,9 +25,33 @@ const teardownAll = async () => {
 };
 
 const addTestUser = async user => {
-  const insertedUser = await User.addOne(user);
+  const testUser = {
+    email: 'test@gmail.com',
+    username: 'Tester',
+    password: 'testing123',
+  };
+  const insertedUser = await User.addOne(user || testUser);
   const token = await insertedUser.generateAuthToken();
-  return token;
+  return {token, user: insertedUser};
 };
 
-module.exports = {setupAll, teardownEach, teardownAll, addTestUser};
+// const addTestUserWithBoards = async () => {
+//   const testUser = {
+//     username: 'Tester',
+//     email: 'test@gmail.com',
+//     password: 'testing123',
+//   };
+//   const user = await User.addOne(testUser);
+//   const boards = [
+//     {title: 'test_board_1', owner_id: user.id},
+//     {title: 'test_board_2', owner_id: user.id},
+//   ];
+//   await Board.query().insert(boards);
+// };
+
+module.exports = {
+  setupAll,
+  teardownEach,
+  teardownAll,
+  addTestUser,
+};
