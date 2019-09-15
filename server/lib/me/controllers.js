@@ -6,4 +6,11 @@ const getUser = async ctx => {
   ctx.body = {user};
 };
 
-module.exports = {getUser};
+const getUserBoards = async ctx => {
+  const {id} = ctx.request.user;
+  const user = await User.findById(id);
+  const boards = await user.findBoards();
+  ctx.body = {boards};
+};
+
+module.exports = {getUser, getUserBoards};

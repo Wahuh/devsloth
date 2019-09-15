@@ -1,8 +1,9 @@
 const Router = require('@koa/router');
-const {getUser} = require('./controllers');
+const {getUser, getUserBoards} = require('./controllers');
 
 const meRouter = new Router();
 
 meRouter.get('/', getUser);
+meRouter.get('/boards', getUserBoards);
 
 module.exports = meRouter;
