@@ -1,3 +1,4 @@
+const Board = require('../models/Board');
 const User = require('../models/User');
 
 const getUser = async ctx => {
@@ -13,4 +14,12 @@ const getUserBoards = async ctx => {
   ctx.body = {boards};
 };
 
-module.exports = {getUser, getUserBoards};
+const postUserBoard = async ctx => {
+  const {id} = ctx.request.user;
+  const {title} = ctx.request.body;
+  const board = await Board.addOne({title, owner_id: id, owner_type: 'user'});
+  ctx.status = 201;
+  ctx.body = {board};
+};
+
+module.exports = {getUser, getUserBoards, postUserBoard};
