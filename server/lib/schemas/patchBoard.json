@@ -1,0 +1,15 @@
+{
+  "title": "PATCH /api/me/boards/:board_id",
+  "description": "Update a board",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "maxLength": 32,
+      "errorMessage": {
+        "type": "title field must be a string",
+        "maxLength": "title field should not be longer than 32 characters"
+      }
+    }
+  }
+}
