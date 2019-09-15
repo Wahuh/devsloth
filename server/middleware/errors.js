@@ -1,5 +1,6 @@
 const httpMap = {
   E100: 200,
+  E200: 404,
 };
 
 const handleErrors = (err, ctx) => {
