@@ -22,4 +22,16 @@ const postUserBoard = async ctx => {
   ctx.body = {board};
 };
 
-module.exports = {getUser, getUserBoards, postUserBoard};
+const patchUserBoard = async ctx => {
+  try {
+    const {body} = ctx.request;
+    const {board_id} = ctx.params;
+    const board = await Board.findById(board_id);
+    const updatedBoard = await board.update(body);
+    ctx.body = {board: updatedBoard};
+  } catch (err) {
+    ctx.app.emit('error', err, ctx);
+  }
+};
+
+module.exports = {getUser, getUserBoards, postUserBoard, patchUserBoard};

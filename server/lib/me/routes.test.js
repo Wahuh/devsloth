@@ -180,4 +180,80 @@ describe('POST /api/me/boards', () => {
     expect(status).toBe(400);
     expect(body).toEqual(expected);
   });
+
+  it('401: responds with an errors array if no auth token is provided', async () => {
+    const expected = {
+      errors: [{message: 'Access denied. Invalid token', status: 401}],
+    };
+
+    const {status, body} = await request(server).post('/api/me/boards');
+    expect(status).toBe(401);
+    expect(body).toEqual(expected);
+  });
+});
+
+describe('PATCH /api/me/boards/:board_id', () => {
+  const updateBoardRequest = async (board, token) => {
+    const response = await request(server)
+      .patch(`/api/me/boards/${1}`)
+      .send(board)
+      .set('Authorization', `Bearer ${token}`);
+    return response;
+  };
+
+  it('200: responds with an updated board object', async () => {
+    const {token, boards, user} = await addTestUserWithBoards();
+    const testBoard = {
+      title: 'Slothy updated',
+    };
+    const expected = {
+      board: {
+        id: boards[0].id,
+        title: 'Slothy updated',
+        owner_type: 'user',
+        owner_id: user.id,
+      },
+    };
+
+    const {status, body} = await updateBoardRequest(testBoard, token);
+    expect(status).toBe(200);
+    expect(body).toEqual(expected);
+  });
+
+  it('400: responds with an errors array if title field is longer than 32 characters', async () => {
+    const {token} = await addTestUserWithBoards();
+    const testBoard = {
+      title:
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    };
+    const expected = {
+      errors: [
+        {
+          status: 400,
+          message: 'title field should not be longer than 32 characters',
+        },
+      ],
+    };
+
+    const {status, body} = await updateBoardRequest(testBoard, token);
+    expect(status).toBe(400);
+    expect(body).toEqual(expected);
+  });
+
+  it('404: responds with an errors array if the board_id does not exist', async () => {
+    const {token} = await addTestUserWithBoards();
+    const testBoard = {
+      title: 'Slothy updated',
+    };
+    const expected = {
+      errors: [{status: 404, message: 'board not found'}],
+    };
+
+    const {status, body} = await request(server)
+      .patch(`/api/me/boards/9000`)
+      .send(testBoard)
+      .set('Authorization', `Bearer ${token}`);
+    expect(status).toBe(404);
+    expect(body).toEqual(expected);
+  });
 });
