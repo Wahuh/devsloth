@@ -7,9 +7,8 @@ const authenticateSocket = (socket, next) => {
   if (socket.handshake.query && socket.handshake.query.token) {
     try {
       const payload = jwt.verify(socket.handshake.query.token, secret);
-      const {id} = payload;
       // eslint-disable-next-line
-      socket.id = id;
+      socket.user = payload;
       next();
     } catch (err) {
       next(new Error('Access denied. Invalid token'));
@@ -22,8 +21,12 @@ const authenticateSocket = (socket, next) => {
 module.exports = app => {
   const server = http.createServer(app.callback());
   const io = socketIo(server);
+  app.on('push', (event, payload, room) => {
+    io.to(room).emit(event, payload);
+  });
   io.use(authenticateSocket);
   io.on('connection', socket => {
+    socket.join(socket.user.id);
     socket.on('join', () => {});
   });
   return server;
