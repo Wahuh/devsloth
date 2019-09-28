@@ -44,4 +44,4 @@ services:
       - ./server:/app
     env_file:
       - ./server/.test.env
-    command: ["tail", "-f", "/dev/null"]
+    command: ["npm", "run", "test-stall"]
