@@ -5,7 +5,7 @@ exports.up = function(knex) {
       .primary()
       .notNullable();
     table.string('title', 100).notNullable();
-    table.string('description', 1000);
+    table.string('description', 1000).notNullable();
     table
       .integer('list_id')
       .references('lists.id')
