@@ -15,8 +15,12 @@ const Slothy = ({isAuthenticated}) => {
       <Route exact path="/" component={Home} />
       <Route
         path="/login"
-        render={() => {
-          return isAuthenticated ? <Redirect to="/@me" /> : <div>hello</div>;
+        render={({location}) => {
+          return isAuthenticated ? (
+            <Redirect to={location.state.from} />
+          ) : (
+            <div>hello</div>
+          );
         }}
       />
       <Route
@@ -25,7 +29,7 @@ const Slothy = ({isAuthenticated}) => {
           return isAuthenticated ? <Redirect to="/@me" /> : <SignUpForm />;
         }}
       />
-      <PrivateRoute path={['/@me']} component={Dashboard} />
+      <PrivateRoute path={['/@me*']} component={Dashboard} />
     </Router>
   );
 };
