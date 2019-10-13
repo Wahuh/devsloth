@@ -43,7 +43,7 @@ describe('watchRequest', () => {
 
     return expectSaga(watchRequest)
       .provide([[matchers.call.fn(api.getBoard), throwError(err)]])
-      .put({type: 'GET_BOARD_FAILURE', payload: err})
+      .put({type: 'GET_BOARD_FAILURE', payload: err, error: true})
       .dispatch(action)
       .run();
   });
@@ -88,7 +88,7 @@ describe('watchEveryRequest', () => {
 
     return expectSaga(watchEveryRequest)
       .provide([[matchers.call.fn(api.postTask), throwError(err)]])
-      .put({type: 'CREATE_TASK_FAILURE', payload: err})
+      .put({type: 'CREATE_TASK_FAILURE', payload: err, error: true})
       .dispatch(action)
       .run();
   });

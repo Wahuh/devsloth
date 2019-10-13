@@ -9,7 +9,11 @@ function* handleRequest({meta, payload, type}) {
     const data = yield call(api[apiFunction], params);
     yield put({type: type.replace(regex, 'SUCCESS'), payload: data});
   } catch (err) {
-    yield put({type: type.replace(regex, 'FAILURE'), payload: err});
+    yield put({
+      type: type.replace(regex, 'FAILURE'),
+      payload: err,
+      error: true,
+    });
   }
 }
 
