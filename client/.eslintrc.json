@@ -18,7 +18,8 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
-    "prettier/prettier": "error"
-  },
-  "parser": "babel-eslint"
+    "prettier/prettier": "error",
+    "camelcase": "warn",
+    "parser": "babel-eslint"
+  }
 }
