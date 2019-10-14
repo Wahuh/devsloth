@@ -9,6 +9,14 @@
     padding: 0.75rem;
     text-decoration: none;
     color: var(--color-secondary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    svg {
+      fill: var(--color-icon);
+      height: 1.5rem;
+      width: 1.5rem;
+    }
   }
   .Active {
     background-color: var(--color-fg);
