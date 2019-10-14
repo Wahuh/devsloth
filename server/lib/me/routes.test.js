@@ -59,6 +59,19 @@ describe('GET /api/me', () => {
     expect(status).toBe(401);
     expect(body).toEqual(expected);
   });
+
+  it('404: responds with an errors array if the user does not exist', async () => {
+    const expected = {
+      errors: [{message: 'User not found', status: 404}],
+    };
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNTcwOTYzNjIwfQ.ss3s57XfEgKrXyXGlEws2as-SaWBF9hygHzwqAISS-A';
+    const {status, body} = await request(server)
+      .get('/api/me')
+      .set('Authorization', `Bearer ${token}`);
+    expect(status).toBe(404);
+    expect(body).toEqual(expected);
+  });
 });
 
 describe('GET /api/me/boards', () => {

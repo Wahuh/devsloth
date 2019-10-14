@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {string, object, reach} from 'yup';
 import TextInput from '../../../common/components/TextInput';
 import SubmitButton from '../../../common/components/SubmitButton';
 import styles from './CreateBoardForm.module.scss';
 import {createUserBoardRequest} from '../../redux/actions';
-import {connect} from 'react-redux';
+import {getIsFetching} from '../../../ui/redux/selectors';
+import {usePrevious} from '../../../common/hooks';
+import {hideModal} from '../../../ui/redux/actions';
 
 const schema = object().shape({
   title: string().required('Email address is required'),
 });
 
-const CreateBoardForm = ({onCreateBoard}) => {
+const CreateBoardForm = ({onCreateBoard, onHideModal, isFetching}) => {
   const [state, setState] = useState({
     board: {
       title: '',
@@ -20,6 +24,14 @@ const CreateBoardForm = ({onCreateBoard}) => {
     },
     isFormValid: false,
   });
+
+  const prevIsFetching = usePrevious(isFetching);
+
+  useEffect(() => {
+    if (!isFetching && prevIsFetching) {
+      onHideModal();
+    }
+  }, [isFetching]);
 
   const {board, error, isFormValid} = state;
 
@@ -72,14 +84,33 @@ const CreateBoardForm = ({onCreateBoard}) => {
         error={error.title}
         placeholder="Add board title"
       />
-      <SubmitButton text="Create Board" isFormValid={isFormValid} />
+      <SubmitButton
+        isFetching={isFetching}
+        text="Create Board"
+        isFormValid={isFormValid}
+      />
     </form>
   );
 };
 
+CreateBoardForm.defaultProps = {
+  isFetching: false,
+};
+
+CreateBoardForm.propTypes = {
+  onCreateBoard: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
+  onHideModal: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  isFetching: getIsFetching(state, 'postUserBoard'),
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     onCreateBoard: createUserBoardRequest,
+    onHideModal: () => hideModal('board'),
   },
 )(CreateBoardForm);

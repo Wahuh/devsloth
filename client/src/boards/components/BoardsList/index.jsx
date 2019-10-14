@@ -1,19 +1,15 @@
 import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import BoardItem from '../BoardItem';
 import styles from './BoardsList.module.scss';
 import AddBoard from '../AddBoard';
 import BoardModal from '../BoardModal';
-import {connect} from 'react-redux';
 import {getBoards} from '../../redux/selectors';
 import {getUserId} from '../../../me/redux/selectors';
 import {getUserBoardsRequest} from '../../redux/actions';
 
-// const boards = [
-//   {title: 'hello', owner_id: 1, id: 2, owner_type: 'user'},
-//   {title: 'hello', owner_id: 1, id: 2, owner_type: 'user'},
-// ];
-
-const BoardsList = ({match, boards, onGetBoards}) => {
+const BoardsList = ({boards, onGetBoards}) => {
   useEffect(() => {
     onGetBoards();
   }, []);
@@ -27,6 +23,13 @@ const BoardsList = ({match, boards, onGetBoards}) => {
       <BoardModal />
     </ul>
   );
+};
+
+BoardsList.propTypes = {
+  boards: PropTypes.arrayOf(
+    PropTypes.objectOf({id: PropTypes.number, title: PropTypes.string}),
+  ).isRequired,
+  onGetBoards: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
