@@ -1,4 +1,4 @@
-import http from './http.api';
+import http, {setDefaultHeader} from './http.api';
 import config from '../config';
 
 const getJwt = () => localStorage.getItem('jwt');
@@ -20,14 +20,14 @@ const saveJwt = jwt => {
 };
 
 const setAuthorizationHeader = jwt => {
-  http.setDefaultHeader('Authorization', `Bearer ${jwt}`);
+  setDefaultHeader('Authorization', `Bearer ${jwt}`);
 };
 
-const signup = user => {
+export const signup = async user => {
   return http.post(`${config.apiUrl}/signup`, user);
 };
 
-const login = ({email, password}) => {
+export const login = ({email, password}) => {
   return http.post(`${config.apiUrl}/login`, {
     email,
     password,
@@ -35,19 +35,11 @@ const login = ({email, password}) => {
 };
 
 export default {
-  signup,
-  login,
   getJwt,
   saveJwt,
   extractJwt,
   setAuthorizationHeader,
 };
-// export const login = ({email, password}) => {
-//   return http.post(LOGIN_ENDPOINT, {
-//     email,
-//     password,
-//   });
-// };
 
 // export const logout = () => {
 //   localStorage.removeItem('jwt');

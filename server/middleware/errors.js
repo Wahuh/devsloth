@@ -1,11 +1,17 @@
 const httpMap = {
-  E1: 200,
+  E100: 200,
+  E200: 404,
 };
 
 const handleErrors = (err, ctx) => {
   const {name, message} = err;
-  ctx.status = httpMap[name];
-  ctx.body = {message};
+  const status = httpMap[name] || 500;
+  ctx.status = status;
+  ctx.body = {
+    errors: [
+      {status, message: status === 500 ? 'Something blew up :(' : message},
+    ],
+  };
 };
 
 module.exports = handleErrors;

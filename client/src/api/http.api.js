@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const setDefaultHeader = (header, value) => {
+const apiUrl = process.env.API_URL;
+const instance = axios.create({
+  baseURL: `${apiUrl}/api`,
+});
+
+export const setDefaultHeader = (header, value) => {
   axios.defaults.headers.common[header] = value;
 };
 
@@ -27,10 +32,4 @@ const setDefaultHeader = (header, value) => {
 //   return Promise.reject(error);
 // });
 
-export default {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete,
-  setDefaultHeader,
-};
+export default instance;
