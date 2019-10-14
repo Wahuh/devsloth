@@ -2,9 +2,13 @@ const Board = require('../models/Board');
 const User = require('../models/User');
 
 const getUser = async ctx => {
-  const {id} = ctx.request.user;
-  const user = await User.findById(id);
-  ctx.body = {user};
+  try {
+    const {id} = ctx.request.user;
+    const user = await User.findById(id);
+    ctx.body = {user};
+  } catch (err) {
+    ctx.app.emit('error', err, ctx);
+  }
 };
 
 const getUserBoards = async ctx => {

@@ -51,9 +51,14 @@ class User extends Model {
   static async findById(id) {
     try {
       const user = await this.query().findById(id);
+      if (!user) {
+        const error = new Error('User not found');
+        error.name = 'E200';
+        throw error;
+      }
       return user;
     } catch (err) {
-      return Promise.reject(new Error('User not found'));
+      return Promise.reject(err);
     }
   }
 
