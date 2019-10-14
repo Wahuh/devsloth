@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import styles from './Input.module.scss';
 
 const Input = ({
+  autoFocus,
   autoComplete,
   className,
   min,
@@ -19,7 +20,8 @@ const Input = ({
 }) => {
   return (
     <input
-      autoComplete={autoComplete ? 'on' : 'off'}
+      autoFocus={autoFocus}
+      autoComplete={autoComplete}
       className={classNames(styles.Input, className)}
       min={min}
       max={max}

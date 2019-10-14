@@ -2,11 +2,12 @@ import {all, call, take, takeEvery, put} from 'redux-saga/effects';
 import api from '../../api';
 
 function* handleRequest({meta, payload, type}) {
-  const {params} = payload;
+  console.log(type, payload, meta);
   const {apiFunction} = meta;
   const regex = /REQUEST.*$/;
   try {
-    const data = yield call(api[apiFunction], params);
+    const data = yield call(api[apiFunction], payload);
+    console.log(type.replace(regex, 'SUCCESS'), data);
     yield put({type: type.replace(regex, 'SUCCESS'), payload: data});
   } catch (err) {
     yield put({
@@ -29,7 +30,7 @@ export function* watchEveryRequest() {
 }
 
 export default function* commonSaga() {
-  yield all([watchRequest, watchEveryRequest]);
+  yield all([watchRequest(), watchEveryRequest()]);
 }
 // export function* watchLatestRequest() {
 

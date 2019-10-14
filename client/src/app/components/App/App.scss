@@ -1,8 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap');
 
 :root {
-  --color-bg: #282828;
-  --color-primary: white;
+  --color-bg: #201e20;
+  // --color-bg: #171517;
+  --color-fg: rgba(255, 255, 255, 0.07);
+  --color-fg-hover: #414041;
+  --color-tg: #282828;
+  --color-primary: rgba(255, 255, 255, 0.8);
   --color-secondary: #909090;
   --color-tertiary: #939393;
   --color-accent: #e87e04;
@@ -12,13 +16,17 @@
   --color-complement: black;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--color-bg);
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 #index {

@@ -11,11 +11,6 @@ const colors = {
   error: styles.error,
 };
 
-const fontWeights = {
-  400: styles.fontWeight400,
-  700: styles.fontWeight700,
-};
-
 const fontScale = {
   12: '0.75rem',
   14: '0.875rem',
@@ -55,16 +50,13 @@ const Typography = ({
     as || 'p',
     {
       style: {
+        fontWeight: fontWeight || 400,
         letterSpacing: letterSpacing || 'normal',
         fontSize: fontScale[fontSize] || fontScale[16],
         textAlign: textAlign || 'center',
         marginBottom: spacingScale[mb],
       },
-      className: classNames(
-        styles.Typography,
-        colors[color],
-        fontWeights[fontWeight] || fontWeights[400],
-      ),
+      className: classNames(styles.Typography, colors[color]),
     },
     children,
   );

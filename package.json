@@ -5,12 +5,10 @@
   "main": "index.js",
   "scripts": {
     "precommit:client": "cd client && npm run precommit",
-    "precommit:server": "cd server && npm run precommit",
-    "precommit": "npm-run-all precommit:*"
+    "precommit:server": "cd server && npm run precommit"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run precommit"
     }
   },
   "repository": {

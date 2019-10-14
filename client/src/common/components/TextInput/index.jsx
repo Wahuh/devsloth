@@ -9,6 +9,7 @@ import Typography from '../Typography';
 
 const TextInput = ({
   autoComplete,
+  autoFocus,
   onChange,
   label,
   name,
@@ -39,7 +40,8 @@ const TextInput = ({
         </span>
       </label>
       <Input
-        autoComplete={autoComplete}
+        autoFocus={autoFocus}
+        autoComplete={autoComplete || 'new-password'}
         name={name}
         onBlur={handleFocus}
         onChange={onChange}

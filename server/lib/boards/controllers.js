@@ -14,6 +14,17 @@ const postBoardList = async ctx => {
   }
 };
 
+const getBoard = async ctx => {
+  try {
+    const {board_id} = ctx.params;
+    const board = await Board.findById(+board_id);
+    ctx.body = {board};
+  } catch (err) {
+    ctx.app.emit('error', err, ctx);
+  }
+};
+
 module.exports = {
   postBoardList,
+  getBoard,
 };

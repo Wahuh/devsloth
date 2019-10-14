@@ -1,0 +1,17 @@
+.MeMenuItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .MenuLink {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    flex: 1;
+    padding: 0.75rem;
+    text-decoration: none;
+    color: var(--color-secondary);
+  }
+  .Active {
+    background-color: var(--color-fg);
+    color: var(--color-primary);
+  }
+}

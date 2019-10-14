@@ -1,8 +1,15 @@
 import {createAction} from 'redux-actions';
-import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE} from './types';
+import {LOGIN_REQUEST, JWT_LOGIN_REQUEST} from './types';
+import makeRequestMetaCreator from '../../common/redux/makeRequestMetaCreator';
 
-const loginRequest = createAction(LOGIN_REQUEST);
-const loginSuccess = createAction(LOGIN_SUCCESS);
-const loginFailure = createAction(LOGIN_FAILURE);
+export const loginRequest = createAction(
+  LOGIN_REQUEST,
+  null,
+  makeRequestMetaCreator('login'),
+);
 
-export {loginRequest, loginSuccess, loginFailure};
+export const jwtLoginRequest = createAction(
+  JWT_LOGIN_REQUEST,
+  null,
+  makeRequestMetaCreator('getUser'),
+);

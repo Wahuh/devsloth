@@ -4,7 +4,10 @@ const knexMigrate = require('knex-migrate');
 
 const connection = require('../../database/connection');
 const Board = require('../models/Board');
+const List = require('../models/List');
+const Task = require('../models/Task');
 const User = require('../models/User');
+const TestClient = require('./TestClient');
 
 const setupAll = async () => {
   connection.initialize();
@@ -48,10 +51,32 @@ const addTestUserWithBoards = async () => {
   return {token, user, boards: insertedBoards};
 };
 
+const addUserWithBoardsAndLists = async () => {
+  const {token, user} = await addTestUser();
+  const boards = [
+    {title: 'test_board_1', owner_id: user.id, owner_type: 'user'},
+    {title: 'test_board_2', owner_id: user.id, owner_type: 'user'},
+  ];
+  const insertedBoards = await Board.query()
+    .insert(boards)
+    .returning('*');
+
+  const lists = [
+    {title: 'test_list_1', board_id: 1},
+    {title: 'test_list_2', board_id: 2},
+  ];
+  const insertedLists = await List.query()
+    .insert(lists)
+    .returning('*');
+  return {token, user, boards: insertedBoards, lists: insertedLists};
+};
+
 module.exports = {
   setupAll,
   teardownEach,
   teardownAll,
   addTestUser,
   addTestUserWithBoards,
+  addUserWithBoardsAndLists,
+  TestClient,
 };
