@@ -24,15 +24,21 @@ const setAuthorizationHeader = jwt => {
 };
 
 export const signup = async user => {
-  const {data} = await http.post(`${config.apiUrl}/signup`, user);
+  const {data, headers} = await http.post(`${config.apiUrl}/signup`, user);
+  const jwt = extractJwt(headers);
+  saveJwt(jwt);
+  setAuthorizationHeader(jwt);
   return data.user;
 };
 
 export const login = ({email, password}) => {
-  const {data} = http.post(`${config.apiUrl}/login`, {
+  const {data, headers} = http.post(`${config.apiUrl}/login`, {
     email,
     password,
   });
+  const jwt = extractJwt(headers);
+  saveJwt(jwt);
+  setAuthorizationHeader(jwt);
   return data.user;
 };
 
