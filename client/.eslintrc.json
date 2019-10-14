@@ -19,7 +19,7 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "camelcase": 1,
-    "parser": "babel-eslint"
-  }
+    "camelcase": 1
+  },
+  "parser": "babel-eslint"
 }
