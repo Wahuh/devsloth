@@ -5,6 +5,7 @@ import {getBoard} from '../../redux/selectors';
 import {getBoardRequest} from '../../redux/actions';
 import Typography from '../../../common/components/Typography';
 import CreateListForm from '../../../lists/components/CreateListForm';
+import Lists from '../../../lists/components/Lists';
 
 const Board = ({board, match, onGetBoard}) => {
   const {board_id} = match.params;
@@ -19,7 +20,8 @@ const Board = ({board, match, onGetBoard}) => {
         {title}
       </Typography>
 
-      <CreateListForm />
+      <CreateListForm board_id={board_id} />
+      <Lists board_id={board_id} />
     </>
   ); // </DragDropContext>
 };
@@ -34,9 +36,11 @@ Board.propTypes = {
   onGetBoard: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  board: getBoard(state, ownProps.match.params.board_id),
-});
+const mapStateToProps = (state, ownProps) => {
+  return {
+    board: getBoard(state, ownProps.match.params.board_id),
+  };
+};
 
 export default connect(
   mapStateToProps,
