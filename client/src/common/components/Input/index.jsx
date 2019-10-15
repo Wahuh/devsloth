@@ -20,6 +20,7 @@ const Input = ({
 }) => {
   return (
     <input
+      // eslint-disable-next-line
       autoFocus={autoFocus}
       autoComplete={autoComplete}
       className={classNames(styles.Input, className)}
@@ -39,7 +40,8 @@ const Input = ({
 };
 
 Input.defaultProps = {
-  autoComplete: true,
+  autoComplete: false,
+  autoFocus: false,
   className: '',
   min: null,
   max: null,
@@ -53,6 +55,7 @@ Input.defaultProps = {
 
 Input.propTypes = {
   autoComplete: PropTypes.bool,
+  autoFocus: PropTypes.bool,
   className: PropTypes.string,
   min: PropTypes.number,
   max: PropTypes.number,
