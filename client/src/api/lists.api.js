@@ -1,5 +1,5 @@
 import {normalize} from 'normalizr';
-import http from './httpApi';
+import http from './http.api';
 import schemas from './schemas';
 
 export const postList = async ({title, board_id}) => {
