@@ -15,7 +15,7 @@ export const getBoardRequest = createAction(
 export const getUserBoardsRequest = createAction(
   GET_USER_BOARDS_REQUEST,
   null,
-  makeRequestMetaCreator('getUserBoardsRequest'),
+  makeRequestMetaCreator('getUserBoards'),
 );
 
 export const createUserBoardRequest = createAction(

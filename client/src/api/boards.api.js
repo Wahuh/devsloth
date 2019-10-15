@@ -7,7 +7,7 @@ export const getBoard = async ({board_id}) => {
   return normalize(data.board, schemas.board);
 };
 
-const getUserBoards = async () => {
+export const getUserBoards = async () => {
   const {data} = await http.get('/me/boards');
   return normalize(data.boards, schemas.boards);
 };
@@ -15,8 +15,4 @@ const getUserBoards = async () => {
 export const postUserBoard = async board => {
   const {data} = await http.post('/me/boards', board);
   return normalize(data.board, schemas.board);
-};
-
-export default {
-  getUserBoards,
 };
