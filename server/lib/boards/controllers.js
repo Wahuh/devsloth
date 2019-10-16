@@ -24,7 +24,18 @@ const getBoard = async ctx => {
   }
 };
 
+const getBoardLists = async ctx => {
+  try {
+    const {board_id} = ctx.params;
+    const lists = await List.findByBoardId(+board_id);
+    ctx.body = {lists};
+  } catch (err) {
+    ctx.app.emit('error', err, ctx);
+  }
+};
+
 module.exports = {
   postBoardList,
   getBoard,
+  getBoardLists,
 };

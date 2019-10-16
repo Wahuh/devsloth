@@ -5,6 +5,7 @@ const {
   teardownEach,
   teardownAll,
   addTestUserWithBoards,
+  addUserWithBoardsAndLists,
 } = require('../utils');
 
 beforeAll(async done => {
@@ -24,6 +25,33 @@ beforeEach(async done => {
 
 afterEach(() => {
   server.close();
+});
+
+describe('GET /api/boards/:board_id/lists', () => {
+  const getBoardListsRequest = async token => {
+    const response = await request(server)
+      .get('/api/boards/1/lists')
+      .set('Authorization', `Bearer ${token}`);
+    return response;
+  };
+
+  it('200: responds with an array of lists', async () => {
+    const {token} = await addUserWithBoardsAndLists();
+    const {status, body} = await getBoardListsRequest(token);
+    const expected = {
+      lists: [{title: 'test_list_1', board_id: 1, id: expect.any(Number)}],
+    };
+    expect(status).toBe(200);
+    expect(body).toEqual(expected);
+  });
+
+  it('200: responds with an empty array if board has no lists', async () => {
+    const {token} = await addTestUserWithBoards();
+    const {status, body} = await getBoardListsRequest(token);
+    const expected = {lists: []};
+    expect(status).toBe(200);
+    expect(body).toEqual(expected);
+  });
 });
 
 describe('POST /api/boards/:board_id/lists', () => {

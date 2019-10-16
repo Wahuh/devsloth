@@ -1,5 +1,5 @@
 const Router = require('@koa/router');
-const {postBoardList, getBoard} = require('./controllers');
+const {postBoardList, getBoard, getBoardLists} = require('./controllers');
 const createValidator = require('../../middleware/createValidator');
 const postBoardListSchema = require('../schemas/postBoardList.json');
 
@@ -12,5 +12,7 @@ boardRouter.post(
   createValidator(postBoardListSchema),
   postBoardList,
 );
+
+boardRouter.get('/:board_id/lists', getBoardLists);
 
 module.exports = boardRouter;
