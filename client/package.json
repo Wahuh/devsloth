@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --mode development --hot --host 0.0.0.0",
     "build": "webpack --mode production",
     "precommit": "lint-staged",
+    "coverage": "jest --coverage",
     "test": "jest --watchAll --verbose"
   },
   "repository": {
