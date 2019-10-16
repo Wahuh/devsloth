@@ -7,4 +7,7 @@ export const postList = async ({title, board_id}) => {
   return normalize(data.list, schemas.list);
 };
 
-export const getList = async () => {};
+export const getLists = async board_id => {
+  const {data} = await http.get(`/boards/${board_id}/lists`);
+  return normalize(data.lists, schemas.lists);
+};

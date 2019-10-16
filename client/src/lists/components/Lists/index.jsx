@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {selectBoardLists} from '../../redux/selectors';
+import {getListsRequest} from '../../redux/actions';
+import List from '../List';
+import styles from './Lists.module.scss';
 
-const Lists = ({lists}) => {
-  return <ul>{lists.map(list => list.title)}</ul>;
+const Lists = ({lists, onGetLists, board_id}) => {
+  useEffect(() => {
+    onGetLists(board_id);
+  }, []);
+  return (
+    <ul className={styles.Lists}>
+      {lists.map(list => (
+        <List list={list} />
+      ))}
+    </ul>
+  );
 };
 
 Lists.propTypes = {
@@ -15,13 +27,19 @@ Lists.propTypes = {
       board_id: PropTypes.number,
     }),
   ).isRequired,
+  onGetLists: PropTypes.func.isRequired,
+  board_id: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps, selectBoardLists(state, ownProps.board_id));
   return {
     lists: selectBoardLists(state, ownProps.board_id),
   };
 };
 
-export default connect(mapStateToProps)(Lists);
+export default connect(
+  mapStateToProps,
+  {
+    onGetLists: getListsRequest,
+  },
+)(Lists);
