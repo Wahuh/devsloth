@@ -1,5 +1,5 @@
 import {createAction} from 'redux-actions';
-import {CREATE_LIST_REQUEST} from './types';
+import {CREATE_LIST_REQUEST, GET_LISTS_REQUEST} from './types';
 import makeRequestMetaCreator from '../../common/redux/makeRequestMetaCreator';
 
 export const createListRequest = createAction(
@@ -8,4 +8,8 @@ export const createListRequest = createAction(
   makeRequestMetaCreator('postList'),
 );
 
-export const getList = createAction('');
+export const getListsRequest = createAction(
+  GET_LISTS_REQUEST,
+  null,
+  makeRequestMetaCreator('getLists'),
+);
