@@ -14,7 +14,7 @@ const Me = ({match}) => {
 };
 
 Me.propTypes = {
-  match: PropTypes.objectOf({path: PropTypes.string}).isRequired,
+  match: PropTypes.shape({path: PropTypes.string}).isRequired,
 };
 
 export default Me;

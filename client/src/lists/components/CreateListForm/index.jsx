@@ -20,6 +20,7 @@ const CreateListForm = ({onCreateList, board_id}) => {
 
   return (
     <Input
+      name="title"
       className={styles.CreateListInput}
       onEnter={handleSubmit}
       placeholder="+ add list"
