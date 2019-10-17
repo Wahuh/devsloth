@@ -17,7 +17,7 @@ const BoardsList = ({boards, onGetBoards}) => {
   return (
     <ul className={styles.BoardsList}>
       {boards.map(board => (
-        <BoardItem board={board} />
+        <BoardItem key={board.id} board={board} />
       ))}
       <AddBoard />
       <BoardModal />
