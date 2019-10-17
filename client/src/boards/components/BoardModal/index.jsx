@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Modal from '../../../common/components/Modal';
-import {getIsModalOpen} from '../../../ui/redux/selectors';
+import {selectIsModalOpen} from '../../../ui/redux/selectors';
 import {hideModal} from '../../../ui/redux/actions';
 import CreateBoardForm from '../CreateBoardForm';
 
@@ -13,8 +14,13 @@ const BoardModal = ({isOpen, onClose}) => {
   );
 };
 
+BoardModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => ({
-  isOpen: getIsModalOpen(state, 'board'),
+  isOpen: selectIsModalOpen(state, 'board'),
 });
 
 export default connect(
