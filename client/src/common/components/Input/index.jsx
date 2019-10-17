@@ -67,7 +67,7 @@ const Input = ({
 };
 
 Input.defaultProps = {
-  autoComplete: false,
+  autoComplete: undefined,
   autoFocus: false,
   className: '',
   min: null,
