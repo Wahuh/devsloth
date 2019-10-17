@@ -18,7 +18,7 @@ describe('authReducer', () => {
       type: SIGNUP_SUCCESS,
       payload: {
         username: 'Dasadasdsa',
-        email: 'tmdoan98@gmail.com',
+        email: 'tmdoan@gmail.com',
         id: 2,
       },
     };
@@ -27,7 +27,7 @@ describe('authReducer', () => {
       isAuthenticated: true,
       user: {
         username: 'Dasadasdsa',
-        email: 'tmdoan98@gmail.com',
+        email: 'tmdoan@gmail.com',
         id: 2,
       },
     };
