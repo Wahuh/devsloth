@@ -1,4 +1,5 @@
-export const selectTasks = (state, list_id) => {
+/* eslint-disable */
+export const selectTasksByListId = (state, list_id) => {
   const taskIds = state.tasks.allIds;
   const tasks = taskIds.reduce((acc, task_id) => {
     const task = state.tasks.byId[task_id];
@@ -9,5 +10,4 @@ export const selectTasks = (state, list_id) => {
   }, []);
   return tasks;
 };
-
-export const selectTasksBy = () => {};
+/* eslint-enable */
