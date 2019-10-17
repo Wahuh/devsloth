@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getBoard} from '../../redux/selectors';
+import {selectBoard} from '../../redux/selectors';
 import {getBoardRequest} from '../../redux/actions';
 import Typography from '../../../common/components/Typography';
 import CreateListForm from '../../../lists/components/CreateListForm';
@@ -38,7 +38,7 @@ Board.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    board: getBoard(state, ownProps.match.params.board_id),
+    board: selectBoard(state, ownProps.match.params.board_id),
   };
 };
 

@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Redirect, Route} from 'react-router-dom';
-import {getIsAuthenticated} from '../../../auth/redux/selectors';
+import {selectIsAuthenticated} from '../../../auth/redux/selectors';
 
 const PrivateRoute = ({component: Component, isAuthenticated, ...rest}) => {
   return (
@@ -27,7 +27,7 @@ const PrivateRoute = ({component: Component, isAuthenticated, ...rest}) => {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: getIsAuthenticated(state),
+  isAuthenticated: selectIsAuthenticated(state),
 });
 
 PrivateRoute.propTypes = {
