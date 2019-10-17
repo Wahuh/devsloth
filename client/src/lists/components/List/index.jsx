@@ -20,7 +20,8 @@ const List = ({list}) => {
 };
 
 List.propTypes = {
-  list: PropTypes.objectOf({title: PropTypes.string}).isRequired,
+  list: PropTypes.shape({title: PropTypes.string, id: PropTypes.number})
+    .isRequired,
 };
 
 export default List;

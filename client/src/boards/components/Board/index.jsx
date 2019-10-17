@@ -26,13 +26,17 @@ const Board = ({board, match, onGetBoard}) => {
   ); // </DragDropContext>
 };
 
+Board.defaultProps = {
+  board: null,
+};
+
 Board.propTypes = {
-  match: PropTypes.objectOf({
-    params: PropTypes.objectOf({board_id: PropTypes.string}),
+  match: PropTypes.shape({
+    params: PropTypes.shape({board_id: PropTypes.string}),
   }).isRequired,
-  board: PropTypes.objectOf({
+  board: PropTypes.shape({
     title: PropTypes.string,
-  }).isRequired,
+  }),
   onGetBoard: PropTypes.func.isRequired,
 };
 

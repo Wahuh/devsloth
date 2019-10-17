@@ -25,6 +25,7 @@ const CreateTaskForm = ({list_id, onCreateTask}) => {
   return (
     <form onSubmit={handleSubmit} className={styles.CreateTaskForm}>
       <Input
+        name="title"
         className={styles.CreateTaskInput}
         value={title}
         onChange={handleChange}
@@ -40,7 +41,7 @@ const CreateTaskForm = ({list_id, onCreateTask}) => {
 };
 
 CreateTaskForm.propTypes = {
-  list_id: PropTypes.string.isRequired,
+  list_id: PropTypes.number.isRequired,
   onCreateTask: PropTypes.func.isRequired,
 };
 

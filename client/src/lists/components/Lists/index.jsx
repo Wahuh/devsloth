@@ -21,7 +21,7 @@ const Lists = ({lists, onGetLists, board_id}) => {
 
 Lists.propTypes = {
   lists: PropTypes.arrayOf(
-    PropTypes.objectOf({
+    PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
       board_id: PropTypes.number,
