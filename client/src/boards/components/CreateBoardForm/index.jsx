@@ -6,7 +6,7 @@ import TextInput from '../../../common/components/TextInput';
 import SubmitButton from '../../../common/components/SubmitButton';
 import styles from './CreateBoardForm.module.scss';
 import {createUserBoardRequest} from '../../redux/actions';
-import {getIsFetching} from '../../../ui/redux/selectors';
+import {selectIsFetching} from '../../../ui/redux/selectors';
 import {usePrevious} from '../../../common/hooks';
 import {hideModal} from '../../../ui/redux/actions';
 
@@ -104,7 +104,7 @@ CreateBoardForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isFetching: getIsFetching(state, 'postUserBoard'),
+  isFetching: selectIsFetching(state, 'postUserBoard'),
 });
 
 export default connect(
