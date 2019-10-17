@@ -1,5 +1,5 @@
-export const getIsModalOpen = (state, modalName) =>
+export const selectIsModalOpen = (state, modalName) =>
   state.ui.modals.includes(modalName);
 
-export const getIsFetching = (state, requestName) =>
-  state.ui.fetching[requestName];
+export const selectIsFetching = (state, requestName) =>
+  state.ui.fetching[requestName] || false;
