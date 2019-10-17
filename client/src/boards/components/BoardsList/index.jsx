@@ -27,7 +27,7 @@ const BoardsList = ({boards, onGetBoards}) => {
 
 BoardsList.propTypes = {
   boards: PropTypes.arrayOf(
-    PropTypes.objectOf({id: PropTypes.number, title: PropTypes.string}),
+    PropTypes.shape({id: PropTypes.number, title: PropTypes.string}),
   ).isRequired,
   onGetBoards: PropTypes.func.isRequired,
 };
