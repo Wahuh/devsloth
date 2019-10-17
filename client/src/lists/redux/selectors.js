@@ -1,4 +1,5 @@
-export const selectBoardLists = (state, board_id) => {
+/* eslint-disable */
+export const selectListsByBoardId = (state, board_id) => {
   const listIds = Object.keys(state.lists.byId);
   const lists = listIds.reduce((acc, listId) => {
     const list = state.lists.byId[listId];
@@ -9,5 +10,4 @@ export const selectBoardLists = (state, board_id) => {
   }, []);
   return lists;
 };
-
-export const selectListsBy = () => {};
+/* eslint-enable */
