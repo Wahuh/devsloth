@@ -6,8 +6,8 @@ import styles from './BoardsList.module.scss';
 import AddBoard from '../AddBoard';
 import BoardModal from '../BoardModal';
 import {selectBoardsByOwnerId} from '../../redux/selectors';
-import {getUserId} from '../../../me/redux/selectors';
 import {getUserBoardsRequest} from '../../redux/actions';
+import {selectUserId} from '../../../auth/redux/selectors';
 
 const BoardsList = ({boards, onGetBoards}) => {
   useEffect(() => {
@@ -33,7 +33,7 @@ BoardsList.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const boards = selectBoardsByOwnerId(state, getUserId(state));
+  const boards = selectBoardsByOwnerId(state, selectUserId(state));
   return {
     boards,
   };

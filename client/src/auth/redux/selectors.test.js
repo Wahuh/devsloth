@@ -1,4 +1,4 @@
-import {selectIsAuthenticated, selectUser} from './selectors';
+import {selectIsAuthenticated, selectUser, selectUserId} from './selectors';
 
 describe('selectIsAuthenticated', () => {
   it('returns an isAuthenticated boolean from state', () => {
@@ -24,6 +24,20 @@ describe('selectUser', () => {
 
     const actual = selectUser(state);
     const expected = {username: 'Dasadasdsa', email: 'tmdoan@gmail.com', id: 2};
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe('selectUserId', () => {
+  it('returns the id of the authenticated user from state', () => {
+    const state = {
+      auth: {
+        user: {username: 'Dasadasdsa', email: 'tmdoan@gmail.com', id: 2},
+      },
+    };
+
+    const actual = selectUserId(state);
+    const expected = 2;
     expect(actual).toEqual(expected);
   });
 });
