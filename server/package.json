@@ -12,7 +12,8 @@
     "test": "jest --runInBand --watchAll --verbose",
     "test-stall": "nodemon listen.js",
     "migration-make": "knex migrate:make",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "coverage": "jest --coverage"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
