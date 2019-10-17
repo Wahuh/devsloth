@@ -1,5 +1,4 @@
 import {all} from 'redux-saga/effects';
-// import boardsSaga from '../../boards/redux/sagas';
 // import meSaga from '../../me/redux/sagas';
 import commonSaga from '../../common/redux/sagas';
 
