@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {selectBoardLists} from '../../redux/selectors';
+import {selectListsByBoardId} from '../../redux/selectors';
 import {getListsRequest} from '../../redux/actions';
 import List from '../List';
 import styles from './Lists.module.scss';
@@ -33,7 +33,7 @@ Lists.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    lists: selectBoardLists(state, ownProps.board_id),
+    lists: selectListsByBoardId(state, ownProps.board_id),
   };
 };
 
