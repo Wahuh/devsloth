@@ -13,7 +13,7 @@ const Lists = ({lists, onGetLists, board_id}) => {
   return (
     <ul className={styles.Lists}>
       {lists.map(list => (
-        <List list={list} />
+        <List key={list.id} list={list} />
       ))}
     </ul>
   );
