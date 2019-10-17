@@ -1,5 +1,6 @@
 import {useRef, useEffect} from 'react';
 
+/* eslint-disable */
 export function usePrevious(value) {
   const ref = useRef();
   useEffect(() => {
@@ -7,5 +8,4 @@ export function usePrevious(value) {
   }, [value]);
   return ref.current;
 }
-
-export function useStuff() {}
+/* eslint-enable */
