@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiUrl = process.env.API_URL;
 const instance = axios.create({
-  baseURL: `${apiUrl}/api`,
+  baseURL: apiUrl,
 });
 
 export const setDefaultHeader = (header, value) => {
