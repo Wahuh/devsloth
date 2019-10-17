@@ -1,7 +1,7 @@
 import * as actions from './actions';
-import {SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE} from './types';
+import {SIGNUP_REQUEST} from './types';
 
-describe('signup > redux > actions', () => {
+describe('signup actions', () => {
   describe('signupRequest', () => {
     it('returns a SIGNUP_REQUEST action', () => {
       const payload = {
@@ -13,29 +13,9 @@ describe('signup > redux > actions', () => {
       const expectedAction = {
         type: SIGNUP_REQUEST,
         payload,
-      };
-      expect(action).toEqual(expectedAction);
-    });
-  });
-
-  describe('signupSuccess', () => {
-    it('returns a SIGNUP_SUCCESS action', () => {
-      const action = actions.signupSuccess();
-      const expectedAction = {
-        type: SIGNUP_SUCCESS,
-      };
-      expect(action).toEqual(expectedAction);
-    });
-  });
-
-  describe('signupFailure', () => {
-    it('returns a SIGNUP_FAILURE action', () => {
-      const error = new Error('something went wrong...');
-      const action = actions.signupFailure(error);
-      const expectedAction = {
-        type: SIGNUP_FAILURE,
-        payload: error,
-        error: true,
+        meta: {
+          apiFunction: 'signup',
+        },
       };
       expect(action).toEqual(expectedAction);
     });
