@@ -1,8 +1,10 @@
 import http from './http.api';
-import authApi from './auth.api';
+import {setAuthorizationHeader} from './auth.api';
 
+/* eslint-disable */
 export const getUser = async jwt => {
-  authApi.setAuthorizationHeader(jwt);
+  setAuthorizationHeader(jwt);
   const {data} = await http.get('/me');
   return data.user;
 };
+/* eslint-enable */
