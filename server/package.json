@@ -15,10 +15,6 @@
     "precommit": "lint-staged",
     "coverage": "jest && codecov"
   },
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
-  },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
   "dependencies": {
@@ -39,7 +35,6 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
-    "codecov": "^3.6.1",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.2.0",
