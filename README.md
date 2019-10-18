@@ -2,6 +2,8 @@
 
 A web app inspired by Slack, Discord and Trello which features chat, task management and social groups.
 
+[![Build Status](https://travis-ci.org/Wahuh/slothy.io.svg?branch=development)](https://travis-ci.org/Wahuh/slothy.io)
+
 ## Features
 
 ## Getting Started
