@@ -1,5 +1,10 @@
 version: "3"
 services:
+  client:
+    environment:
+      - "TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+      - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
+
   database_test:
     environment:
       - "POSTGRES_PASSWORD=${TEST_POSTGRES_PASSWORD}"
@@ -17,3 +22,5 @@ services:
       - "POSTGRES_PORT=${TEST_POSTGRES_PORT}"
       - "POSTGRES_USER=${TEST_POSTGRES_USER}"
       - "JWT_SECRET=${TEST_JWT_SECRET}"
+      - "TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+      - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
