@@ -13,6 +13,7 @@
     "test-stall": "nodemon listen.js",
     "migration-make": "knex migrate:make",
     "precommit": "lint-staged",
+    "ci-test": "jest",
     "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
