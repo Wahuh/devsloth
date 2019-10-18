@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node listen.js",
+    "codecov": "codecov --token=${CODECOV_TOKEN}",
     "dev": "npm run migrate-latest && npm run seed-dev && nodemon listen.js",
     "seed-make": "knex seed:make",
     "seed-dev": "knex seed:run",
@@ -13,7 +14,7 @@
     "test-stall": "nodemon listen.js",
     "migration-make": "knex migrate:make",
     "precommit": "lint-staged",
-    "coverage": "jest && codecov"
+    "coverage": "jest && npm run codecov"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
