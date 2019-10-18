@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --mode development --hot --host 0.0.0.0",
     "build": "webpack --mode production",
     "precommit": "lint-staged",
-    "coverage": "jest && codecov",
+    "coverage": "jest && npm run codecov",
     "test": "jest --watchAll --verbose"
   },
   "repository": {
