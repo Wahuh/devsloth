@@ -29,6 +29,9 @@ const postResponses = {
   '/boards/1/lists': ({title}) => ({
     data: {list: {id: 1, title, board_id: 1}},
   }),
+  '/lists/1/tasks': ({title}) => ({
+    data: {task: {id: 1, title, list_id: 1}},
+  }),
 };
 
 const getResponses = {
