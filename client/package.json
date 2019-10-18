@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development --hot --host 0.0.0.0",
     "build": "webpack --mode production",
     "precommit": "lint-staged",
-    "coverage": "jest --coverage",
+    "coverage": "jest && codecov",
     "test": "jest --watchAll --verbose"
   },
   "repository": {
@@ -18,6 +18,10 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Wahuh/slacker/issues"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "homepage": "https://github.com/Wahuh/slacker#readme",
   "devDependencies": {
@@ -31,6 +35,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.2",
+    "codecov": "^3.6.1",
     "css-loader": "^1.0.0",
     "eslint": "^6.2.2",
     "eslint-config-airbnb": "^18.0.1",
