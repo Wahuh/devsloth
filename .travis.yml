@@ -17,3 +17,6 @@ branches:
   only:
     - master
     - development
+
+notifications:
+  webhooks: https://coveralls.io/webhook
