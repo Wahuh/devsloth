@@ -25,6 +25,10 @@ const postResponses = {
   '/me/boards': ({title}) => ({
     data: {board: {id: 1, title, owner_id: 2}},
   }),
+
+  '/boards/1/lists': ({title}) => ({
+    data: {list: {id: 1, title, board_id: 1}},
+  }),
 };
 
 const getResponses = {
@@ -33,6 +37,9 @@ const getResponses = {
   },
   '/boards/1': {
     data: {board: {id: 1, title: 'hello board', owner_id: 2}},
+  },
+  '/boards/1/lists': {
+    data: {lists: [{id: 1, board_id: 1, title: 'hello list'}]},
   },
 };
 
