@@ -13,7 +13,7 @@
     "test-stall": "nodemon listen.js",
     "migration-make": "knex migrate:make",
     "precommit": "lint-staged",
-    "coverage": "jest && codecov"
+    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
+    "coveralls": "^3.0.7",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.2.0",

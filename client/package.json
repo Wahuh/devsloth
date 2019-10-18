@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development --hot --host 0.0.0.0",
     "build": "webpack --mode production",
     "precommit": "lint-staged",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test": "jest --watchAll --verbose"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.2",
+    "coveralls": "^3.0.7",
     "css-loader": "^1.0.0",
     "eslint": "^6.2.2",
     "eslint-config-airbnb": "^18.0.1",
