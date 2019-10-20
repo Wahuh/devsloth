@@ -39,6 +39,32 @@ const addTestUser = async user => {
   return {token, user: insertedUser};
 };
 
+const addTestUserWithBoardsListsAndTasks = async () => {
+  const {token, user} = await addTestUser();
+  const boards = [
+    {title: 'test_board_1', owner_id: user.id, owner_type: 'user'},
+  ];
+
+  const lists = [{title: 'test_list_1', board_id: 1}];
+  const insertedBoards = await Board.query()
+    .insert(boards)
+    .returning('*');
+  const insertedLists = await List.query()
+    .insert(lists)
+    .returning('*');
+
+  const tasks = [{title: 'hello task', list_id: 1, description: ''}];
+  const insertedTasks = await Task.query()
+    .insert(tasks)
+    .returning('*');
+  return {
+    token,
+    tasks: insertedTasks,
+    lists: insertedLists,
+    boards: insertedBoards,
+  };
+};
+
 const addTestUserWithBoards = async () => {
   const {token, user} = await addTestUser();
   const boards = [
@@ -78,5 +104,6 @@ module.exports = {
   addTestUser,
   addTestUserWithBoards,
   addUserWithBoardsAndLists,
+  addTestUserWithBoardsListsAndTasks,
   TestClient,
 };

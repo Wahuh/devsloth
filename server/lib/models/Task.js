@@ -15,6 +15,18 @@ class Task extends Model {
       return Promise.reject(error);
     }
   }
+
+  static async findByListId(list_id) {
+    try {
+      const tasks = await this.query()
+        .select('*')
+        .where({list_id});
+      return tasks;
+    } catch (err) {
+      const error = new Error('adasd');
+      return Promise.reject(error);
+    }
+  }
 }
 
 module.exports = Task;

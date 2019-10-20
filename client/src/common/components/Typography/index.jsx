@@ -53,7 +53,7 @@ const Typography = ({
         fontWeight: fontWeight || 400,
         letterSpacing: letterSpacing || 'normal',
         fontSize: fontScale[fontSize] || fontScale[16],
-        textAlign: textAlign || 'center',
+        textAlign: textAlign || 'left',
         marginBottom: spacingScale[mb],
       },
       className: classNames(styles.Typography, colors[color]),

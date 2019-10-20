@@ -14,6 +14,17 @@ const postListTask = async ctx => {
   }
 };
 
+const getTasks = async ctx => {
+  try {
+    const {list_id} = ctx.params;
+    const tasks = await Task.findByListId(list_id);
+    ctx.body = {tasks};
+  } catch (err) {
+    ctx.app.emit('error', err, ctx);
+  }
+};
+
 module.exports = {
   postListTask,
+  getTasks,
 };

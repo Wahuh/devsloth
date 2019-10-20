@@ -1,11 +1,15 @@
 import {createAction} from 'redux-actions';
-import {CREATE_TASK_REQUEST} from './types';
+import {CREATE_TASK_REQUEST, GET_TASKS_REQUEST} from './types';
 import makeRequestMetaCreator from '../../common/redux/makeRequestMetaCreator';
 
-/* eslint-disable */
 export const createTaskRequest = createAction(
   CREATE_TASK_REQUEST,
   null,
   makeRequestMetaCreator('postTask'),
 );
-/* eslint-enable */
+
+export const getTasksRequest = createAction(
+  GET_TASKS_REQUEST,
+  null,
+  makeRequestMetaCreator('getTasks'),
+);
