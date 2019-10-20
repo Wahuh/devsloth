@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions';
 import {combineReducers} from 'redux';
-import {CREATE_TASK_SUCCESS} from './types';
+import {CREATE_TASK_SUCCESS, GET_TASKS_SUCCESS} from './types';
 
 const addTasks = (state, action) => {
   const {tasks} = action.payload.entities;
@@ -9,18 +9,21 @@ const addTasks = (state, action) => {
 
 const addTaskIds = (state, action) => {
   const {result} = action.payload;
-  return [...state, result];
+
+  return Array.isArray(result) ? [...state, ...result] : [...state, result];
 };
 
 const byId = handleActions(
   {
     [CREATE_TASK_SUCCESS]: addTasks,
+    [GET_TASKS_SUCCESS]: addTasks,
   },
   {},
 );
 const allIds = handleActions(
   {
     [CREATE_TASK_SUCCESS]: addTaskIds,
+    [GET_TASKS_SUCCESS]: addTaskIds,
   },
   [],
 );
