@@ -6,6 +6,7 @@ const {
   teardownEach,
   teardownAll,
   addUserWithBoardsAndLists,
+  addTestUserWithBoardsListsAndTasks,
 } = require('../utils');
 
 beforeAll(async done => {
@@ -26,6 +27,24 @@ beforeEach(async done => {
 
 afterEach(() => {
   server.close();
+});
+
+describe('GET /api/lists/:list_id/tasks', () => {
+  const getTasksRequest = async token => {
+    const response = await request(server)
+      .get(`/api/lists/1/tasks`)
+      .set('Authorization', `Bearer ${token}`);
+    return response;
+  };
+  it('200: responds with an array of tasks', async () => {
+    const {token} = await addTestUserWithBoardsListsAndTasks();
+    const {status, body} = await getTasksRequest(token);
+    const expected = {
+      tasks: [{title: 'hello task', list_id: 1, description: '', id: 1}],
+    };
+    expect(status).toBe(200);
+    expect(body).toEqual(expected);
+  });
 });
 
 describe('POST /api/lists/:list_id/tasks', () => {
