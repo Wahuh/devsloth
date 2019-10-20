@@ -47,6 +47,9 @@ const getResponses = {
   '/me': {
     data: {user: {username: 'Thanh', email: 'tmdoa@gmail.com', id: 1}},
   },
+  '/lists/1/tasks': {
+    data: {tasks: [{id: 1, list_id: 1, title: 'hello task'}]},
+  },
 };
 
 const headers = {};
