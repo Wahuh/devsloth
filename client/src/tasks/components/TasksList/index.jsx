@@ -2,9 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {selectTasksByListId} from '../../redux/selectors';
+import styles from './TasksList.module.scss';
+import TaskItem from '../TaskItem';
 
 const TasksList = ({tasks}) => {
-  return <ul>{tasks.map(task => task.title)}</ul>;
+  return (
+    <ul className={styles.TasksList}>
+      {tasks.map(task => (
+        <TaskItem task={task} />
+      ))}
+    </ul>
+  );
 };
 
 TasksList.propTypes = {

@@ -2,11 +2,31 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 275px;
+  overflow: hidden;
+  flex: 0 0 calc(275px + 1rem);
   margin-right: 1rem;
+  padding-bottom: 1.5rem;
   &:first-child {
-    margin-left: 1rem;
+    margin-left: 1.5rem;
+  }
+  .ListTitle {
+    flex: 0 0 auto;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+  }
+  .ListContent {
+    flex: 1;
+    max-height: 100%;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-radius: 2rem;
+    }
   }
 }

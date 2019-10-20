@@ -5,6 +5,7 @@ import {selectListsByBoardId} from '../../redux/selectors';
 import {getListsRequest} from '../../redux/actions';
 import List from '../List';
 import styles from './Lists.module.scss';
+import CreateListForm from '../CreateListForm';
 
 const Lists = ({lists, onGetLists, board_id}) => {
   useEffect(() => {
@@ -15,6 +16,7 @@ const Lists = ({lists, onGetLists, board_id}) => {
       {lists.map(list => (
         <List key={list.id} list={list} />
       ))}
+      <CreateListForm board_id={board_id} />
     </ul>
   );
 };

@@ -9,12 +9,22 @@ const List = ({list}) => {
   const {title, id} = list;
   return (
     <li className={styles.List}>
-      <Typography fontSize={18} fontWeight={600} color="secondary">
-        {title}
-      </Typography>
-      <ul />
-      <TasksList list_id={id} />
+      <div className={styles.ListTitle}>
+        <Typography
+          textAlign="center"
+          fontSize={18}
+          fontWeight={600}
+          color="secondary"
+        >
+          {title}
+        </Typography>
+      </div>
+
       <CreateTaskForm list_id={id} />
+
+      <div className={styles.ListContent}>
+        <TasksList list_id={id} />
+      </div>
     </li>
   );
 };
