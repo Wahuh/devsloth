@@ -6,10 +6,10 @@ import BoardsList from '../../../boards/components/BoardsList';
 
 const Me = ({match}) => {
   return (
-    <div>
+    <>
       <Route exact path={`${match.path}/boards`} component={BoardsList} />
       <Route path={`${match.path}/boards/:board_id`} component={Board} />
-    </div>
+    </>
   );
 };
 
