@@ -20,11 +20,8 @@ const List = ({list}) => {
         </Typography>
       </div>
 
+      <TasksList list_id={id} />
       <CreateTaskForm list_id={id} />
-
-      <div className={styles.ListContent}>
-        <TasksList list_id={id} />
-      </div>
     </li>
   );
 };
