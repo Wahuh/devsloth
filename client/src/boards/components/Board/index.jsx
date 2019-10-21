@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {selectBoard} from '../../redux/selectors';
 import {getBoardRequest} from '../../redux/actions';
-import Typography from '../../../common/components/Typography';
 import Lists from '../../../lists/components/Lists';
 import styles from './Board.module.scss';
 
@@ -13,14 +12,8 @@ const Board = ({board, match, onGetBoard}) => {
     onGetBoard({board_id});
   }, []);
   if (!board) return null;
-  const {title} = board;
   return (
     <div className={styles.Board}>
-      <div className={styles.BoardHeader}>
-        <Typography fontWeight={700} fontSize={20} as="h1" color="primary">
-          {title}
-        </Typography>
-      </div>
       <Lists board_id={board_id} />
     </div>
   ); // </DragDropContext>
