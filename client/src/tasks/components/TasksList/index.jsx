@@ -10,12 +10,15 @@ const TasksList = ({tasks, onGetTasks, list_id}) => {
   useEffect(() => {
     onGetTasks({list_id});
   }, []);
+  if (!tasks.length) return null;
   return (
-    <ul className={styles.TasksList}>
-      {tasks.map(task => (
-        <TaskItem task={task} />
-      ))}
-    </ul>
+    <div className={styles.ListWrapper}>
+      <ul className={styles.TasksList}>
+        {tasks.map(task => (
+          <TaskItem task={task} />
+        ))}
+      </ul>
+    </div>
   );
 };
 
