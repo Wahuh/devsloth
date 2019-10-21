@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {Droppable} from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {selectTasksByListId} from '../../redux/selectors';
@@ -12,13 +13,23 @@ const TasksList = ({tasks, onGetTasks, list_id}) => {
   }, []);
   if (!tasks.length) return null;
   return (
-    <div className={styles.ListWrapper}>
-      <ul className={styles.TasksList}>
-        {tasks.map(task => (
-          <TaskItem task={task} />
-        ))}
-      </ul>
-    </div>
+    /* eslint-disable */
+    <Droppable droppableId={list_id.toString()}>
+      {provided => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className={styles.ListWrapper}
+        >
+          <ul className={styles.TasksList}>
+            {tasks.map((task, index) => (
+              <TaskItem key={task.id} index={index} task={task} />
+            ))}
+          </ul>
+        </div>
+      )}
+    </Droppable>
+    /* eslint-enable */
   );
 };
 
@@ -27,7 +38,7 @@ TasksList.propTypes = {
     PropTypes.objectOf({id: PropTypes.number, title: PropTypes.string}),
   ).isRequired,
   onGetTasks: PropTypes.func.isRequired,
-  list_id: PropTypes.string.isRequired,
+  list_id: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {DragDropContext} from 'react-beautiful-dnd';
 import {selectBoard} from '../../redux/selectors';
 import {getBoardRequest} from '../../redux/actions';
 import Lists from '../../../lists/components/Lists';
@@ -11,12 +12,20 @@ const Board = ({board, match, onGetBoard}) => {
   useEffect(() => {
     onGetBoard({board_id});
   }, []);
+  // eslint-disable-next-line
+  const handleDragEnd = useCallback(result => {
+    const {destination} = result;
+    if (!destination) return null;
+  }, []);
   if (!board) return null;
+
   return (
-    <div className={styles.Board}>
-      <Lists board_id={board_id} />
-    </div>
-  ); // </DragDropContext>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className={styles.Board}>
+        <Lists board_id={board_id} />
+      </div>
+    </DragDropContext>
+  );
 };
 
 Board.defaultProps = {
