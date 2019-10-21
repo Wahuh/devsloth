@@ -1,6 +1,7 @@
 const {Model} = require('objection');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const shortid = require('shortid');
 const {secret} = require('../../config');
 
 class User extends Model {
@@ -16,8 +17,8 @@ class User extends Model {
 
   $formatJson(jsonRaw) {
     const json = super.$formatJson(jsonRaw);
-    const {username, email, id} = json;
-    return {username, email, id};
+    const {username, email, id, room} = json;
+    return {username, email, id, room};
   }
 
   static get relationMappings() {
@@ -65,7 +66,7 @@ class User extends Model {
   static async addOne(user) {
     try {
       const insertedUser = await this.query()
-        .insert(user)
+        .insert({...user, room: shortid.generate()})
         .returning('*');
       return insertedUser;
     } catch (err) {
