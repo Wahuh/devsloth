@@ -15,6 +15,12 @@ after_script:
   - docker exec -it server_test npm run coverage
   - docker-compose down
 
+after_success:
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker build -t wahuh/slothy.io-client ./client
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker build -t wahuh/slothy.io-server ./server
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker push wahuh/slothy.io-client
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker push wahuh/slothy.io-server
 branches:
   only:
     - master
