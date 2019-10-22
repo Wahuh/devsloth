@@ -25,6 +25,7 @@ const TasksList = ({tasks, onGetTasks, list_id}) => {
             {tasks.map((task, index) => (
               <TaskItem key={task.id} index={index} task={task} />
             ))}
+            {provided.placeholder}
           </ul>
         </div>
       )}
@@ -35,7 +36,7 @@ const TasksList = ({tasks, onGetTasks, list_id}) => {
 
 TasksList.propTypes = {
   tasks: PropTypes.arrayOf(
-    PropTypes.objectOf({id: PropTypes.number, title: PropTypes.string}),
+    PropTypes.shape({id: PropTypes.number, title: PropTypes.string}),
   ).isRequired,
   onGetTasks: PropTypes.func.isRequired,
   list_id: PropTypes.number.isRequired,

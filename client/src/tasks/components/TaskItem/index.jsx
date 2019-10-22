@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import {Draggable} from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import styles from './TaskItem.module.scss';
@@ -8,14 +9,16 @@ const TaskItem = ({task, index}) => {
   const {title, id} = task;
   return (
     <Draggable draggableId={id.toString()} index={index}>
-      {provided => (
+      {(provided, snapshot) => (
         <li
           /* eslint-disable */
           {...provided.dragHandleProps}
           {...provided.draggableProps}
           /* eslint-enable */
           ref={provided.innerRef}
-          className={styles.TaskItem}
+          className={classNames(styles.TaskItem, {
+            [styles.Dragging]: snapshot.isDragging,
+          })}
         >
           <Typography as="p" color="secondary">
             {title}

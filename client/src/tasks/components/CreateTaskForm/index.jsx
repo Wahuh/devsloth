@@ -7,8 +7,11 @@ import Input from '../../../common/components/Input';
 import Button from '../../../common/components/Button';
 import {createTaskRequest} from '../../redux/actions';
 import PlusIcon from '../../../common/components/icons/PlusIcon';
+import {selectTasksCountByListId} from '../../redux/selectors';
 
-const CreateTaskForm = ({list_id, onCreateTask}) => {
+// get previous task's position
+
+const CreateTaskForm = ({list_id, onCreateTask, count}) => {
   const [title, setTitle] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -24,7 +27,7 @@ const CreateTaskForm = ({list_id, onCreateTask}) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (title) {
-      onCreateTask({list_id, title});
+      onCreateTask({list_id, title, position: (count + 1) * 10000});
       setTitle('');
     }
   };
@@ -63,10 +66,15 @@ const CreateTaskForm = ({list_id, onCreateTask}) => {
 CreateTaskForm.propTypes = {
   list_id: PropTypes.number.isRequired,
   onCreateTask: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
 };
 
+const mapStateToProps = (state, ownProps) => ({
+  count: selectTasksCountByListId(state, ownProps.list_id),
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     onCreateTask: createTaskRequest,
   },

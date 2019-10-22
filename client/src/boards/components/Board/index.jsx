@@ -6,16 +6,30 @@ import {selectBoard} from '../../redux/selectors';
 import {getBoardRequest} from '../../redux/actions';
 import Lists from '../../../lists/components/Lists';
 import styles from './Board.module.scss';
+import {moveTaskSameList} from '../../../tasks/redux/actions';
 
-const Board = ({board, match, onGetBoard}) => {
+const Board = ({board, match, onGetBoard, onMoveSameList}) => {
   const {board_id} = match.params;
   useEffect(() => {
     onGetBoard({board_id});
   }, []);
   // eslint-disable-next-line
   const handleDragEnd = useCallback(result => {
-    const {destination} = result;
+    const {source, destination} = result;
     if (!destination) return null;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index !== destination.index
+    ) {
+      // same list reorder
+      onMoveSameList({
+        prevIndex: source.index,
+        nextIndex: destination.index,
+        list_id: destination.droppableId,
+      });
+    } else {
+      // move to another list
+    }
   }, []);
   if (!board) return null;
 
@@ -40,6 +54,7 @@ Board.propTypes = {
     title: PropTypes.string,
   }),
   onGetBoard: PropTypes.func.isRequired,
+  onMoveSameList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -52,5 +67,6 @@ export default connect(
   mapStateToProps,
   {
     onGetBoard: getBoardRequest,
+    onMoveSameList: moveTaskSameList,
   },
 )(Board);
