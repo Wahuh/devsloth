@@ -28,12 +28,13 @@ class Task extends Model {
     }
   }
 
-  static async findByListId(list_id) {
+  static async updateOne({id, ...rest}) {
     try {
-      const tasks = await this.query()
-        .select('*')
-        .where({list_id});
-      return tasks;
+      const [task] = await this.query()
+        .patch(rest)
+        .where({id})
+        .returning('*');
+      return task;
     } catch (err) {
       const error = new Error('adasd');
       return Promise.reject(error);

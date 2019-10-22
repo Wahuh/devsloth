@@ -59,7 +59,7 @@ describe('POST /api/signup', () => {
     expect(/^Bearer\s.+/.test(authorization)).toBe(true);
   });
 
-  it('201: responds with a user object that contains an id, username and email but no password', async () => {
+  it('201: responds with a user object that contains an id, username, room and email but no password', async () => {
     const user = {
       email: 'tmd@gmail.com',
       username: 'Wahuh',
@@ -70,6 +70,7 @@ describe('POST /api/signup', () => {
         id: expect.any(Number),
         email: 'tmd@gmail.com',
         username: 'Wahuh',
+        room: expect.any(String),
       },
     });
 

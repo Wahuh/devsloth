@@ -53,7 +53,9 @@ const addTestUserWithBoardsListsAndTasks = async () => {
     .insert(lists)
     .returning('*');
 
-  const tasks = [{title: 'hello task', list_id: 1, description: ''}];
+  const tasks = [
+    {title: 'hello task', list_id: 1, description: '', position: 500},
+  ];
   const insertedTasks = await Task.query()
     .insert(tasks)
     .returning('*');
@@ -97,6 +99,33 @@ const addUserWithBoardsAndLists = async () => {
   return {token, user, boards: insertedBoards, lists: insertedLists};
 };
 
+const seed = async ({
+  user = {
+    email: 'tmd@gmail.com',
+    password: 'abc123',
+    username: 'Thanh',
+  },
+  boards = null,
+  lists = null,
+  tasks = null,
+}) => {
+  const insertedUser = await User.addOne(user);
+  const token = await insertedUser.generateAuthToken();
+
+  if (boards) {
+    await connection('boards').insert(boards);
+  }
+
+  if (lists) {
+    await connection('lists').insert(lists);
+  }
+
+  if (tasks) {
+    await connection('tasks').insert(tasks);
+  }
+  return {token, user: insertedUser};
+};
+
 module.exports = {
   setupAll,
   teardownEach,
@@ -106,4 +135,5 @@ module.exports = {
   addUserWithBoardsAndLists,
   addTestUserWithBoardsListsAndTasks,
   TestClient,
+  seed,
 };

@@ -1,7 +1,27 @@
 jest.mock('./http.api');
 /* eslint-disable */
-import {postTask, getTasks} from './tasks.api';
+import {postTask, getTasks, patchTaskPosition} from './tasks.api';
 /* eslint-enable */
+describe('patchTaskPosition', () => {
+  it('returns normalized data for a task object', async () => {
+    const task = await patchTaskPosition({id: 1, position: 500});
+    const expectedTask = {
+      entities: {
+        tasks: {
+          1: {
+            list_id: 1,
+            title: 'hello thanh',
+            id: 1,
+            position: 500,
+          },
+        },
+      },
+      result: 1,
+    };
+    expect(task).toEqual(expectedTask);
+  });
+});
+
 describe('postTask', () => {
   it('returns normalized data for a task object', async () => {
     const task = await postTask({title: 'hello task', list_id: 1});

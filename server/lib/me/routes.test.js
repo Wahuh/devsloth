@@ -42,6 +42,7 @@ describe('GET /api/me', () => {
         id: expect.any(Number),
         email: 'test@gmail.com',
         username: 'Tester',
+        room: expect.any(String),
       },
     };
 

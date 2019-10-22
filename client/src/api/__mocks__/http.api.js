@@ -52,6 +52,12 @@ const getResponses = {
   },
 };
 
+const patchResponses = {
+  '/tasks/1/position': ({position}) => ({
+    data: {task: {id: 1, list_id: 1, title: 'hello thanh', position}},
+  }),
+};
+
 const headers = {};
 
 export const setDefaultHeader = (header, value) => {
@@ -65,6 +71,12 @@ class MockRequest {
   post(url, data) {
     return new Promise(resolve => {
       const response = postResponses[url](data);
+      resolve(response);
+    });
+  }
+  patch(url, data) {
+    return new Promise(resolve => {
+      const response = patchResponses[url](data);
       resolve(response);
     });
   }

@@ -1,5 +1,6 @@
 import tasksReducer from './reducers';
 import {CREATE_TASK_SUCCESS, GET_TASKS_SUCCESS} from './types';
+import {updateTask} from './actions';
 
 describe('tasksReducer', () => {
   it('returns the initial state', () => {
@@ -10,6 +11,50 @@ describe('tasksReducer', () => {
       byId: {},
       allIds: [],
     };
+    expect(state).toEqual(expectedState);
+  });
+
+  it('handles UPDATE_TASK', () => {
+    const action = updateTask({
+      entities: {
+        tasks: {
+          1: {
+            id: 1,
+            title: 'hello task 1',
+            list_id: 1,
+            description: '',
+            position: 500,
+          },
+        },
+      },
+      result: 1,
+    });
+
+    const intialState = {
+      byId: {
+        1: {
+          id: 1,
+          title: 'hello task 1',
+          list_id: 1,
+          description: '',
+          position: 300,
+        },
+      },
+      allIds: [1],
+    };
+    const expectedState = {
+      byId: {
+        1: {
+          id: 1,
+          title: 'hello task 1',
+          list_id: 1,
+          description: '',
+          position: 500,
+        },
+      },
+      allIds: [1],
+    };
+    const state = tasksReducer(intialState, action);
     expect(state).toEqual(expectedState);
   });
 

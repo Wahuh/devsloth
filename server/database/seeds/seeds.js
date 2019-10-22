@@ -1,3 +1,5 @@
+const shortid = require('shortid');
+
 exports.seed = function(knex) {
   return knex.migrate
     .rollback()
@@ -8,6 +10,7 @@ exports.seed = function(knex) {
           username: 'Thanh',
           email: 'test@gmail.com',
           password: 'abc123',
+          room: shortid.generate(),
         })
         .into('users')
         .returning('*');
