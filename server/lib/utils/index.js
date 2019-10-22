@@ -53,7 +53,9 @@ const addTestUserWithBoardsListsAndTasks = async () => {
     .insert(lists)
     .returning('*');
 
-  const tasks = [{title: 'hello task', list_id: 1, description: ''}];
+  const tasks = [
+    {title: 'hello task', list_id: 1, description: '', position: 500},
+  ];
   const insertedTasks = await Task.query()
     .insert(tasks)
     .returning('*');
