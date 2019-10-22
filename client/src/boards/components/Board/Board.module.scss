@@ -1,0 +1,8 @@
+.Board {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 50px);
+  overflow: hidden;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}

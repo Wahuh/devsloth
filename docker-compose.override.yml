@@ -1,0 +1,28 @@
+version: "3"
+services:
+  database_dev:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - ./server/.dev.env
+
+  database_test:
+    env_file:
+      - ./server/.test.env
+
+  server_dev:
+    container_name: server_dev
+    build:
+      context: ./server
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    env_file:
+      - ./server/.dev.env
+    command: ["npm", "run", "dev"]
+
+  server_test:
+      env_file:
+      - ./server/.test.env

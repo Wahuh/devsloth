@@ -8,12 +8,7 @@ const colors = {
   tertiary: styles.tertiary,
   accent: styles.accent,
   complement: styles.complement,
-  error: styles.error
-};
-
-const fontWeights = {
-  400: styles.fontWeight400,
-  700: styles.fontWeight700,
+  error: styles.error,
 };
 
 const fontScale = {
@@ -49,20 +44,19 @@ const Typography = ({
   textAlign,
   mb,
   fontWeight,
+  letterSpacing,
 }) => {
   return createElement(
     as || 'p',
     {
       style: {
+        fontWeight: fontWeight || 400,
+        letterSpacing: letterSpacing || 'normal',
         fontSize: fontScale[fontSize] || fontScale[16],
-        textAlign: textAlign || 'center',
+        textAlign: textAlign || 'left',
         marginBottom: spacingScale[mb],
       },
-      className: classNames(
-        styles.Typography,
-        colors[color],
-        fontWeights[fontWeight] || fontWeights[400],
-      ),
+      className: classNames(styles.Typography, colors[color]),
     },
     children,
   );

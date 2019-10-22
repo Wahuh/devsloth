@@ -1,0 +1,40 @@
+{
+  "title": "POST /signup",
+  "description": "Create a new user account",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "errorMessage": {
+        "type": "email must be a string"
+      }
+    },
+    "password": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 32,
+      "errorMessage": {
+        "minLength": "password field should not be shorter than 5 characters",
+        "maxLength": "password field should not be longer than 32 characters"
+      }
+    },
+    "username": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 32,
+      "errorMessage": {
+        "maxLength": "username should not be longer than 32 characters",
+        "minLength": "username should not be shorter than 2 characters"
+      }
+    }
+  },
+  "required": ["email", "password", "username"],
+  "errorMessage": {
+    "required": {
+      "username": "username field is missing",
+      "email": "email field is missing",
+      "password": "password field is missing"
+    }
+  }
+}

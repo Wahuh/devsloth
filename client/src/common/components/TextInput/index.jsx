@@ -7,7 +7,16 @@ import TickIcon from '../icons/TickIcon';
 import CrossIcon from '../icons/CrossIcon';
 import Typography from '../Typography';
 
-const TextInput = ({onChange, label, name, type, value, error}) => {
+const TextInput = ({
+  autoComplete,
+  autoFocus,
+  onChange,
+  label,
+  name,
+  type,
+  value,
+  error,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -31,6 +40,8 @@ const TextInput = ({onChange, label, name, type, value, error}) => {
         </span>
       </label>
       <Input
+        autoFocus={autoFocus}
+        autoComplete={autoComplete || 'new-password'}
         name={name}
         onBlur={handleFocus}
         onChange={onChange}
@@ -49,11 +60,13 @@ const TextInput = ({onChange, label, name, type, value, error}) => {
 };
 
 TextInput.defaultProps = {
+  autoComplete: true,
   type: 'text',
   error: '',
 };
 
 TextInput.propTypes = {
+  autoComplete: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

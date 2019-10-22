@@ -1,9 +1,8 @@
-import http from './http.api';
-import config from '../config';
+import http, {setDefaultHeader} from './http.api';
 
-const getJwt = () => localStorage.getItem('jwt');
+export const getJwt = () => localStorage.getItem('jwt');
 
-const extractJwt = headers => {
+export const extractJwt = headers => {
   const {authorization} = headers;
   if (!authorization) {
     throw new Error('authorization header missing');
@@ -14,41 +13,34 @@ const extractJwt = headers => {
   throw new Error('Bearer does not precede the token');
 };
 
-const saveJwt = jwt => {
+export const saveJwt = jwt => {
   if (!jwt) throw new Error('Invalid jwt cannot be saved');
   localStorage.setItem('jwt', jwt);
 };
 
-const setAuthorizationHeader = jwt => {
-  http.setDefaultHeader('Authorization', `Bearer ${jwt}`);
+export const setAuthorizationHeader = jwt => {
+  setDefaultHeader('Authorization', `Bearer ${jwt}`);
 };
 
-const signup = user => {
-  return http.post(`${config.apiUrl}/signup`, user);
+export const signup = async user => {
+  const {data, headers} = await http.post('/signup', user);
+  const jwt = extractJwt(headers);
+  saveJwt(jwt);
+  setAuthorizationHeader(jwt);
+  return data.user;
 };
 
-const login = ({email, password}) => {
-  return http.post(`${config.apiUrl}/login`, {
+export const login = async ({email, password}) => {
+  const {data, headers} = await http.post('/login', {
     email,
     password,
   });
+  const jwt = extractJwt(headers);
+  saveJwt(jwt);
+  setAuthorizationHeader(jwt);
+  return data.user;
 };
 
-export default {
-  signup,
-  login,
-  getJwt,
-  saveJwt,
-  extractJwt,
-  setAuthorizationHeader,
+export const logout = () => {
+  localStorage.removeItem('jwt');
 };
-// export const login = ({email, password}) => {
-//   return http.post(LOGIN_ENDPOINT, {
-//     email,
-//     password,
-//   });
-// };
-
-// export const logout = () => {
-//   localStorage.removeItem('jwt');
-// };

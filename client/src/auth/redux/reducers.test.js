@@ -1,5 +1,5 @@
 import authReducer from './reducers';
-import {signupSuccess} from '../../signup/redux/actions';
+import {SIGNUP_SUCCESS} from '../../signup/redux/types';
 
 describe('authReducer', () => {
   it('returns the initial state', () => {
@@ -8,15 +8,28 @@ describe('authReducer', () => {
     const state = authReducer(initalState, action);
     const expectedState = {
       isAuthenticated: false,
+      user: {},
     };
     expect(state).toEqual(expectedState);
   });
 
   it('handles SIGNUP_SUCCESS', () => {
-    const action = signupSuccess();
+    const action = {
+      type: SIGNUP_SUCCESS,
+      payload: {
+        username: 'Dasadasdsa',
+        email: 'tmdoan@gmail.com',
+        id: 2,
+      },
+    };
     const state = authReducer({}, action);
     const expectedState = {
       isAuthenticated: true,
+      user: {
+        username: 'Dasadasdsa',
+        email: 'tmdoan@gmail.com',
+        id: 2,
+      },
     };
     expect(state).toEqual(expectedState);
   });

@@ -22,12 +22,13 @@ Button.defaultProps = {
   className: null,
   disabled: false,
   type: 'button',
+  onClick: () => {},
 };
 
 Button.propTypes = {
   children: Proptypes.node,
   className: Proptypes.string,
-  onClick: Proptypes.func.isRequired,
+  onClick: Proptypes.func,
   disabled: Proptypes.bool,
   type: Proptypes.string,
 };

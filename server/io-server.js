@@ -1,5 +1,6 @@
 const app = require('./app');
+const realtime = require('./lib/realtime');
 
-const ioServer = require('./io')(app);
+const ioServer = realtime.connect(app);
 
 module.exports = ioServer;
