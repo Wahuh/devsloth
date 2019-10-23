@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --hot --host 0.0.0.0",
     "build": "webpack --mode=production",
-    "deploy": "s3-deploy ./dist/** --region eu-west-1 --bucket www.slothy.io",
+    "deploy": "s3-deploy ./dist/** --cwd ./dist/ --region eu-west-1 --bucket www.slothy.io",
     "precommit": "lint-staged",
     "ci-test": "jest",
     "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
