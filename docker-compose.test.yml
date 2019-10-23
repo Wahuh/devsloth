@@ -6,6 +6,8 @@ services:
       - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
       - "COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN}"
       - "COVERALLS_PARALLEL=true"
+      - "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY}"
+      - "AWS_SECRET_KEY=${AWS_SECRET_KEY}"
 
   database_test:
     environment:
