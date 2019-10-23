@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "server",
+      "image": "wahuh/slothy.io-server",
+      "hostname": "server",
+      "essential": true,
+      "memory": 256
+    }
+  ]
+}
