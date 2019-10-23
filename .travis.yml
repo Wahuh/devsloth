@@ -45,6 +45,8 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     local_dir: ./client/dist
     skip_cleanup: true
+    on:
+      branch: master
 
 notifications:
   webhooks: https://coveralls.io/webhook
