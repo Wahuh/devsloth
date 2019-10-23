@@ -1,12 +1,12 @@
 {
-  "AWSEBDockerrunVersion": 2,
-  "containerDefinitions": [
+  "AWSEBDockerrunVersion": 1,
+  "Image": {
+    "Name": "wahuh/slothy.io-server",
+    "Update": true
+  },
+  "Ports": [
     {
-      "name": "server",
-      "image": "wahuh/slothy.io-server",
-      "hostname": "server",
-      "essential": true,
-      "memory": 256
+      "ContainerPort": 3000
     }
   ]
 }

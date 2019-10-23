@@ -6,4 +6,5 @@ module.exports = {
   pgHost: process.env.POSTGRES_HOST,
   secret: process.env.JWT_SECRET,
   env: process.env.NODE_ENV || 'development',
+  port: process.env.PORT || 3000,
 };
