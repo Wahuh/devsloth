@@ -9,17 +9,17 @@ before_script:
 script:
   - docker exec -it client npm run ci-test
   - docker exec -it server_test npm run ci-test
-
-after_script:
   - docker exec -it client npm run coverage
   - docker exec -it server_test npm run coverage
+
+after_script:
   - docker-compose down
 
 after_success:
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker build -t wahuh/slothy.io-server ./server
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker push wahuh/slothy.io-server
-  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && cd client && npm run build && cd .. && ls
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker exec -it client npm run build
 branches:
   only:
     - master
@@ -37,14 +37,8 @@ deploy:
     access_key_id:
       secure: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-  - provider: s3
-    region: eu-west-1
-    bucket: www.slothy.io
-    access_key_id:
-      secure: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    local_dir: ./client/dist
-    skip_cleanup: true
+  - provider: script
+    script: docker exec -it client npm run deploy
     on:
       branch: master
 
