@@ -19,7 +19,7 @@ after_success:
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker build -t wahuh/slothy.io-server ./server
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker push wahuh/slothy.io-server
-  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && cd client && npm run build
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && cd client && npm run build && cd .. && ls
 branches:
   only:
     - master
