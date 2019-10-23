@@ -8,4 +8,4 @@ COPY . .
 
 RUN npm install && npm cache clean --force
 
-CMD [ "node", "./bin/www" ]
+CMD [ "node", "listen.js" ]
