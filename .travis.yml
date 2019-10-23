@@ -19,23 +19,32 @@ after_success:
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker build -t wahuh/slothy.io-server ./server
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && docker push wahuh/slothy.io-server
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && cd client && npm run build
 branches:
   only:
     - master
     - development
 
 deploy:
-  provider: elasticbeanstalk
-  region: eu-west-1
-  app: slothy.io
-  env: Slothyio-env
-  bucket_name: elasticbeanstalk-eu-west-1-566169246547
-  bucket_path: slothy.io
-  on:
-    branch: master
-  access_key_id:
-    secure: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  - provider: elasticbeanstalk
+    region: eu-west-1
+    app: slothy.io
+    env: Slothyio-env
+    bucket_name: elasticbeanstalk-eu-west-1-566169246547
+    bucket_path: slothy.io
+    on:
+      branch: master
+    access_key_id:
+      secure: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+  - provider: s3
+    region: eu-west-1
+    bucket: www.slothy.io
+    access_key_id:
+      secure: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: ./client/dist
+    skip_cleanup: true
 
 notifications:
   webhooks: https://coveralls.io/webhook
