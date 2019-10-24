@@ -10,7 +10,7 @@ var s3 = new AWS.S3({
 
 var fs = require('fs');
 
-function uploadToS3(bucketName, keyPrefix, filePath) {
+function uploadToS3(bucketName, keyPrefix, filePath, contentType) {
   // ex: /path/to/my-picture.png becomes my-picture.png
   var fileName = path.basename(filePath);
   var fileStream = fs.createReadStream(filePath);
@@ -26,6 +26,8 @@ function uploadToS3(bucketName, keyPrefix, filePath) {
         Bucket: bucketName,
         Key: keyName,
         Body: fileStream,
+        ContentType: contentType,
+        ACL: 'public-read',
       },
       function(err, result) {
         if (err) {
@@ -39,6 +41,6 @@ function uploadToS3(bucketName, keyPrefix, filePath) {
   });
 }
 
-uploadToS3('www.slothy.io', '', './dist/main.js');
-uploadToS3('www.slothy.io', '', './dist/main.css');
-uploadToS3('www.slothy.io', '', './dist/index.html');
+uploadToS3('www.slothy.io', '', './dist/main.js', 'application/javascript');
+uploadToS3('www.slothy.io', '', './dist/main.css', 'text/css');
+uploadToS3('www.slothy.io', '', './dist/index.html', 'text/html');
