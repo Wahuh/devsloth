@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Input from '../../../common/components/Input';
 import styles from './CreateListForm.module.scss';
 import {createListRequest} from '../../redux/actions';
 
-const CreateListForm = ({onCreateList, board_id}) => {
+const CreateListForm = ({onCreateList, hasNoLists, board_id}) => {
   const [title, setTitle] = useState('');
 
   const handleChange = ({currentTarget}) => {
@@ -21,7 +22,9 @@ const CreateListForm = ({onCreateList, board_id}) => {
   return (
     <Input
       name="title"
-      className={styles.CreateListInput}
+      className={classNames(styles.CreateListInput, {
+        [styles.Alone]: hasNoLists,
+      })}
       onEnter={handleSubmit}
       placeholder="+ add list"
       onChange={handleChange}
@@ -33,6 +36,7 @@ const CreateListForm = ({onCreateList, board_id}) => {
 CreateListForm.propTypes = {
   onCreateList: PropTypes.func.isRequired,
   board_id: PropTypes.string.isRequired,
+  hasNoLists: PropTypes.bool.isRequired,
 };
 
 export default connect(

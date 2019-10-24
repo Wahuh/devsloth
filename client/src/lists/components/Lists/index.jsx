@@ -16,7 +16,7 @@ const Lists = ({lists, onGetLists, board_id}) => {
       {lists.map(list => (
         <List key={list.id} list={list} />
       ))}
-      <CreateListForm board_id={board_id} />
+      <CreateListForm hasNoLists={!lists.length} board_id={board_id} />
     </ul>
   );
 };
