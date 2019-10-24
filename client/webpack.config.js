@@ -37,6 +37,13 @@ const postCSSLoader = {
   },
 };
 
+let apiUrl = JSON.stringify(process.env.API_URL || 'http://localhost:3000/api');
+if (!devMode) {
+  apiUrl = JSON.stringify(
+    'http://slothyio-env.brau2wscw3.eu-west-1.elasticbeanstalk.com/api',
+  );
+}
+
 module.exports = {
   entry: './src/index.jsx',
   output: {
@@ -92,9 +99,7 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify(
-        process.env.API_URL || 'http://localhost:3000/api',
-      ),
+      'process.env.API_URL': apiUrl,
     }),
   ],
 };
