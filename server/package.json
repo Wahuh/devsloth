@@ -14,7 +14,8 @@
     "migration-make": "knex migrate:make",
     "precommit": "lint-staged",
     "ci-test": "jest",
-    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "prestart": "npm run migrate-latest"
   },
   "author": "'Thanh <'tmdoan98@gmail.com'>",
   "license": "ISC",
