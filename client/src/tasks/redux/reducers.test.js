@@ -127,4 +127,47 @@ describe('tasksReducer', () => {
     const state = tasksReducer(initialState, action);
     expect(state).toEqual(expectedState);
   });
+
+  it('does not duplicate tasks in state', () => {
+    const action = {
+      type: GET_TASKS_SUCCESS,
+      payload: {
+        entities: {
+          tasks: {
+            1: {
+              id: 1,
+              title: 'hello task',
+              description: '',
+              list_id: 1,
+            },
+          },
+        },
+        result: [1],
+      },
+    };
+    const initialState = {
+      byId: {
+        1: {
+          id: 1,
+          title: 'hello task',
+          description: '',
+          list_id: 1,
+        },
+      },
+      allIds: [1],
+    };
+    const expectedState = {
+      byId: {
+        1: {
+          id: 1,
+          title: 'hello task',
+          description: '',
+          list_id: 1,
+        },
+      },
+      allIds: [1],
+    };
+    const state = tasksReducer(initialState, action);
+    expect(state).toEqual(expectedState);
+  });
 });

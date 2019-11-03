@@ -9,8 +9,10 @@ const addTasks = (state, action) => {
 
 const addTaskIds = (state, action) => {
   const {result} = action.payload;
-
-  return Array.isArray(result) ? [...state, ...result] : [...state, result];
+  const taskIds = Array.isArray(result)
+    ? [...state, ...result]
+    : [...state, result];
+  return [...new Set(taskIds)];
 };
 
 const updateTask = (state, action) => {
