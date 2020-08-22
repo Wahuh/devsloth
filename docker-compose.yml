@@ -7,6 +7,18 @@ services:
       - ./services/auth:/node/app
     build:
       context: services/auth
-    ports:
-      - 8001:3000
     command: npm start
+    labels: 
+      - traefik.http.routers.auth.rule=Host(`api.localhost`) && Path(`/auth`)
+
+  gateway:
+    image: traefik:v2.2
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    command: 
+      - --api.insecure=true
+      - --providers.docker=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

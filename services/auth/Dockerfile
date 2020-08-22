@@ -1,7 +1,5 @@
 FROM node:14-slim
 
-EXPOSE 3000
-
 WORKDIR /node
 
 COPY package*.json ./
@@ -15,5 +13,9 @@ RUN npm install && npm cache clean --force
 WORKDIR /node/app
 
 COPY --chown=node:node . .
+
+ENV PORT=3000
+
+EXPOSE ${PORT}
 
 CMD node index.js
