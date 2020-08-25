@@ -1,25 +1,12 @@
-version: "3"
+version: "3.8"
+
 services:
-  client:
-    container_name: client
+  email:
+    container_name: email
+    volumes:
+      - ./services/email/src:/app
     build:
-      context: ./client
+      context: services/email
     ports:
-      - "8080:8080"
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    command: ["npm", "start"]
-
-  database_test:
-    image: postgres:latest
-    restart: always
-
-  server_test:
-    container_name: server_test
-    build:
-      context: ./server
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    command: ["npm", "run", "test-stall"]
+      - 8080:80
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 80
