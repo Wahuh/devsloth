@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from config import SENDGRID_API_KEY, DEVTRUCK_EMAIL
 
 
 class Email(BaseModel):
-    to: str
+    to: EmailStr
     subject: str
     content: str
 
