@@ -1,4 +1,7 @@
 import os
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+SENDGRID_CONFIRMATION_CODE_TEMPLATE_ID = os.environ.get(
+    "SENDGRID_CONFIRMATION_CODE_TEMPLATE_ID"
+)
 DEVTRUCK_EMAIL = "noreply@devtruck.com"

@@ -1,13 +1,10 @@
 from fastapi import FastAPI
-from email_kit import send, Email
+from emails import send, ConfirmationCodeEmail
+from config import SENDGRID_CONFIRMATION_CODE_TEMPLATE_ID
 
 app = FastAPI()
 
 
-@app.post("/email/send", status_code=201)
-async def send_email(email: Email):
-    try:
-        send(email)
-
-    except Exception as e:
-        print(str(e))
+@app.post("/email/confirmation-code")
+async def email_confirmation_code(email: ConfirmationCodeEmail):
+    send(email.to, template_id=SENDGRID_CONFIRMATION_CODE_TEMPLATE_ID, code=email.code)
