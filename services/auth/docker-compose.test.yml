@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  auth:
+    build: .
+    container_name: auth
+  auth_tests:
+    build: tests/service_integration
+    container_name: auth_tests
+    depends_on: 
+      - auth

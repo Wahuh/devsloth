@@ -1,0 +1,15 @@
+[package]
+name = "auth"
+version = "0.1.0"
+authors = ["Thanh Doan <tmdoan98@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "auth"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0"
+async-std = { version = "1.6.0", features = [ "attributes" ] }
+sqlx = { version = "0.4.0-beta.1", features = [ "postgres" ] }
+tide = "0.13.0"
