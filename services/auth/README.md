@@ -17,19 +17,19 @@ docker run -e POSTGRES_DB=auth -e POSTGRES_PASSWORD=postgres --name auth_db_test
 ```sh
 # services/auth/.env
 
-DATABASE_URL=postgres://postgres:postgres@localhost:8084/auth
+DATABASE_URL=postgresql://postgres:postgres@localhost:8084/auth
 ```
 
 ### Running migrations
 
 > make sure you are in the services/auth directory
-```
+```sh
 docker-compose -f docker-compose.migrate.yml up --exit-code-from migrations
 ```
 
 > below is an alternative to running the docker-compose command, using volume doesn't work on Windows yet see: https://github.com/docker/cli/pull/1273
 
-```
+```sh
 docker run --rm -v $(PWD)/migrations:/flyway/sql flyway/flyway -url=jdbc:postgresql://host.docker.internal:8084/auth -schemas=public -user=postgres -password=postgres -connectRetries=60 migrate
 ```
 
