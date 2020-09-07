@@ -9,7 +9,10 @@ name = "auth"
 path = "src/main.rs"
 
 [dependencies]
-anyhow = "1.0"
+anyhow = "1.0.32"
 async-std = { version = "1.6.0", features = [ "attributes" ] }
 sqlx = { version = "0.4.0-beta.1", features = [ "postgres" ] }
 tide = "0.13.0"
+
+[dev-dependencies]
+serial_test = "0.5.0"
