@@ -4,8 +4,22 @@ services:
   auth:
     build: .
     container_name: auth
+    environment: 
+      - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:8084/auth
+      - GITHUB_API_URL=http://fake:8081
+      - GITHUB_BASE_URL=http://fake:8081
+      - GITHUB_CLIENT_ID=abcdef123456
+      - SQLX_OFFLINE
+  
   auth_tests:
     build: tests/service_integration
     container_name: auth_tests
     depends_on: 
       - auth
+      - fake
+    environment: 
+      - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:8084/auth
+  
+  fake:
+    build: tests/fake
+    container_name: fake
