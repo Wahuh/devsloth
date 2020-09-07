@@ -1,0 +1,21 @@
+{
+  "db": "PostgreSQL",
+  "6fb99586d07c2a5e9f3d36cccd8ee55c0f2420ba6616a69efc8832baade49059": {
+    "query": "INSERT INTO challenge DEFAULT VALUES RETURNING state",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "state",
+          "type_info": "Uuid"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false
+      ]
+    }
+  }
+}
