@@ -1,8 +1,8 @@
 mod handlers;
 mod routes;
 
-use crate::{authn::GitHubConfig, config::Config};
-use anyhow::Result;
+use crate::config::Config;
+use anyhow::{Context, Result};
 use routes::add_routes;
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 use std::env;
@@ -23,7 +23,8 @@ fn setup_app(state: State) -> Server<State> {
 pub async fn run() -> Result<()> {
     tide::log::start();
     let config = Config::from_env()?;
-    let database_url = env::var("DATABASE_URL")?;
+    let database_url =
+        env::var("DATABASE_URL").context("DATABASE_URL environment variable not set")?;
     let pool = PgPoolOptions::new().connect(&database_url).await?;
     let state = State { config, pool };
     let app = setup_app(state);
