@@ -5,11 +5,17 @@ services:
     build: .
     container_name: auth
     environment: 
+      - ACCESS_SECRET=banana
+      - REFRESH_SECRET=banana
       - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:8084/auth
       - GITHUB_API_URL=http://fake:8081
       - GITHUB_BASE_URL=http://fake:8081
       - GITHUB_CLIENT_ID=abcdef123456
-      - SQLX_OFFLINE
+      - GITHUB_CLIENT_SECRET=banana
+      - WEB_DOMAIN=localhost
+      - WEB_URL=localhost
+    ports: 
+      - 8080:8080
   
   auth_tests:
     build: tests/service_integration

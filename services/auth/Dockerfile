@@ -1,5 +1,8 @@
 FROM ekidd/rust-musl-builder:latest as build
 
+ADD --chown=rust:rust Cargo.toml Cargo.lock ./
+RUN cargo build --release || true
+
 ADD --chown=rust:rust . ./
 RUN cargo build --release
 

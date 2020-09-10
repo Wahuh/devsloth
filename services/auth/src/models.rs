@@ -9,6 +9,7 @@ impl Challenge<'_> {
     pub fn new(pool: &Pool<Postgres>) -> Challenge {
         Challenge { pool }
     }
+
     pub async fn create_state(&self) -> Result<String> {
         let row = sqlx::query!("INSERT INTO challenge DEFAULT VALUES RETURNING state")
             .fetch_one(self.pool)

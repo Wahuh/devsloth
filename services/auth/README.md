@@ -12,13 +12,18 @@ This service handles logins, signups and user accounts.
 docker run -e POSTGRES_DB=auth -e POSTGRES_PASSWORD=postgres --name auth_db_test -p 8084:5432 -d postgres 
 ```
 
-> create a .env file so sqlx can connect to the test database
+### Configuring sqlx
+
+Create a .env file so sqlx can connect to the test database
 
 ```sh
 # services/auth/.env
 
 DATABASE_URL=postgresql://postgres:postgres@localhost:8084/auth
 ```
+
+Keep `sqlx-data.json` up to date by running `cargo sqlx prepare`. If this command fails to update, try deleting files in `target/sqlx`.
+
 
 ### Running migrations
 

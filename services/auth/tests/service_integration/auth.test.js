@@ -18,10 +18,8 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
-  const sql = `
-    TRUNCATE TABLE challenge;
-  `;
-  await client.query(sql);
+  await client.query("TRUNCATE TABLE challenge;");
+  await client.query("TRUNCATE TABLE account RESTART IDENTITY;");
 });
 
 test("health check is successful", async () => {
@@ -35,7 +33,7 @@ test("redirects to GitHub (fake server) with state param", async () => {
   );
 
   // should persist state as a uuid in database
-  let sql = `SELECT * FROM challenge`;
+  const sql = `SELECT * FROM challenge`;
   const res = await client.query(sql);
   const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
   const {
@@ -47,4 +45,28 @@ test("redirects to GitHub (fake server) with state param", async () => {
   expect(statusCode).toBe(200);
   expect(state).toMatch(uuidRegex);
   expect(url).toMatch(urlRegex);
+});
+
+test("creates account and redirects to web app", async () => {
+  const searchParams = new URLSearchParams([
+    ["code", "abcd"],
+    ["state", "abc123"],
+  ]);
+  const { statusCode, url } = await got(
+    "http://auth:8080/auth/github/continue",
+    { searchParams, followRedirect: false }
+  );
+  const sql = `SELECT * FROM account`;
+  const res = await client.query(sql);
+  const {
+    rows: [account],
+  } = res;
+
+  expect(statusCode).toBe(301);
+  expect(account).toEqual({
+    email: "example@gmail.com",
+    created_at: expect.any(Date),
+    id: 1,
+    refresh_token: expect.any(String),
+  });
 });
