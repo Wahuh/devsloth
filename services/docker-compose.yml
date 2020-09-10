@@ -2,6 +2,17 @@ version: '3.8'
 
 # development environment for services
 services: 
+  api_gateway:
+    command: 
+      - --api.insecure=true
+      - --providers.docker=true
+    image: traefik:v2.2
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+
   auth:
     build: auth
     environment: 
@@ -13,3 +24,5 @@ services:
     env_file: 
       # should contain GITHUB_API_URL, GITHUB_BASE_URL, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
       - auth/.env
+    labels: 
+      - traefik.http.routers.auth.rule=Host(`api.localhost`) && PathPrefix(`/auth`)
