@@ -1,0 +1,16 @@
+{
+  "name": "container_tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Thanh Doan",
+  "license": "ISC",
+  "devDependencies": {
+    "got": "^11.6.2",
+    "jest": "^26.4.2",
+    "pg": "^8.3.3"
+  }
+}
