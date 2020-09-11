@@ -8,8 +8,8 @@ services:
       - ACCESS_SECRET=banana
       - REFRESH_SECRET=banana
       - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:8084/auth
-      - GITHUB_API_URL=http://fake:8081
-      - GITHUB_BASE_URL=http://fake:8081
+      - GITHUB_API_URL=http://fake_server:8081
+      - GITHUB_BASE_URL=http://fake_server:8081
       - GITHUB_CLIENT_ID=abcdef123456
       - GITHUB_CLIENT_SECRET=banana
       - WEB_DOMAIN=localhost
@@ -24,3 +24,7 @@ services:
       - auth
     environment: 
       - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:8084/auth
+  
+  fake_server:
+    build: tests/fake_server
+    container_name: fake_server

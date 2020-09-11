@@ -42,6 +42,27 @@ test("redirects to GitHub (fake server) with state param", async () => {
   expect(statusCode).toBe(301);
   expect(state).toMatch(uuidRegex);
   expect(location).toBe(
-    `http://fake:8081/login/oauth/authorize?client_id=abcdef123456&state=${state}`
+    `http://fake_server:8081/login/oauth/authorize?client_id=abcdef123456&state=${state}`
   );
+});
+
+test("creates account and redirects to web app url", async () => {
+  const searchParams = { code: "abcd", state: "abc123" };
+  const { statusCode } = await got("http://auth:8080/auth/github/continue", {
+    searchParams,
+    followRedirect: false,
+  });
+  const sql = `SELECT * FROM account`;
+  const res = await client.query(sql);
+  const {
+    rows: [account],
+  } = res;
+
+  expect(statusCode).toBe(301);
+  expect(account).toEqual({
+    email: "example@gmail.com",
+    created_at: expect.any(Date),
+    id: 1,
+    refresh_token: expect.any(String),
+  });
 });

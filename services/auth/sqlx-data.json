@@ -1,5 +1,44 @@
 {
   "db": "PostgreSQL",
+  "1a392d67f3b3ca8059fa74524f052803b13f2b00aa263ba8ac29d7c23e1897be": {
+    "query": "INSERT INTO account (email) VALUES ($1) RETURNING id, email",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "email",
+          "type_info": "Text"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      },
+      "nullable": [
+        false,
+        true
+      ]
+    }
+  },
+  "29bb0e7b5ceeff6bbc1872f81bcd8de2a284d9fc94f3765ca201dd1f2960d9b6": {
+    "query": "UPDATE account SET refresh_token = $1 WHERE id = $2",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Int4"
+        ]
+      },
+      "nullable": []
+    }
+  },
   "6fb99586d07c2a5e9f3d36cccd8ee55c0f2420ba6616a69efc8832baade49059": {
     "query": "INSERT INTO challenge DEFAULT VALUES RETURNING state",
     "describe": {
@@ -12,6 +51,26 @@
       ],
       "parameters": {
         "Left": []
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
+  "9345184ec1dc0c79e75e81567b39c2e5a463def5890beab9b86588f740d78c6a": {
+    "query": "SELECT id FROM account WHERE email = $1 LIMIT 1",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int4"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
       },
       "nullable": [
         false
