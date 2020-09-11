@@ -6,6 +6,7 @@ services:
     command: 
       - --api.insecure=true
       - --providers.docker=true
+      - --providers.docker.exposedByDefault=false
     image: traefik:v2.2
     ports:
       - 80:80
@@ -27,6 +28,7 @@ services:
       - auth/.env
     labels: 
       - traefik.http.routers.auth.rule=Host(`api.localhost`) && PathPrefix(`/auth`)
+      - traefik.enable=true
   
   auth_db:
     image: postgres
