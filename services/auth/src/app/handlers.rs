@@ -48,7 +48,7 @@ pub async fn github_continue(req: Request<State>) -> Result<Response> {
         .http_only(true)
         .finish();
 
-    let location = format!("{}", &req.state().config.web_url);
+    let location = format!("{}/@me", &req.state().config.web_url);
     let mut response = Response::builder(301).header("Location", location).build();
     response.insert_cookie(access_cookie);
     response.insert_cookie(refresh_cookie);

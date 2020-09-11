@@ -48,7 +48,10 @@ test("redirects to GitHub (fake server) with state param", async () => {
 
 test("creates account and redirects to web app url", async () => {
   const searchParams = { code: "abcd", state: "abc123" };
-  const { statusCode } = await got("http://auth:8080/auth/github/continue", {
+  const {
+    statusCode,
+    headers: { location },
+  } = await got("http://auth:8080/auth/github/continue", {
     searchParams,
     followRedirect: false,
   });
@@ -59,6 +62,7 @@ test("creates account and redirects to web app url", async () => {
   } = res;
 
   expect(statusCode).toBe(301);
+  expect(location).toBe("http://localhost:3000/@me");
   expect(account).toEqual({
     email: "example@gmail.com",
     created_at: expect.any(Date),
