@@ -10,7 +10,10 @@ pub async fn health_check(_req: Request<State>) -> Result<Response> {
 
 pub async fn github_redirect(req: Request<State>) -> Result<Response> {
     let url = generate_redirect_url(&req.state().config, &req.state().pool).await?;
-    let response = Response::builder(301).header("Location", url).build();
+    let response = Response::builder(301)
+        .header("Cache-Control", "no-store")
+        .header("Location", url)
+        .build();
     Ok(response)
 }
 
@@ -49,7 +52,11 @@ pub async fn github_continue(req: Request<State>) -> Result<Response> {
         .finish();
 
     let location = format!("{}/@me", &req.state().config.web_url);
-    let mut response = Response::builder(301).header("Location", location).build();
+
+    let mut response = Response::builder(301)
+        .header("Cache-Control", "no-store")
+        .header("Location", location)
+        .build();
     response.insert_cookie(access_cookie);
     response.insert_cookie(refresh_cookie);
     Ok(response)

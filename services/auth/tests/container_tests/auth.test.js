@@ -24,12 +24,12 @@ test("health check is successful", async () => {
 });
 
 test("redirects to GitHub (fake server) with state param", async () => {
-  const {
-    statusCode,
-    headers: { location },
-  } = await got("http://auth:8080/auth/github/redirect", {
-    followRedirect: false,
-  });
+  const { statusCode, headers } = await got(
+    "http://auth:8080/auth/github/redirect",
+    {
+      followRedirect: false,
+    }
+  );
 
   // should persist state as a uuid in database
   const sql = `SELECT * FROM challenge`;
@@ -41,20 +41,21 @@ test("redirects to GitHub (fake server) with state param", async () => {
 
   expect(statusCode).toBe(301);
   expect(state).toMatch(uuidRegex);
-  expect(location).toBe(
+  expect(headers["cache-control"]).toBe("no-store");
+  expect(headers.location).toBe(
     `http://fake_server:8081/login/oauth/authorize?client_id=abcdef123456&state=${state}`
   );
 });
 
 test("creates account and redirects to web app url", async () => {
   const searchParams = { code: "abcd", state: "abc123" };
-  const {
-    statusCode,
-    headers: { location },
-  } = await got("http://auth:8080/auth/github/continue", {
-    searchParams,
-    followRedirect: false,
-  });
+  const { statusCode, headers } = await got(
+    "http://auth:8080/auth/github/continue",
+    {
+      searchParams,
+      followRedirect: false,
+    }
+  );
   const sql = `SELECT * FROM account`;
   const res = await client.query(sql);
   const {
@@ -62,7 +63,8 @@ test("creates account and redirects to web app url", async () => {
   } = res;
 
   expect(statusCode).toBe(301);
-  expect(location).toBe("http://localhost:3000/@me");
+  expect(headers["cache-control"]).toBe("no-store");
+  expect(headers.location).toBe("http://localhost:3000/@me");
   expect(account).toEqual({
     email: "example@gmail.com",
     created_at: expect.any(Date),
