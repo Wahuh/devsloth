@@ -18,11 +18,25 @@ services:
     environment: 
       ACCESS_SECRET: banana
       REFRESH_SECRET: banana
+      DATABASE_URL: postgresql://postgres:postgres@auth_db/auth 
       SECURE_COOKIES: 0
       WEB_DOMAIN: localhost
       WEB_URL: http://localhost:3000
     env_file: 
-      # should contain GITHUB_API_URL, GITHUB_BASE_URL, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
+      # should contain GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
       - auth/.env
     labels: 
       - traefik.http.routers.auth.rule=Host(`api.localhost`) && PathPrefix(`/auth`)
+  
+  auth_db:
+    image: postgres
+    environment: 
+      POSTGRES_DB: auth
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  auth_migrations:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://auth_db/auth -schemas=public -user=postgres -password=postgres -connectRetries=60 migrate
+    volumes: 
+      - ./auth/migrations:/flyway/sql
