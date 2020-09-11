@@ -49,12 +49,12 @@ impl GitHubClient<'_> {
     pub async fn authorize(&mut self, code: String, state: String) -> Result<()> {
         let url = format!("{}/login/oauth/access_token", self.base_url);
         let json = json!({ "client_id": self.client_id, "client_secret": self.client_secret, "code": code, "state": state });
-        let AccessTokenResponse { access_token } = surf::post(url)
-            .header("accept", "application/json")
-            .body(json)
-            .recv_json()
-            .await
-            .map_err(|err| anyhow!(err))?;
+
+        let AccessTokenResponse { access_token } = ureq::post(url.as_str())
+            .set("accept", "application/json")
+            .send_json(json)
+            .into_json_deserialize::<AccessTokenResponse>()?;
+
         self.access_token = Some(access_token);
         Ok(())
     }
@@ -62,12 +62,12 @@ impl GitHubClient<'_> {
     pub async fn get_user_email(&self) -> Result<String> {
         let access_token = self.access_token.as_ref().context("access_token is not set. Please call authorize to get an access token before calling this method.")?;
         let url = format!("{}/user/emails", self.api_url);
-        let emails: Vec<UserEmailResponse> = surf::get(url)
-            .header("accept", "application/vnd.github.v3+json")
-            .header("Authorization", format!("token {}", access_token))
-            .recv_json()
-            .await
-            .map_err(|err| anyhow!(err))?;
+        let authorization_header = format!("token {}", access_token);
+        let emails = ureq::get(url.as_str())
+            .set("accept", "application/vnd.github.v3+json")
+            .set("Authorization", authorization_header.as_str())
+            .call()
+            .into_json_deserialize::<Vec<UserEmailResponse>>()?;
         // .context("Failed to get GitHub user email")?;
         let email_response = emails.iter().find(|e| e.primary).context(
             "The user does not have a primary email with GitHub, could this ever happen?",
