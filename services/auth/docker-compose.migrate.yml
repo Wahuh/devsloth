@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  migrations:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://host.docker.internal:8084/auth -schemas=public -user=postgres -password=postgres -connectRetries=60 migrate
+    volumes: 
+      - ./migrations:/flyway/sql
