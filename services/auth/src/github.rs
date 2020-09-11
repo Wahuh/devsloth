@@ -1,5 +1,5 @@
 use crate::config::Config;
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -74,5 +74,34 @@ impl GitHubClient<'_> {
         )?;
         let primary_email = email_response.email.to_owned();
         Ok(primary_email)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::GitHubClient;
+    use crate::config::Config;
+
+    #[test]
+    fn build_redirect_url_returns_identity_url_with_state() {
+        let config = Config {
+            github_api_url: String::new(),
+            github_base_url: "https://github.com".to_string(),
+            github_client_id: "id456789".to_string(),
+            github_client_secret: String::new(),
+            refresh_secret: String::new(),
+            access_secret: String::new(),
+            secure_cookies: false,
+            web_url: String::new(),
+            web_domain: String::new(),
+        };
+
+        let client = GitHubClient::new(&config);
+        let state = "abc123";
+        let redirect_url = client.build_redirect_url(state);
+        assert_eq!(
+            redirect_url,
+            "https://github.com/login/oauth/authorize?client_id=id456789&state=abc123"
+        );
     }
 }
